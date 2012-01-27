@@ -1,0 +1,3 @@
+[submodule "lang/objc/boostoniphone"]
+	path = lang/objc/boostoniphone
+	url = git://gitorious.org/boostoniphone/boostoniphone.git

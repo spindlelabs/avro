@@ -133,6 +133,9 @@ target_link_libraries (SpecificTests avrocpp ${Boost_LIBRARIES})
 add_executable (avrogencpp impl/avrogencpp.cc)
 target_link_libraries (avrogencpp avrocpp ${Boost_LIBRARIES})
 
+add_executable (avrogenobjc impl/avrogenobjc.cc)
+target_link_libraries (avrogenobjc avrocpp ${Boost_LIBRARIES})
+
 add_executable (testgentest test/testgen.cc)
 add_dependencies (testgentest testgen testgen2)
 target_link_libraries (testgentest avrocpp ${Boost_LIBRARIES})
@@ -157,7 +160,7 @@ install (TARGETS avrocpp avrocpp_s
     ARCHIVE DESTINATION lib
     RUNTIME DESTINATION lib)
 
-install (TARGETS avrogencpp RUNTIME DESTINATION bin)
+install (TARGETS avrogencpp avrogenobjc RUNTIME DESTINATION bin)
 
 install (DIRECTORY api/ DESTINATION include/avro
     FILES_MATCHING PATTERN *.hh)

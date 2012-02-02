@@ -96,6 +96,7 @@
 		9317B3AF14D4A9A20079A430 /* AvroLex.lpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.lex; fileEncoding = 4; path = AvroLex.lpp; sourceTree = "<group>"; };
 		9317B3B314D4AD660079A430 /* AvroYacc.ypp */ = {isa = PBXFileReference; explicitFileType = sourcecode.yacc; fileEncoding = 4; path = AvroYacc.ypp; sourceTree = "<group>"; };
 		9317B3BE14D5159D0079A430 /* FlexLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlexLexer.h; sourceTree = "<group>"; };
+		9317B3D014D6636F0079A430 /* avrogenobjc.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = avrogenobjc.cc; path = "../../c++/impl/avrogenobjc.cc"; sourceTree = "<group>"; };
 		936B62D314D49BBD00CDE104 /* libavro.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libavro.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		936B62D614D49BBD00CDE104 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		936B62DA14D49BBD00CDE104 /* avro-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "avro-Prefix.pch"; sourceTree = "<group>"; };
@@ -329,6 +330,7 @@
 		936B634914D4A24F00CDE104 /* impl */ = {
 			isa = PBXGroup;
 			children = (
+				9317B3D014D6636F0079A430 /* avrogenobjc.cc */,
 				936B636A14D4A33E00CDE104 /* parsing */,
 				936B634A14D4A33900CDE104 /* BinaryDecoder.cc */,
 				9317B3AB14D4A8C40079A430 /* BinaryEncoder.cc */,

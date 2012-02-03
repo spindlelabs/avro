@@ -81,6 +81,15 @@ class Node : private boost::noncopyable
     }
     virtual const std::string &name() const = 0;
 
+    virtual bool hasNamespace() const = 0;
+    
+    void setNamespace(const std::string &ns) {
+        checkLock();
+        checkNamespace(ns);
+        doSetNamespace(ns);
+    }
+    virtual const std::string &getNamespace() const = 0;
+    
     void addLeaf(const NodePtr &newLeaf) {
         checkLock();
         doAddLeaf(newLeaf);
@@ -123,9 +132,11 @@ class Node : private boost::noncopyable
         }
     }
 
-    void checkName(const std::string &name) const;
+    virtual void checkName(const std::string &name) const;
+    void checkNamespace(const std::string &ns) const;
 
     virtual void doSetName(const std::string &name) = 0;
+    virtual void doSetNamespace(const std::string &ns) = 0;
     virtual void doAddLeaf(const NodePtr &newLeaf) = 0;
     virtual void doAddName(const std::string &name) = 0;
     virtual void doSetFixedSize(int size) = 0;

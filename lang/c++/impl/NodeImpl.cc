@@ -22,9 +22,9 @@
 namespace avro {
 
 
-template < class A, class B, class C, class D >
+template < class A, class B, class C, class D, class E >
 SchemaResolution 
-NodeImpl<A,B,C,D>::furtherResolution(const Node &reader) const
+NodeImpl<A,B,C,D,E>::furtherResolution(const Node &reader) const
 {
     SchemaResolution match = RESOLVE_NO_MATCH;
 

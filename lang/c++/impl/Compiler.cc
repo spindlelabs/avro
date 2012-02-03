@@ -25,7 +25,7 @@ extern void yyparse(void *ctx);
 
 namespace avro {
 
-// #define DEBUG_VERBOSE
+#define DEBUG_VERBOSE
 
 void
 compileJsonSchema(std::istream &is, ValidSchema &schema)
@@ -91,6 +91,16 @@ CompilerContext::stopType()
     assert(!stack_.empty());
     NodePtr nodePtr(nodeFromCompilerNode(stack_.back()));
     stack_.pop_back();
+    // if the type is a record/enum/fixed, and it has a namespace, pop it off the back
+    if ((nodePtr->type() == AVRO_RECORD ||
+        nodePtr->type() == AVRO_FIXED ||
+        nodePtr->type() == AVRO_ENUM) &&
+        !nodePtr->getNamespace().empty()) {
+#ifdef DEBUG_VERBOSE
+        std::cerr << "Popping namespace " << text_ << '\n';
+#endif
+        namespaceStack_.pop_back();
+    }
     add(nodePtr);
 }
 
@@ -118,8 +128,12 @@ CompilerContext::addNamedType()
 {
 #ifdef DEBUG_VERBOSE
     std::cerr << "Adding named type " << text_ << '\n';
+    if (!namespaceStack_.empty()) {
+        std::cerr << "Namespace on stack is: " << namespaceStack_.back() << '\n'; 
+    }
 #endif
     stack_.back().setType(AVRO_SYMBOLIC);
+    // KEHLI - do i need to get a namespace here? YES YOU DO!
     stack_.back().nameAttribute_.add(text_);
 }
 
@@ -132,6 +146,17 @@ CompilerContext::setNameAttribute()
     stack_.back().nameAttribute_.add(text_);
 }
 
+void 
+CompilerContext::setNamespaceAttribute()
+{
+#ifdef DEBUG_VERBOSE
+    std::cerr << "Setting namespace to " << text_ << '\n';
+    std::cerr << "Pushing namespace " << text_ << '\n';
+#endif
+    stack_.back().namespaceAttribute_.add(text_);
+    namespaceStack_.push_back(new std::string(text_));
+}
+    
 void 
 CompilerContext::setSymbolsAttribute()
 {

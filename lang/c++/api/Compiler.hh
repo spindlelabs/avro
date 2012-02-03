@@ -57,6 +57,7 @@ class CompilerContext {
 
     void setSizeAttribute();
     void setNameAttribute();
+    void setNamespaceAttribute();
     void setSymbolsAttribute();
 
     void setFieldsAttribute();
@@ -80,6 +81,7 @@ class CompilerContext {
   private:
 
     typedef boost::ptr_vector<CompilerNode> Stack;
+    typedef boost::ptr_vector<std::string> StringStack;
 
     void add(const NodePtr &node);
 
@@ -88,6 +90,7 @@ class CompilerContext {
     
     NodePtr   root_;
     Stack     stack_;
+    StringStack     namespaceStack_;
 };
 
 class ValidSchema;

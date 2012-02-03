@@ -57,6 +57,7 @@ int yylex(int *val, void *ctx)
 %x STARTTYPE
 %x STARTSCHEMA
 %x READNAME
+%x READNAMESPACE
 %x READFIELD
 %x READFIELDS
 %x READFIELDNAME
@@ -98,6 +99,9 @@ anytext .*
 
 <READNAME>{avrotext}            return AVRO_LEX_NAME;
 <READNAME>\"                    yy_pop_state();
+
+<READNAMESPACE>{avrotext}       return AVRO_LEX_NAMESPACE;
+<READNAMESPACE>\"               yy_pop_state();
 
 <READSYMBOL>{avrotext}          return AVRO_LEX_SYMBOL;
 <READSYMBOL>\"                  yy_pop_state();
@@ -150,7 +154,8 @@ anytext .*
 <READMETADATA>[^\"\{\[,\}]+     yy_pop_state();
 
 <INOBJECT>\"type\"{delim}       yy_push_state(STARTTYPE); return AVRO_LEX_TYPE;
-<INOBJECT>\"name\"{delim}\"     yy_push_state(READNAME); 
+<INOBJECT>\"name\"{delim}\"     yy_push_state(READNAME);
+<INOBJECT>\"namespace\"{delim}\"     yy_push_state(READNAMESPACE);
 <INOBJECT>\"size\"{delim}       yy_push_state(READSIZE);
 <INOBJECT>\"items\"{delim}      yy_push_state(STARTSCHEMA); return AVRO_LEX_ITEMS;
 <INOBJECT>\"values\"{delim}     yy_push_state(STARTSCHEMA); return AVRO_LEX_VALUES;

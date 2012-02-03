@@ -19,6 +19,7 @@
 #ifndef avro_SymbolMap_hh__
 #define avro_SymbolMap_hh__
 
+#include <iostream>
 #include <map>
 #include <boost/noncopyable.hpp>
 
@@ -47,14 +48,23 @@ class SymbolMap : private boost::noncopyable
             throw Exception("Node must not be a symbolic name");
         }
         const std::string name = node->name();
+        std::string symbol;
         if(name.empty()) {
             throw Exception("Node must have a name to be registered");
         }
+        const std::string ns = node->getNamespace();
+        if (!ns.empty()) {
+            symbol.append(ns);
+            symbol.append(".");
+        }
+        symbol.append(name);
         bool added = false;
-        MapImpl::iterator lb = map_.lower_bound(name);
+        MapImpl::iterator lb = map_.lower_bound(symbol);
 
-        if(lb == map_.end() || map_.key_comp()(name, lb->first)) {
-            map_.insert(lb, std::make_pair(name, node));
+        if(lb == map_.end() || map_.key_comp()(symbol, lb->first)) {
+            map_.insert(lb, std::make_pair(symbol, node));
+            // KEHLI
+            std::cout << "ns: " << node->getNamespace() << " name: " << name << "\n";
             added = true; 
         }
         return added;

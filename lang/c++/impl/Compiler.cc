@@ -91,15 +91,24 @@ CompilerContext::stopType()
     assert(!stack_.empty());
     NodePtr nodePtr(nodeFromCompilerNode(stack_.back()));
     stack_.pop_back();
-    // if the type is a record/enum/fixed, and it has a namespace, pop it off the back
-    if ((nodePtr->type() == AVRO_RECORD ||
+    // if the type is a record/enum/fixed we have to do some special magic for namespaces
+    if (nodePtr->type() == AVRO_RECORD ||
         nodePtr->type() == AVRO_FIXED ||
-        nodePtr->type() == AVRO_ENUM) &&
-        !nodePtr->getNamespace().empty()) {
+        nodePtr->type() == AVRO_ENUM) {
+        // if the named type ALREADY has a namespace, pop it off the back
+        if (!nodePtr->getNamespace().empty()) {
 #ifdef DEBUG_VERBOSE
-        std::cerr << "Popping namespace " << text_ << '\n';
+            std::cerr << "Popping namespace " << text_ << '\n';
 #endif
-        namespaceStack_.pop_back();
+            namespaceStack_.pop_back();
+        } else if (!namespaceStack_.empty()) {
+            // but if it doesn't AND there's a namespace on the namespace stack, it means that this
+            // named type should get that namespace
+#ifdef DEBUG_VERBOSE
+            std::cerr << "Adding container namespace " << namespaceStack_.back() << '\n';
+#endif
+            nodePtr->setNamespace(namespaceStack_.back());
+        }
     }
     add(nodePtr);
 }

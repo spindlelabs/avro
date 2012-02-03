@@ -133,8 +133,16 @@ CompilerContext::addNamedType()
     }
 #endif
     stack_.back().setType(AVRO_SYMBOLIC);
-    // KEHLI - do i need to get a namespace here? YES YOU DO!
-    stack_.back().nameAttribute_.add(text_);
+    // If the name does not contain a '.' then it is not a fullname, so make 
+    // it a fullname if the namespace stack has something on it
+    if (text_.find('.') == std::string::npos && !namespaceStack_.empty()) {
+        std::string fullname(namespaceStack_.back());
+        fullname.append(".");
+        fullname.append(text_);
+        stack_.back().nameAttribute_.add(fullname);
+    } else {
+        stack_.back().nameAttribute_.add(text_);
+    }
 }
 
 void 
@@ -154,6 +162,8 @@ CompilerContext::setNamespaceAttribute()
     std::cerr << "Pushing namespace " << text_ << '\n';
 #endif
     stack_.back().namespaceAttribute_.add(text_);
+    // Capture the namespace for resolving future symbolic references that may be contained
+    // inside this namespace reference
     namespaceStack_.push_back(new std::string(text_));
 }
     

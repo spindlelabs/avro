@@ -245,7 +245,7 @@ class NodeSymbolic : public NodeImplSymbolic
     }
 
     virtual void checkName(const std::string &name) const {
-        // use namespace version since a symbol may be a fullname (namespace.name) 
+        // use namespace version since a symbol may be a fullname
         checkNamespace(name);
     }
 

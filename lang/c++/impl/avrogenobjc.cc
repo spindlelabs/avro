@@ -92,6 +92,7 @@ class CodeGen {
     std::string objcTypeOf(const NodePtr& n);
     std::string generateRecordType(const NodePtr& n);
     std::string unionName();
+    std::string objcUnionName();
     std::string generateUnionType(const NodePtr& n);
     std::string generateType(const NodePtr& n);
     std::string generateDeclaration(const NodePtr& n);
@@ -134,34 +135,31 @@ string CodeGen::generateEnumType(const NodePtr& n)
 }
 
 string CodeGen::objcTypeOf(const NodePtr& n)
-{
+{    
     switch (n->type()) {
     case avro::AVRO_STRING:
         return "NSString *";
     case avro::AVRO_BYTES:
-        return "u8int_t *";
+        return "NSData *";
+    // represent all the primitives as an NSNumber so that everything is an object/pointer
     case avro::AVRO_INT:
-        return "int32_t";
     case avro::AVRO_LONG:
-        return "int64_t";
     case avro::AVRO_FLOAT:
-        return "float";
     case avro::AVRO_DOUBLE:
-        return "double";
     case avro::AVRO_BOOL:
-        return "BOOL";
+        return "NSNumber *";
     case avro::AVRO_RECORD:
     case avro::AVRO_ENUM:
         return inNamespace_ ? n->name() : fullname(n->name());
     case avro::AVRO_ARRAY:
         //return "std::vector<" + objcTypeOf(n->leafAt(0)) + " >";
-        return objcTypeOf(n->leafAt(0));
+        return "NSArray *";
     case avro::AVRO_MAP:
         //return "std::map<std::string, " + objcTypeOf(n->leafAt(1)) + " >";
         return "NSDictionary *";
     case avro::AVRO_FIXED:
         //return "boost::array<uint8_t, " + lexical_cast<string>(n->fixedSize()) + ">";
-        return "uint8_t";
+        return "NSData *";
     case avro::AVRO_SYMBOLIC:
         return objcTypeOf(resolveSymbol(n));
     default:
@@ -187,7 +185,7 @@ static string objcNameOf(const NodePtr& n)
     case avro::AVRO_DOUBLE:
         return "double";
     case avro::AVRO_BOOL:
-        return "bool";
+        return "BOOL";
     case avro::AVRO_RECORD:
     case avro::AVRO_ENUM:
     case avro::AVRO_FIXED:
@@ -217,26 +215,26 @@ string CodeGen::generateRecordType(const NodePtr& n)
     }
 
     // forward declaration
-    os_ << "struct " << n->name() << ";\n\n";
-    os_ << "@interface  " << n->name() << " :NSObject {\n";
-    os_ << "struct " << n->name() << " *_cpp;\n";
-    os_ << "}\n\n";
+    os_ << "struct " << n->name() << ";\n\n"
+    // appending "Object" to every class
+    << "@interface " << n->name() << "Object : NSObject {\n"
+    << "}\n\n";
     if (! noUnion_) {
         for (size_t i = 0; i < c; ++i) {
             if (n->leafAt(i)->type() == avro::AVRO_UNION) {
-                os_ << "    typedef " << types[i]
+                os_ << "typedef " << types[i]
                     << ' ' << n->nameAt(i) << "_t;\n";
             }
         }
     }
     for (size_t i = 0; i < c; ++i) {
         if (! noUnion_ && n->leafAt(i)->type() == avro::AVRO_UNION) {
-            os_ << "@property (nonatomic, readonly) " << n->nameAt(i) << "_t";
+            os_ << "@property (nonatomic, readonly) " << n->nameAt(i) << "_t *";
         } else {
             // spit out a generated property that we'll implement
             os_ << "@property (nonatomic, readonly) " << types[i];
         }
-        os_ << ' ' << n->nameAt(i);
+        os_ << n->nameAt(i);
         switch (n->leafAt(i)->type()) {
             case avro::AVRO_ARRAY:
             case avro::AVRO_BYTES:
@@ -249,7 +247,7 @@ string CodeGen::generateRecordType(const NodePtr& n)
         os_ << ";\n";
     }
     os_ << "@end\n\n";
-    return n->name();
+    return n->name() + "Object *";
 }
 
 void makeCanonical(string& s, bool foldCase)
@@ -273,8 +271,21 @@ string CodeGen::unionName()
         s = s.substr(n);
     }
     makeCanonical(s, false);
+    // move the increment out
+    return s + "_Union__" + boost::lexical_cast<string>(unionNumber_) + "__";
+}
 
-    return s + "_Union__" + boost::lexical_cast<string>(unionNumber_++) + "__";
+string CodeGen::objcUnionName() 
+{
+    string s = schemaFile_;
+    // TODO: cut off the period
+    string::size_type n = s.find_last_of("/\\");
+    if (n != string::npos) {
+        s = s.substr(n);
+    }
+    makeCanonical(s, false);
+    
+    return s + "_Object__" + boost::lexical_cast<string>(unionNumber_) + "__";    
 }
 
 static void generateGetterAndSetter(ostream& os,
@@ -311,12 +322,79 @@ static void generateConstructor(ostream& os,
 }
 
 /**
+ * Generates a type that wraps a union but not the implementation
+ */
+
+string CodeGen::generateUnionType(const NodePtr& n)
+{
+    size_t c = n->leaves();
+    vector<string> types;
+    vector<string> names;
+    
+    set<NodePtr>::const_iterator it = doing.find(n);
+    if (it != doing.end()) {
+        for (size_t i = 0; i < c; ++i) {
+            const NodePtr& nn = n->leafAt(i);
+            types.push_back(generateDeclaration(nn));
+            names.push_back(objcNameOf(nn));
+        }
+    } else {
+        doing.insert(n);
+        for (size_t i = 0; i < c; ++i) {
+            const NodePtr& nn = n->leafAt(i);
+            types.push_back(generateType(nn));
+            names.push_back(objcNameOf(nn));
+        }
+        doing.erase(n);
+    }
+    if (done.find(n) != done.end()) {
+        return done[n];
+    }
+    
+    const string result = unionName();
+    const string objcName = objcUnionName();
+    // increment unionnumber
+    unionNumber_++;
+    
+    os_ << "struct " << result << ";"
+    << "\n"
+    << "@interface " << objcName << " {\n"
+    << "@private:\n"
+    << "    size_t _idx;\n"
+    << "    id _value;\n"
+    << "}\n"
+    << "\n"
+    << "@property (nonatomic, readonly) size_t idx;\n";
+    
+    for (size_t i = 0; i < c; ++i) {
+        const NodePtr& nn = n->leafAt(i);
+        if (nn->type() == avro::AVRO_NULL) {
+            os_ << "@property (nonatomic, readonly) BOOL isNull;\n";
+        } else {
+            const string& type = types[i];
+            const string& name = names[i];
+            // append "Value" to end of each type in the union since it names a type, not a variable
+            os_ << "@property (nonatomic, readonly) " << type << " " << name << "Value;\n";
+            pendingGettersAndSetters.push_back(PendingSetterGetter(result, type, name, i));
+        }
+    }
+    os_ << "\n"
+    << "- (id)initWithStruct:(struct " << result << ")cppStruct;\n";
+    pendingConstructors.push_back(PendingConstructor(result, types[0],
+                                                     n->leafAt(0)->type() != avro::AVRO_NULL));
+    os_ << "@end\n\n";
+    
+    // return the objcName
+    return objcName;
+}
+
+/**
  * Generates a type for union and emits the code.
  * Since unions can encounter names that are not fully defined yet,
  * such names must be declared and the inline functions deferred until all
  * types are fully defined.
- */
-string CodeGen::generateUnionType(const NodePtr& n)
+
+string CodeGen::generateUnionImplementation(const NodePtr& n)
 {
     size_t c = n->leaves();
     vector<string> types;
@@ -378,7 +456,7 @@ string CodeGen::generateUnionType(const NodePtr& n)
     
     return result;
 }
-
+ */
 /**
  * Returns the type for the given schema node and emits code to os.
  */
@@ -410,9 +488,9 @@ string CodeGen::doGenerateType(const NodePtr& n)
         // TODO: something more here?
         return objcTypeOf(n);
     case avro::AVRO_ARRAY:
-        return "std::vector<" + generateType(n->leafAt(0)) + " >";
+        return "NSArray *";
     case avro::AVRO_MAP:
-        return "std::map<std::string, " + generateType(n->leafAt(1)) + " >";
+        return "NSDictionary *";
     case avro::AVRO_RECORD:
         return generateRecordType(n);
     case avro::AVRO_ENUM:
@@ -440,10 +518,9 @@ string CodeGen::generateDeclaration(const NodePtr& n)
     case avro::AVRO_FIXED:
         return objcTypeOf(nn);
     case avro::AVRO_ARRAY:
-        return "std::vector<" + generateDeclaration(nn->leafAt(0)) + " >";
+        return "NSArray *";
     case avro::AVRO_MAP:
-        return "std::map<std::string, " +
-            generateDeclaration(nn->leafAt(1)) + " >";
+        return "NSDictionary *";
     case avro::AVRO_RECORD:
         os_ << "struct " << objcTypeOf(nn) << ";\n";
         return objcTypeOf(nn);
@@ -641,7 +718,7 @@ void CodeGen::generate(const ValidSchema& schema)
 
     const NodePtr& root = schema.root();
     generateType(root);
-
+/*
     for (vector<PendingSetterGetter>::const_iterator it =
         pendingGettersAndSetters.begin();
         it != pendingGettersAndSetters.end(); ++it) {
@@ -655,7 +732,7 @@ void CodeGen::generate(const ValidSchema& schema)
         generateConstructor(os_, it->structName,
             it->initMember, it->memberName);
     }
-
+*/
     if (! ns_.empty()) {
         inNamespace_ = false;
         os_ << "}\n";
@@ -664,9 +741,9 @@ void CodeGen::generate(const ValidSchema& schema)
     os_ << "namespace avro {\n";
 
     unionNumber_ = 0;
-
+/*
     generateTraits(root);
-
+*/
     os_ << "}\n";
 
     os_ << "#endif\n";

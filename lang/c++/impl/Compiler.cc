@@ -102,8 +102,7 @@ CompilerContext::stopType()
 #endif
             namespaceStack_.pop_back();
         } else if (!namespaceStack_.empty()) {
-            // but if it doesn't AND there's a namespace on the namespace stack, it means that this
-            // named type should get that namespace
+            // if there's a namespace on the namespace stack, it means that this type should get that namespace
 #ifdef DEBUG_VERBOSE
             std::cerr << "Adding container namespace " << namespaceStack_.back() << '\n';
 #endif

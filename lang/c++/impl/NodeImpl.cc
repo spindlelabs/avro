@@ -221,6 +221,9 @@ NodeRecord::printJson(std::ostream &os, int depth) const
 {
     os << "{\n";
     os << indent(++depth) << "\"type\": \"record\",\n";
+    if(!namespaceAttribute_.get().empty()) {
+        os << indent(depth) << "\"namespace\": \"" << namespaceAttribute_.get() << "\",\n";
+    }
     if(!nameAttribute_.get().empty()) {
         os << indent(depth) << "\"name\": \"" << nameAttribute_.get() << "\",\n";
     }
@@ -249,6 +252,9 @@ NodeEnum::printJson(std::ostream &os, int depth) const
 {
     os << "{\n";
     os << indent(++depth) << "\"type\": \"enum\",\n";
+    if(!namespaceAttribute_.get().empty()) {
+        os << indent(depth) << "\"namespace\": \"" << namespaceAttribute_.get() << "\",\n";
+    }
     if(!nameAttribute_.get().empty()) {
         os << indent(depth) << "\"name\": \"" << nameAttribute_.get() << "\",\n";
     }
@@ -312,6 +318,9 @@ NodeFixed::printJson(std::ostream &os, int depth) const
     os << "{\n";
     os << indent(++depth) << "\"type\": \"fixed\",\n";
     os << indent(depth) << "\"size\": " << sizeAttribute_.get() << ",\n";
+    if(!namespaceAttribute_.get().empty()) {
+        os << indent(depth) << "\"namespace\": \"" << namespaceAttribute_.get() << "\",\n";
+    }
     os << indent(depth) << "\"name\": \"" << nameAttribute_.get() << "\"\n";
     os << indent(--depth) << '}';
 }

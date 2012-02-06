@@ -53,19 +53,6 @@ class NodeImpl : public Node
         namespaceAttribute_()
     { }
 
-// KEHLI
-//    NodeImpl(Type type, 
-//             const NameConcept &name, 
-//             const LeavesConcept &leaves, 
-//             const LeafNamesConcept &leafNames,
-//             const SizeConcept &size) :
-//        Node(type),
-//        nameAttribute_(name),
-//        leafAttributes_(leaves),
-//        leafNameAttributes_(leafNames),
-//        sizeAttribute_(size)
-//    { }
-
     NodeImpl(Type type, 
              const NameConcept &name, 
              const LeavesConcept &leaves, 

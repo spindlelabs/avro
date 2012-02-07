@@ -236,15 +236,6 @@ string CodeGen::generateRecordType(const NodePtr& n)
             os_ << "@property (nonatomic, readonly) " << types[i];
         }
         os_ << n->nameAt(i);
-        switch (n->leafAt(i)->type()) {
-            case avro::AVRO_ARRAY:
-            case avro::AVRO_BYTES:
-            case avro::AVRO_FIXED:
-                os_ << "";
-                break;                
-            default:
-                break;
-        } 
         os_ << ";\n";
     }
     os_ << "@end\n\n";

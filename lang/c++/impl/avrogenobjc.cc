@@ -77,6 +77,7 @@ class CodeGen {
     const std::string headerFile_;
     const std::string includePrefix_;
     const bool noUnion_;
+    const bool implementation_;
     boost::mt19937 random_;
 
     vector<PendingSetterGetter> pendingGettersAndSetters;
@@ -105,10 +106,10 @@ class CodeGen {
 public:
     CodeGen(std::ostream& os, const std::string& ns,
         const std::string& schemaFile, const std::string& headerFile,
-        const std::string& includePrefix, bool noUnion) :
+        const std::string& includePrefix, bool noUnion, bool implementation) :
         unionNumber_(0), os_(os), inNamespace_(false), ns_(ns),
         schemaFile_(schemaFile), headerFile_(headerFile),
-        includePrefix_(includePrefix), noUnion_(noUnion),
+        includePrefix_(includePrefix), noUnion_(noUnion), implementation_(implementation),
         random_(::time(0)) { }
     void generate(const ValidSchema& schema);
 };
@@ -120,7 +121,7 @@ string CodeGen::fullname(const string& name) const
 
 string CodeGen::objcfullname(const string& name) const
 {
-    return ns_.empty() ? name : (ns_ + "_" + name);
+    return name;
 }
 
 string CodeGen::generateEnumType(const NodePtr& n)
@@ -487,10 +488,14 @@ string CodeGen::doGenerateType(const NodePtr& n)
     case avro::AVRO_FIXED:
         // TODO: something more here?
         return objcTypeOf(n);
-    case avro::AVRO_ARRAY:
+    case avro::AVRO_ARRAY: {
+        generateType(n->leafAt(0));
         return "NSArray *";
-    case avro::AVRO_MAP:
+    }
+    case avro::AVRO_MAP: {
+        generateType(n->leafAt(0));
         return "NSDictionary *";
+    }
     case avro::AVRO_RECORD:
         return generateRecordType(n);
     case avro::AVRO_ENUM:
@@ -712,7 +717,8 @@ void CodeGen::generate(const ValidSchema& schema)
         << "\n";
 
     if (! ns_.empty()) {
-        os_ << "namespace " << ns_ << " {\n";
+        // set the flag, but obj-c doesn't support namespaces. Only used for 
+        // referring to the proper cpp type
         inNamespace_ = true;
     }
 
@@ -735,17 +741,12 @@ void CodeGen::generate(const ValidSchema& schema)
 */
     if (! ns_.empty()) {
         inNamespace_ = false;
-        os_ << "}\n";
     }
-
-    os_ << "namespace avro {\n";
 
     unionNumber_ = 0;
 /*
     generateTraits(root);
 */
-    os_ << "}\n";
-
     os_ << "#endif\n";
     os_.flush();
 
@@ -758,6 +759,7 @@ static const string OUT("output");
 static const string IN("input");
 static const string INCLUDE_PREFIX("include-prefix");
 static const string NO_UNION_TYPEDEF("no-union-typedef");
+static const string IMPLEMENTATION("implementation");
 
 int main(int argc, char** argv)
 {
@@ -769,7 +771,8 @@ int main(int argc, char** argv)
         ("no-union-typedef,U", "do not generate typedefs for unions in records")
         ("namespace,n", po::value<string>(), "set namespace for generated code")
         ("input,i", po::value<string>(), "input file")
-        ("output,o", po::value<string>(), "output file to generate");
+        ("output,o", po::value<string>(), "output file to generate")
+        ("implementation,I", po::value<string>(), "generate the .m implementation classes");
 
     po::variables_map vm;
     po::store(po::parse_command_line(argc, argv, desc), vm);
@@ -784,6 +787,7 @@ int main(int argc, char** argv)
     string ns = vm.count(NS) > 0 ? vm[NS].as<string>() : string();
     string outf = vm.count(OUT) > 0 ? vm[OUT].as<string>() : string();
     string inf = vm.count(IN) > 0 ? vm[IN].as<string>() : string();
+    bool impl = vm.count(IMPLEMENTATION) != 0;
     string incPrefix = vm[INCLUDE_PREFIX].as<string>();
     bool noUnion = vm.count(NO_UNION_TYPEDEF) != 0;
     if (incPrefix == "-") {
@@ -804,9 +808,9 @@ int main(int argc, char** argv)
 
         if (! outf.empty()) {
             ofstream out(outf.c_str());
-            CodeGen(out, ns, inf, outf, incPrefix, noUnion).generate(schema);
+            CodeGen(out, ns, inf, outf, incPrefix, noUnion, impl).generate(schema);
         } else {
-            CodeGen(std::cout, ns, inf, outf, incPrefix, noUnion).
+            CodeGen(std::cout, ns, inf, outf, incPrefix, noUnion, impl).
                 generate(schema);
         }
         return 0;

@@ -62,11 +62,23 @@ struct PendingSetterGetter {
 
 struct PendingConstructor {
     string structName;
-    string memberName;
-    bool initMember;
-    PendingConstructor(const string& sn, const string& n, bool im) :
-        structName(sn), memberName(n), initMember(im) { }
+    vector<string> memberTypes_;
+    vector<string> memberNames_;
+    
+    PendingConstructor(const string& sn, const vector<string>& types, const vector<string>& names) :
+    structName(sn), memberTypes_(types), memberNames_(names) { }
 };
+
+struct PendingUnionObject {
+    string unionName;
+    bool isNullable;
+    size_t nullableIndex;
+    vector<PendingSetterGetter> pendingGettersAndSetters;
+    vector<PendingConstructor> pendingConstructors;
+    
+    PendingUnionObject(const string& name) : unionName(name), isNullable(false), nullableIndex(0) { }
+};
+
 
 class CodeGen {
     size_t unionNumber_;
@@ -80,8 +92,7 @@ class CodeGen {
     const bool implementation_;
     boost::mt19937 random_;
 
-    vector<PendingSetterGetter> pendingGettersAndSetters;
-    vector<PendingConstructor> pendingConstructors;
+    vector<PendingUnionObject> pendingUnions;
 
     map<NodePtr, string> done;
     set<NodePtr> doing;
@@ -153,13 +164,10 @@ string CodeGen::objcTypeOf(const NodePtr& n)
     case avro::AVRO_ENUM:
         return inNamespace_ ? n->name() : fullname(n->name());
     case avro::AVRO_ARRAY:
-        //return "std::vector<" + objcTypeOf(n->leafAt(0)) + " >";
         return "NSArray *";
     case avro::AVRO_MAP:
-        //return "std::map<std::string, " + objcTypeOf(n->leafAt(1)) + " >";
         return "NSDictionary *";
     case avro::AVRO_FIXED:
-        //return "boost::array<uint8_t, " + lexical_cast<string>(n->fixedSize()) + ">";
         return "NSData *";
     case avro::AVRO_SYMBOLIC:
         return objcTypeOf(resolveSymbol(n));
@@ -186,7 +194,7 @@ static string objcNameOf(const NodePtr& n)
     case avro::AVRO_DOUBLE:
         return "double";
     case avro::AVRO_BOOL:
-        return "BOOL";
+        return "bool";
     case avro::AVRO_RECORD:
     case avro::AVRO_ENUM:
     case avro::AVRO_FIXED:
@@ -218,7 +226,7 @@ string CodeGen::generateRecordType(const NodePtr& n)
     // forward declaration
     os_ << "struct " << n->name() << ";\n\n"
     // appending "Object" to every class
-    << "@interface " << n->name() << "Object : NSObject {\n"
+    << "@interface " << n->name() << "Object : NSObject {\n"    
     << "}\n\n";
     if (! noUnion_) {
         for (size_t i = 0; i < c; ++i) {
@@ -238,6 +246,8 @@ string CodeGen::generateRecordType(const NodePtr& n)
         os_ << n->nameAt(i);
         os_ << ";\n";
     }
+    os_ << "\n"
+    << "- (id)initWithStruct:(struct " << n->name() << ")cppStruct;\n";
     os_ << "@end\n\n";
     return n->name() + "Object *";
 }
@@ -277,41 +287,107 @@ string CodeGen::objcUnionName()
     }
     makeCanonical(s, false);
     
-    return s + "_Object__" + boost::lexical_cast<string>(unionNumber_) + "__";    
+    return s + "_UnionObject__" + boost::lexical_cast<string>(unionNumber_) + "__";    
 }
 
-static void generateGetterAndSetter(ostream& os,
+static void generateUnionGetter(ostream& os,
     const string& structName, const string& type, const string& name,
     size_t idx)
 {
-    string sn = " " + structName + "::";
-
-    os << "inline\n";
-
-    os << type << sn << "get_" << name << "() const {\n"
+    os << "- (" << type << ")" << name << "Value\n"
+        << "{\n"
         << "    if (idx_ != " << idx << ") {\n"
-        << "        throw avro::Exception(\"Invalid type for "
-            << "union\");\n"
+        << "        return nil;\n"
         << "    }\n"
-        << "    return boost::any_cast<" << type << " >(value_);\n"
+        << "    return (" << type << ")" << "_value;\n"
         << "}\n\n";
-
-    os << "void" << sn << "set_" << name
-        << "(const " << type << "& v) {\n"
-        << "    idx_ = " << idx << ";\n"
-        << "    value_ = v;\n"
-        << "}\n\n";
+    // No setters for objective C
 }
 
-static void generateConstructor(ostream& os,
-    const string& structName, bool initMember,
-    const string& type) {
-    os << "inline " << structName  << "::" << structName << "() : idx_(0)";
-    if (initMember) {
-        os << ", value_(" << type << "())";
+static void generateConstructor(ostream& os, 
+    const string& structName, const vector<string>& types, const vector<string>& names) 
+{    
+    os  << "- (id)initWithStruct:(struct " << structName  << ")cppStruct\n"
+        << "{\n"
+        << "    self = [super init];\n"
+        << "    if (self) {\n"
+        << "        _idx = cppStruct.idx;\n"
+        << "        // now set the value based on the named of the type in the union\n"
+        << "        switch(cppStruct.idx) {\n";
+    size_t i = 0;
+    for (vector<string>::const_iterator it = names.begin(); it != names.end(); ++it) {
+        os  << "            case " << i << ": {\n";
+        std::string name = *it;
+        if (name == "null") {
+            os << "                 _value = nil;\n";
+        } else if (name == "string") {
+            os  << "                 std::string cppString = cppStruct.get_string();\n"
+                << "                 _value = CFStringCreateWithBytes(kCFAllocatorDefault, cppString.data(), cppString.size(), kCFStringEncodingUTF8, false);\n";
+        } else if (name == "bytes") {
+            os  << "                 std::vector<uint8_t> cppBytes = cppStruct.get_bytes();\n"
+                << "                 _value = CFDataCreate(kCFAllocatorDefault, cppBytes.data(), cppBytes.size());\n";
+        } else if (name == "int") {
+            os << "                 _value = [NSNumber numberWithInt:cppStruct.get_int()];\n";
+        } else if (name == "long") {
+            os << "                 _value = [NSNumber numberWithLong:cppStruct.get_long()];\n";
+        } else if (name == "float") {
+            os << "                 _value = [NSNumber numberWithFloat:cppStruct.get_float()];\n";
+        } else if (name == "double") {
+            os << "                 _value = [NSNumber numberWithDouble:cppStruct.get_double()];\n";
+        } else if (name == "bool") {
+            os << "                 _value = [NSNumber numberWithBool:cppStruct.get_bool()];\n";
+        } else if (name == "array") {
+            os  << "#warning incomplete implementation\n"
+                << "                 NSMutableArray *array = [NSMutableArray arrayWithCapacity:cppStruct.get_array().size()];\n"
+                << "                 //for (vector</*CPP TYPE*/>::const_iterator it = cppStruct.get_array().begin();\n"
+                << "                 //     it != cppStruct.get_array().end(); ++it) {\n"
+                << "                 //    [_value addObject: [[/*OBJC TYPE*/ alloc] init/*WithStruct/primitive*/:*it];\n"
+                << "                 _value = array;";
+        } else if (name == "map") {
+            os  << "#warning incomplete implementation\n"
+                << "                 _value = [[NSMutableDictionary alloc] init];\n";
+        } else {
+            // append "Object" to end of name for objc-type, and "struct" to front of name for cpp type, and "get_" for getter
+            os  << "                 _value = [[" << name << "Object alloc] initWithStruct:cppStruct.get_" << name << "];\n";
+        }
+            os  << "            }\n";
+        // increment the case variable
+        ++i;
     }
-    os << " { }\n";
+    os  << "        }\n"
+        << "    }\n"
+        << "    return self;\n";
+    os  << "}\n\n";
 }
+
+
+static void generateUnionImplementation(ostream& os, const PendingUnionObject& unionObject)
+{
+    os << "@implementation " << unionObject.unionName << "\n";
+    
+    // generate an isNull() getter
+    if (unionObject.isNullable) {
+        os << "- (BOOL)isNull\n"
+        << "{\n"
+        << "    " << "return _idx == " << unionObject.nullableIndex << ";\n"
+        << "}\n\n";
+    }
+    
+    for (vector<PendingSetterGetter>::const_iterator it =
+         unionObject.pendingGettersAndSetters.begin();
+         it != unionObject.pendingGettersAndSetters.end(); ++it) {
+        generateUnionGetter(os, it->structName, it->type, it->name,
+                                it->idx);
+    }
+    
+    for (vector<PendingConstructor>::const_iterator it =
+         unionObject.pendingConstructors.begin();
+         it != unionObject.pendingConstructors.end(); ++it) {
+        generateConstructor(os, it->structName, it->memberTypes_, it->memberNames_);
+    }
+    os << "@end\n\n";
+}
+
 
 /**
  * Generates a type that wraps a union but not the implementation
@@ -348,10 +424,12 @@ string CodeGen::generateUnionType(const NodePtr& n)
     // increment unionnumber
     unionNumber_++;
     
+    PendingUnionObject pending(objcName);
+    
     os_ << "struct " << result << ";"
     << "\n"
     << "@interface " << objcName << " {\n"
-    << "@private:\n"
+    << "@private\n"
     << "    size_t _idx;\n"
     << "    id _value;\n"
     << "}\n"
@@ -362,93 +440,26 @@ string CodeGen::generateUnionType(const NodePtr& n)
         const NodePtr& nn = n->leafAt(i);
         if (nn->type() == avro::AVRO_NULL) {
             os_ << "@property (nonatomic, readonly) BOOL isNull;\n";
+            pending.isNullable = true;
+            pending.nullableIndex = i;
         } else {
             const string& type = types[i];
             const string& name = names[i];
             // append "Value" to end of each type in the union since it names a type, not a variable
             os_ << "@property (nonatomic, readonly) " << type << " " << name << "Value;\n";
-            pendingGettersAndSetters.push_back(PendingSetterGetter(result, type, name, i));
+            pending.pendingGettersAndSetters.push_back(PendingSetterGetter(result, type, name, i));
         }
     }
     os_ << "\n"
     << "- (id)initWithStruct:(struct " << result << ")cppStruct;\n";
-    pendingConstructors.push_back(PendingConstructor(result, types[0],
-                                                     n->leafAt(0)->type() != avro::AVRO_NULL));
+    pending.pendingConstructors.push_back(PendingConstructor(result, types, names));
     os_ << "@end\n\n";
     
+    pendingUnions.push_back(pending);
     // return the objcName
     return objcName;
 }
 
-/**
- * Generates a type for union and emits the code.
- * Since unions can encounter names that are not fully defined yet,
- * such names must be declared and the inline functions deferred until all
- * types are fully defined.
-
-string CodeGen::generateUnionImplementation(const NodePtr& n)
-{
-    size_t c = n->leaves();
-    vector<string> types;
-    vector<string> names;
-
-    set<NodePtr>::const_iterator it = doing.find(n);
-    if (it != doing.end()) {
-        for (size_t i = 0; i < c; ++i) {
-            const NodePtr& nn = n->leafAt(i);
-            types.push_back(generateDeclaration(nn));
-            names.push_back(objcNameOf(nn));
-        }
-    } else {
-        doing.insert(n);
-        for (size_t i = 0; i < c; ++i) {
-            const NodePtr& nn = n->leafAt(i);
-            types.push_back(generateType(nn));
-            names.push_back(objcNameOf(nn));
-        }
-        doing.erase(n);
-    }
-    if (done.find(n) != done.end()) {
-        return done[n];
-    }
-
-    const string result = unionName();
-
-    os_ << "struct " << result << " {\n"
-        << "private:\n"
-        << "    size_t idx_;\n"
-        << "    boost::any value_;\n"
-        << "public:\n"
-        << "    size_t idx() const { return idx_; }\n";
-
-    for (size_t i = 0; i < c; ++i) {
-        const NodePtr& nn = n->leafAt(i);
-        if (nn->type() == avro::AVRO_NULL) {
-            os_ << "    bool is_null() const {\n"
-                << "        return (idx_ == " << i << ");\n"
-                << "    }\n"
-                << "    void set_null() {\n"
-                << "        idx_ = " << i << ";\n"
-                << "        value_ = boost::any();\n"
-                << "    }\n";
-        } else {
-            const string& type = types[i];
-            const string& name = names[i];
-            os_ << "    " << type << " get_" << name << "() const;\n"
-                   "    void set_" << name << "(const " << type << "& v);\n";
-            pendingGettersAndSetters.push_back(
-                PendingSetterGetter(result, type, name, i));
-        }
-    }
-
-    os_ << "    " << result << "();\n";
-    pendingConstructors.push_back(PendingConstructor(result, types[0],
-        n->leafAt(0)->type() != avro::AVRO_NULL));
-    os_ << "};\n\n";
-    
-    return result;
-}
- */
 /**
  * Returns the type for the given schema node and emits code to os.
  */
@@ -477,13 +488,14 @@ string CodeGen::doGenerateType(const NodePtr& n)
     case avro::AVRO_BOOL:
     case avro::AVRO_NULL:
     case avro::AVRO_FIXED:
-        // TODO: something more here?
         return objcTypeOf(n);
     case avro::AVRO_ARRAY: {
+        // NOTE: cpp has the call to generateType() inside the cpp template param
         generateType(n->leafAt(0));
         return "NSArray *";
     }
     case avro::AVRO_MAP: {
+        // NOTE: cpp has the call to generateType() inside the cpp template param
         generateType(n->leafAt(0));
         return "NSDictionary *";
     }
@@ -696,15 +708,7 @@ void CodeGen::generate(const ValidSchema& schema)
 {
     emitCopyright();
 
-    string h = guard();
-
-    os_ << "#ifndef " << h << "\n";
-    os_ << "#define " << h << "\n\n\n";
-
-    os_ << "#include \"boost/any.hpp\"\n"
-        << "#include \"" << includePrefix_ << "Specific.hh\"\n"
-        << "#include \"" << includePrefix_ << "Encoder.hh\"\n"
-        << "#include \"" << includePrefix_ << "Decoder.hh\"\n"
+    os_ << "#import <Foundation/Foundation.h>\n"
         << "\n";
 
     if (! ns_.empty()) {
@@ -715,30 +719,21 @@ void CodeGen::generate(const ValidSchema& schema)
 
     const NodePtr& root = schema.root();
     generateType(root);
-/*
-    for (vector<PendingSetterGetter>::const_iterator it =
-        pendingGettersAndSetters.begin();
-        it != pendingGettersAndSetters.end(); ++it) {
-        generateGetterAndSetter(os_, it->structName, it->type, it->name,
-            it->idx);
-    }
 
-    for (vector<PendingConstructor>::const_iterator it =
-        pendingConstructors.begin();
-        it != pendingConstructors.end(); ++it) {
-        generateConstructor(os_, it->structName,
-            it->initMember, it->memberName);
-    }
-*/
     if (! ns_.empty()) {
         inNamespace_ = false;
     }
 
     unionNumber_ = 0;
-/*
+
+    for (vector<PendingUnionObject>::const_iterator it =
+        pendingUnions.begin();
+        it != pendingUnions.end(); ++it) {
+        generateUnionImplementation(os_, *it);
+    }
+
     generateTraits(root);
-*/
-    os_ << "#endif\n";
+    
     os_.flush();
 
 }
@@ -802,8 +797,9 @@ int main(int argc, char** argv)
             CodeGen(out, ns, inf, outf, incPrefix, noUnion, impl).generate(schema);
         } else {
             CodeGen(std::cout, ns, inf, outf, incPrefix, noUnion, impl).
-                generate(schema);
-        }
+            generate(schema);
+        }            
+        
         return 0;
     } catch (std::exception &e) {
         std::cerr << "Failed to parse or compile schema: "

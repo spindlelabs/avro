@@ -102,17 +102,19 @@ class CodeGen {
     std::string objcfullname(const string& name) const;
     std::string generateEnumType(const NodePtr& n);
     std::string objcTypeOf(const NodePtr& n);
+    std::string cppTypeOf(const NodePtr& n);
     std::string generateRecordType(const NodePtr& n);
     std::string unionName();
     std::string objcUnionName();
+    std::string generateObjcInitializer(const NodePtr& node, const string& cppValue);
     std::string generateUnionType(const NodePtr& n);
     std::string generateType(const NodePtr& n);
     std::string generateDeclaration(const NodePtr& n);
     std::string doGenerateType(const NodePtr& n);
-    void generateEnumTraits(const NodePtr& n);
-    void generateTraits(const NodePtr& n);
-    void generateRecordTraits(const NodePtr& n);
-    void generateUnionTraits(const NodePtr& n);
+    void generateEnumImplementation(const NodePtr& n);
+    void generateImplementation(const NodePtr& n);
+    void generateRecordImplementation(const NodePtr& n);
+    void generateUnionImplementation(const NodePtr& n);
     void emitCopyright();
 public:
     CodeGen(std::ostream& os, const std::string& ns,
@@ -173,6 +175,40 @@ string CodeGen::objcTypeOf(const NodePtr& n)
         return objcTypeOf(resolveSymbol(n));
     default:
         return "$Undefined$";
+    }
+}
+
+string CodeGen::cppTypeOf(const NodePtr& n)
+{
+    switch (n->type()) {
+        case avro::AVRO_STRING:
+            return "std::string";
+        case avro::AVRO_BYTES:
+            return "std::vector<uint8_t>";
+        case avro::AVRO_INT:
+            return "int32_t";
+        case avro::AVRO_LONG:
+            return "int64_t";
+        case avro::AVRO_FLOAT:
+            return "float";
+        case avro::AVRO_DOUBLE:
+            return "double";
+        case avro::AVRO_BOOL:
+            return "bool";
+        case avro::AVRO_RECORD:
+        case avro::AVRO_ENUM:
+            return inNamespace_ ? n->name() : fullname(n->name());
+        case avro::AVRO_ARRAY:
+            return "std::vector<" + cppTypeOf(n->leafAt(0)) + " >";
+        case avro::AVRO_MAP:
+            return "std::map<std::string, " + cppTypeOf(n->leafAt(1)) + " >";
+        case avro::AVRO_FIXED:
+            return "boost::array<uint8_t, " +
+            lexical_cast<string>(n->fixedSize()) + ">";
+        case avro::AVRO_SYMBOLIC:
+            return cppTypeOf(resolveSymbol(n));
+        default:
+            return "$Undefined$";
     }
 }
 
@@ -348,7 +384,7 @@ static void generateConstructor(ostream& os,
                 << "                 _value = [[NSMutableDictionary alloc] init];\n";
         } else {
             // append "Object" to end of name for objc-type, and "struct" to front of name for cpp type, and "get_" for getter
-            os  << "                 _value = [[" << name << "Object alloc] initWithStruct:cppStruct.get_" << name << "];\n";
+            os  << "                 _value = [[" << name << "Object alloc] initWithStruct:cppStruct.get_" << name << "()];\n";
         }
             os  << "            }\n";
         // increment the case variable
@@ -543,7 +579,7 @@ string CodeGen::generateDeclaration(const NodePtr& n)
     return "$Undefuned$";
 }
 
-void CodeGen::generateEnumTraits(const NodePtr& n)
+void CodeGen::generateEnumImplementation(const NodePtr& n)
 {
     string fn = fullname(n->name());
     os_ << "template<> struct codec_traits<" << fn << "> {\n"
@@ -556,11 +592,11 @@ void CodeGen::generateEnumTraits(const NodePtr& n)
         << "};\n\n";
 }
 
-void CodeGen::generateRecordTraits(const NodePtr& n)
+void CodeGen::generateRecordImplementation(const NodePtr& n)
 {
     size_t c = n->leaves();
     for (size_t i = 0; i < c; ++i) {
-        generateTraits(n->leafAt(i));
+        generateImplementation(n->leafAt(i));
     }
 
     string fn = fullname(n->name());
@@ -582,64 +618,140 @@ void CodeGen::generateRecordTraits(const NodePtr& n)
         << "};\n\n";
 }
 
-void CodeGen::generateUnionTraits(const NodePtr& n)
+static string cppNameFromObjcName(const string& objcName) 
+{
+    string cppName(objcName);
+    // find the last instance of the word Object, which is appended in type generation
+    size_t pos = cppName.rfind("Object");
+    if (pos != string::npos) {
+        return cppName.erase(pos, 6);
+    }
+    return cppName;
+}
+
+string CodeGen::generateObjcInitializer(const NodePtr& node, const string& cppValue)
+{
+    if (node->type() == avro::AVRO_NULL) {
+        return "nil";
+    } else if (node->type() == avro::AVRO_STRING) {
+        return "CFStringCreateWithBytes(kCFAllocatorDefault, " + cppValue + ".data(), " + cppValue + ".size(), kCFStringEncodingUTF8, false)";
+    } else if (node->type() == avro::AVRO_BYTES) {
+        return "CFDataCreate(kCFAllocatorDefault, " + cppValue + ".data(), " + cppValue + ".size())";
+    } else if (node->type() == avro::AVRO_INT) {
+        return "[NSNumber numberWithInt:" + cppValue + "]";
+    } else if (node->type() == avro::AVRO_LONG) {
+        return "[NSNumber numberWithLong:" + cppValue + "]";
+    } else if (node->type() == avro::AVRO_FLOAT) {
+        return "[NSNumber numberWithFloat:" + cppValue + "]";
+    } else if (node->type() == avro::AVRO_DOUBLE) {
+        return "[NSNumber numberWithDouble:" + cppValue + "]";
+    } else if (node->type() == avro::AVRO_BOOL) {
+        return "[NSNumber numberWithBool:" + cppValue + "]";
+    } else if (node->type() == avro::AVRO_ARRAY) {
+        return "[NSMutableArray arrayWithCapacity:" + cppValue + ".size()]";
+    } else if (node->type() == avro::AVRO_MAP) {
+        return "[[NSMutableDictionary alloc] init]";
+    } else if (node->type() == avro::AVRO_RECORD) {
+        // append "Object" to end of name for objc-type, and "struct" to front of name for cpp type, and "get_" for getter
+        const string &name = objcTypeOf(node);
+        return "[[" + name + "Object alloc] initWithStruct:" + cppValue + "]";
+    } else if (node->type() == avro::AVRO_FIXED) {
+        return "CFDataCreate(kCFAllocatorDefault, " + cppValue + ".data(), " + cppValue + ".size())";
+    }
+    // don't deal with enum?
+    return "";
+}
+
+void CodeGen::generateUnionImplementation(const NodePtr& n)
 {
     size_t c = n->leaves();
 
     for (size_t i = 0; i < c; ++i) {
         const NodePtr& nn = n->leafAt(i);
-        generateTraits(nn);
+        generateImplementation(nn);
     }
 
     string name = done[n];
     string fn = fullname(name);
+    string cppUnion = cppNameFromObjcName(fn);
 
-    os_ << "template<> struct codec_traits<" << fn << "> {\n"
-        << "    static void encode(Encoder& e, " << fn << " v) {\n"
-        << "        e.encodeUnionIndex(v.idx());\n"
-        << "        switch (v.idx()) {\n";
-
+    os_ << "@implementation " << fn << "\n\n";
+    
+    // getter implementations
     for (size_t i = 0; i < c; ++i) {
         const NodePtr& nn = n->leafAt(i);
-        os_ << "        case " << i << ":\n";
         if (nn->type() == avro::AVRO_NULL) {
-            os_ << "            e.encodeNull();\n";
+            os_ << "- (BOOL)isNull\n"
+                << "{\n"
+                << "    " << "return _idx == " << i << ";\n"
+                << "}\n\n";
         } else {
-            os_ << "            avro::encode(e, v.get_" << objcNameOf(nn)
-                << "());\n";
+            string type = objcTypeOf(nn);
+            string attrName = objcNameOf(nn);
+            os_ << "- (" <<  type << ")" << attrName << "Value\n"
+                << "{\n"
+                << "    if (idx_ != " << i << ") {\n"
+                << "        return nil;\n"
+                << "    }\n"
+                << "    return (" << type << ")" << "_value;\n"
+                << "}\n\n";
         }
-        os_ << "            break;\n";
     }
-
-    os_ << "        }\n"
-        << "    }\n"
-        << "    static void decode(Decoder& d, " << fn << "& v) {\n"
-        << "        size_t n = d.decodeUnionIndex();\n"
-        << "        if (n >= " << c << ") { throw avro::Exception(\""
-            "Union index too big\"); }\n"
-        << "        switch (n) {\n";
-
+        // constructor implementation
+    os_ << "- (id)initWithStruct:(struct " << cppUnion  << ")cppStruct\n"
+        << "{\n"
+        << "    self = [super init];\n"
+        << "    if (self) {\n"
+        << "        _idx = cppStruct.idx;\n"
+        << "        // now set the value based on the named of the type in the union\n"
+        << "        switch(cppStruct.idx) {\n";
     for (size_t i = 0; i < c; ++i) {
         const NodePtr& nn = n->leafAt(i);
-        os_ << "        case " << i << ":\n";
+        os_ << "            case " << i << ": {\n";
         if (nn->type() == avro::AVRO_NULL) {
-            os_ << "            d.decodeNull();\n"
-                << "            v.set_null();\n";
-        } else {
-            os_ << "            {\n"
-                << "                " << objcTypeOf(nn) << " vv;\n"
-                << "                avro::decode(d, vv);\n"
-                << "                v.set_" << objcNameOf(nn) << "(vv);\n"
-                << "            }\n";
+            os_ << "                 _value = nil;\n";
+        } else if (nn->type() == avro::AVRO_STRING) {
+            os_ << "                 std::string cppString = cppStruct.get_string();\n"
+                << "                 _value = " << generateObjcInitializer(nn, string("cppString")) << ";\n";
+        } else if (nn->type() == avro::AVRO_BYTES) {
+            os_ << "                 std::vector<uint8_t> cppBytes = cppStruct.get_bytes();\n"
+                << "                 _value = " << generateObjcInitializer(nn, string("cppBytes")) << ";\n";
+        } else if (nn->type() == avro::AVRO_INT) {
+            os_ << "                 _value = " << generateObjcInitializer(nn, "cppStruct.get_int()") << ";\n";
+        } else if (nn->type() == avro::AVRO_LONG) {
+            os_ << "                 _value = " << generateObjcInitializer(nn, "cppStruct.get_long()") << ";\n";
+        } else if (nn->type() == avro::AVRO_FLOAT) {
+            os_ << "                 _value = " << generateObjcInitializer(nn, "cppStruct.get_float()") << ";\n";
+        } else if (nn->type() == avro::AVRO_DOUBLE) {
+            os_ << "                 _value = " << generateObjcInitializer(nn, "cppStruct.get_double()") << ";\n";
+        } else if (nn->type() == avro::AVRO_BOOL) {
+            os_ << "                 _value = " << generateObjcInitializer(nn, "cppStruct.get_bool()") << ";\n";
+        } else if (nn->type() == avro::AVRO_ARRAY) {
+            // the array has a single leaf that is the element type
+            const NodePtr& element = nn->leafAt(0);
+            string obcjType = objcTypeOf(element) + "Object";
+            string cppType = cppTypeOf(element);
+            os_ << "                 vector<" << cppType << "> cppArray = cppStruct.get_array();\n" 
+                << "                 NSMutableArray *array = " << generateObjcInitializer(nn, "cppArray") << ";\n"
+                << "                 for (vector<" << cppType << ">::const_iterator it = cppArray.begin(); it != cppArray.end(); ++it) {\n"
+                << "                     [array addObject:" << generateObjcInitializer(element, "*it") << "];\n"
+                << "                 _value = array;";
+        } else if (nn->type() == avro::AVRO_MAP) {
+            os_ << "#warning incomplete implementation\n"
+                << "                 _value = [[NSMutableDictionary alloc] init];\n";
+        } else if (nn->type() == avro::AVRO_RECORD) {
+            os_ << "                 _value = " << generateObjcInitializer(nn, "cppStruct.get_" + name) << ";\n";
         }
-        os_ << "            break;\n";
+        os_ << "            }\n";
     }
     os_ << "        }\n"
         << "    }\n"
-        << "};\n\n";
+        << "    return self;\n";
+    os_ << "}\n\n";
+    os_ << "@end\n\n";
 }
 
-void CodeGen::generateTraits(const NodePtr& n)
+void CodeGen::generateImplementation(const NodePtr& n)
 {
     switch (n->type()) {
     case avro::AVRO_STRING:
@@ -652,17 +764,17 @@ void CodeGen::generateTraits(const NodePtr& n)
     case avro::AVRO_NULL:
         break;
     case avro::AVRO_RECORD:
-        generateRecordTraits(n);
+        generateRecordImplementation(n);
         break;
     case avro::AVRO_ENUM:
-        generateEnumTraits(n);
+        generateEnumImplementation(n);
         break;
     case avro::AVRO_ARRAY:
     case avro::AVRO_MAP:
-        generateTraits(n->leafAt(n->type() == avro::AVRO_ARRAY ? 0 : 1));
+        generateImplementation(n->leafAt(n->type() == avro::AVRO_ARRAY ? 0 : 1));
         break;
     case avro::AVRO_UNION:
-        generateUnionTraits(n);
+        generateUnionImplementation(n);
         break;
     case avro::AVRO_FIXED:
         break;
@@ -723,7 +835,7 @@ void CodeGen::generate(const ValidSchema& schema)
     if (! ns_.empty()) {
         inNamespace_ = false;
     }
-
+/*
     unionNumber_ = 0;
 
     for (vector<PendingUnionObject>::const_iterator it =
@@ -731,8 +843,8 @@ void CodeGen::generate(const ValidSchema& schema)
         it != pendingUnions.end(); ++it) {
         generateUnionImplementation(os_, *it);
     }
-
-    generateTraits(root);
+*/
+    generateImplementation(root);
     
     os_.flush();
 

@@ -274,13 +274,16 @@ string CodeGen::generateRecordType(const NodePtr& n)
     }
     for (size_t i = 0; i < c; ++i) {
         if (! noUnion_ && n->leafAt(i)->type() == avro::AVRO_UNION) {
-            os_ << "@property (nonatomic, readonly) " << n->nameAt(i) << "_t *";
-        } else {
+            os_ << "@property (nonatomic, retain, readonly) " << n->nameAt(i) << "_t *";
+        } else if (n->leafAt(i)->type() == avro::AVRO_ENUM) {
             // spit out a generated property that we'll implement
-            os_ << "@property (nonatomic, readonly) " << types[i];
+            os_ << "@property (nonatomic, assign, readonly) " << types[i] << " ";
+        } else {
+            os_ << "@property (nonatomic, retain, readonly) " << types[i];
         }
-        if (n->type() == avro::AVRO_ENUM) {
-            os_ << " ";
+        // stick a * on for record types
+        if (n->leafAt(i)->type() == avro::AVRO_RECORD) {
+            os_ << " *";
         }
         os_ << n->nameAt(i);
         os_ << ";\n";
@@ -288,7 +291,7 @@ string CodeGen::generateRecordType(const NodePtr& n)
     os_ << "\n"
     << "- (id)initWithStruct:(struct " << n->name() << ")cppStruct;\n";
     os_ << "@end\n\n";
-    return n->name() + "Object *";
+    return n->name() + "Object";
 }
 
 void makeCanonical(string& s, bool foldCase)
@@ -429,6 +432,18 @@ static void generateUnionImplementation(ostream& os, const PendingUnionObject& u
 }
 
 #endif
+
+static string cppNameFromObjcName(const string& objcName) 
+{
+    string cppName(objcName);
+    // find the last instance of the word Object, which is appended in type generation
+    size_t pos = cppName.rfind("Object");
+    if (pos != string::npos) {
+        return cppName.erase(pos, 6);
+    }
+    return cppName;
+}
+
 /**
  * Generates a type that wraps a union but not the implementation
  */
@@ -475,12 +490,12 @@ string CodeGen::generateUnionType(const NodePtr& n)
     << "    id _value;\n"
     << "}\n"
     << "\n"
-    << "@property (nonatomic, readonly) size_t idx;\n";
+    << "@property (nonatomic, assign, readonly) size_t idx;\n";
     
     for (size_t i = 0; i < c; ++i) {
         const NodePtr& nn = n->leafAt(i);
         if (nn->type() == avro::AVRO_NULL) {
-            os_ << "@property (nonatomic, readonly) BOOL isNull;\n";
+            os_ << "@property (nonatomic, assign, readonly) BOOL isNull;\n";
 #if 0
             pending.isNullable = true;
             pending.nullableIndex = i;
@@ -490,10 +505,10 @@ string CodeGen::generateUnionType(const NodePtr& n)
             const string& name = names[i];
             // append "Value" to end of each type in the union since it names a type, not a variable
             if (nn->type() == avro::AVRO_ENUM) {
-                // add a space for enum types
-                os_ << "@property (nonatomic, readonly) " << type << " " << name << "Value;\n";
+                // add a space for enum types and use assign
+                os_ << "@property (nonatomic, assign, readonly) " << type << " " << name << "Value;\n";
             } else {
-                os_ << "@property (nonatomic, readonly) " << type << name << "Value;\n";
+                os_ << "@property (nonatomic, retain, readonly) " << type << name << "Value;\n";
             }
 #if 0
             pending.pendingGettersAndSetters.push_back(PendingSetterGetter(result, type, name, i));
@@ -612,6 +627,82 @@ void CodeGen::generateEnumImplementation(const NodePtr& n)
 void CodeGen::generateRecordImplementation(const NodePtr& n)
 {
     size_t c = n->leaves();
+    
+    for (size_t i = 0; i < c; ++i) {
+        const NodePtr& nn = n->leafAt(i);
+        generateImplementation(nn);
+    }
+    
+    string name = done[n];
+    string fn = fullname(name);
+    string cppRecord = cppNameFromObjcName(fn);
+    
+    os_ << "@implementation " << name << "\n\n";
+    
+    // synthesize implementations
+    for (size_t i = 0; i < c; ++i) {
+        os_ << "@synthesize " << n->nameAt(i) << " = _" << n->nameAt(i) << ";\n";
+    }
+    // constructor implementation
+    os_ << "\n"
+        << "- (id)initWithStruct:(struct " << cppRecord  << ")cppStruct\n"
+        << "{\n"
+        << "    self = [super init];\n"
+        << "    if (self) {\n";
+    for (size_t i = 0; i < c; ++i) {
+        const NodePtr& nn = n->leafAt(i);
+        const string& nameAt = n->nameAt(i);
+        if (nn->type() == avro::AVRO_NULL) {
+            os_ << "        _" << nameAt << " = nil;\n";
+        } else if (nn->type() == avro::AVRO_STRING) {
+            // enclose in brackets because can have multiple strings
+            os_ << "        {\n"
+                << "            std::string cppString = cppStruct." << nameAt << ";\n"
+                << "            _" << nameAt << " = " << generateObjcInitializer(nn, "cppString") << ";\n"
+                << "        }\n";
+        } else if (nn->type() == avro::AVRO_BYTES) {
+            os_ << "        {\n"
+                << "            std::vector<uint8_t> cppBytes = cppStruct." << nameAt << ";\n"
+                << "            _" << nameAt << " = " << generateObjcInitializer(nn, "cppBytes") << ";\n"
+                << "        }\n";
+        } else if (nn->type() == avro::AVRO_INT) {
+            os_ << "        _" << nameAt << " = " << generateObjcInitializer(nn, "cppStruct." + nameAt) << ";\n";
+        } else if (nn->type() == avro::AVRO_LONG) {
+            os_ << "        _" << nameAt << " = " << generateObjcInitializer(nn, "cppStruct." + nameAt) << ";\n";
+        } else if (nn->type() == avro::AVRO_FLOAT) {
+            os_ << "        _" << nameAt << " = " << generateObjcInitializer(nn, "cppStruct." + nameAt) << ";\n";
+        } else if (nn->type() == avro::AVRO_DOUBLE) {
+            os_ << "        _" << nameAt << " = " << generateObjcInitializer(nn, "cppStruct." + nameAt) << ";\n";
+        } else if (nn->type() == avro::AVRO_BOOL) {
+            os_ << "        _" << nameAt << " = " << generateObjcInitializer(nn, "cppStruct." + nameAt) << ";\n";
+        } else if (nn->type() == avro::AVRO_ARRAY) {
+            // the array has a single leaf that is the element type
+            const NodePtr& element = nn->leafAt(0);
+            string obcjType = objcTypeOf(element) + "Object";
+            string cppType = cppTypeOf(element);
+            os_ << "        vector<" << cppType << "> cppArray = cppStruct." << nameAt << ";\n" 
+                << "        NSMutableArray *array = " << generateObjcInitializer(nn, "cppArray") << ";\n"
+                << "        for (vector<" << cppType << ">::const_iterator it = cppArray.begin(); it != cppArray.end(); ++it) {\n"
+                << "            [array addObject:" << generateObjcInitializer(element, "*it") << "];\n"
+                << "        }\n"
+                << "        _" << nameAt << " = array;\n";
+        } else if (nn->type() == avro::AVRO_MAP) {
+            os_ << "#warning incomplete implementation\n"
+                << "        _" << nameAt << " = [[NSMutableDictionary alloc] init];\n";
+        } else if (nn->type() == avro::AVRO_RECORD) {
+            os_ << "        _" << nameAt << " = " << generateObjcInitializer(nn, "cppStruct." + nameAt) << ";\n";
+        } else if (nn->type() == avro::AVRO_ENUM) {
+            os_ << "            _" << nameAt << " = cppStruct." << nameAt << ";\n";
+        }
+    }
+    os_ << "        }\n"
+    << "    }\n"
+    << "    return self;\n";
+    os_ << "}\n\n";
+    os_ << "@end\n\n";
+
+/*    
+    size_t c = n->leaves();
     for (size_t i = 0; i < c; ++i) {
         generateImplementation(n->leafAt(i));
     }
@@ -633,17 +724,7 @@ void CodeGen::generateRecordImplementation(const NodePtr& n)
 
     os_ << "    }\n"
         << "};\n\n";
-}
-
-static string cppNameFromObjcName(const string& objcName) 
-{
-    string cppName(objcName);
-    // find the last instance of the word Object, which is appended in type generation
-    size_t pos = cppName.rfind("Object");
-    if (pos != string::npos) {
-        return cppName.erase(pos, 6);
-    }
-    return cppName;
+*/
 }
 
 string CodeGen::generateObjcInitializer(const NodePtr& node, const string& cppValue)
@@ -752,12 +833,15 @@ void CodeGen::generateUnionImplementation(const NodePtr& n)
                 << "                 NSMutableArray *array = " << generateObjcInitializer(nn, "cppArray") << ";\n"
                 << "                 for (vector<" << cppType << ">::const_iterator it = cppArray.begin(); it != cppArray.end(); ++it) {\n"
                 << "                     [array addObject:" << generateObjcInitializer(element, "*it") << "];\n"
-                << "                 _value = array;";
+                << "                 }\n"
+                << "                 _value = array;\n";
         } else if (nn->type() == avro::AVRO_MAP) {
             os_ << "#warning incomplete implementation\n"
                 << "                 _value = [[NSMutableDictionary alloc] init];\n";
         } else if (nn->type() == avro::AVRO_RECORD) {
             os_ << "                 _value = " << generateObjcInitializer(nn, "cppStruct.get_" + nn->name() + "()") << ";\n";
+        } else if (nn->type() == avro::AVRO_ENUM) {
+            os_ << "                 _value = cppStruct.get_" + nn->name() + "();\n";
         }
         os_ << "            }\n";
     }

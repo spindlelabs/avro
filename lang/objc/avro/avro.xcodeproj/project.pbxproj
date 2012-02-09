@@ -13,6 +13,7 @@
 		9317B3B114D4A9A20079A430 /* AvroLex.lpp in Sources */ = {isa = PBXBuildFile; fileRef = 9317B3AF14D4A9A20079A430 /* AvroLex.lpp */; };
 		9317B3B414D4AD660079A430 /* AvroYacc.ypp in Sources */ = {isa = PBXBuildFile; fileRef = 9317B3B314D4AD660079A430 /* AvroYacc.ypp */; };
 		9317B3BF14D5159D0079A430 /* FlexLexer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9317B3BE14D5159D0079A430 /* FlexLexer.h */; };
+		9328914214DB414F004EDE98 /* AvroLex.ll in Sources */ = {isa = PBXBuildFile; fileRef = 9328914014DB414F004EDE98 /* AvroLex.ll */; };
 		936B62D714D49BBD00CDE104 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936B62D614D49BBD00CDE104 /* Foundation.framework */; };
 		936B62E514D49BBD00CDE104 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936B62E414D49BBD00CDE104 /* SenTestingKit.framework */; };
 		936B62E814D49BBD00CDE104 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936B62D614D49BBD00CDE104 /* Foundation.framework */; };
@@ -97,6 +98,8 @@
 		9317B3B314D4AD660079A430 /* AvroYacc.ypp */ = {isa = PBXFileReference; explicitFileType = sourcecode.yacc; fileEncoding = 4; path = AvroYacc.ypp; sourceTree = "<group>"; };
 		9317B3BE14D5159D0079A430 /* FlexLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlexLexer.h; sourceTree = "<group>"; };
 		9317B3D014D6636F0079A430 /* avrogenobjc.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = avrogenobjc.cc; path = "../../c++/impl/avrogenobjc.cc"; sourceTree = "<group>"; };
+		9328914014DB414F004EDE98 /* AvroLex.ll */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm.llvm; path = AvroLex.ll; sourceTree = "<group>"; };
+		9328914114DB414F004EDE98 /* AvroYacc.yy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AvroYacc.yy; sourceTree = "<group>"; };
 		936B62D314D49BBD00CDE104 /* libavro.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libavro.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		936B62D614D49BBD00CDE104 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		936B62DA14D49BBD00CDE104 /* avro-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "avro-Prefix.pch"; sourceTree = "<group>"; };
@@ -164,6 +167,7 @@
 		936B636E14D4A34F00CDE104 /* Symbol.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Symbol.hh; path = "../../c++/impl/parsing/Symbol.hh"; sourceTree = "<group>"; };
 		936B636F14D4A34F00CDE104 /* ValidatingCodec.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ValidatingCodec.cc; path = "../../c++/impl/parsing/ValidatingCodec.cc"; sourceTree = "<group>"; };
 		936B637014D4A34F00CDE104 /* ValidatingCodec.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ValidatingCodec.hh; path = "../../c++/impl/parsing/ValidatingCodec.hh"; sourceTree = "<group>"; };
+		93934B8C14E1CEA700BCB29C /* avrogencpp.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = avrogencpp.cc; path = "../../c++/impl/avrogencpp.cc"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,11 +193,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9328913F14DB414F004EDE98 /* parser */ = {
+			isa = PBXGroup;
+			children = (
+				9328914014DB414F004EDE98 /* AvroLex.ll */,
+				9328914114DB414F004EDE98 /* AvroYacc.yy */,
+			);
+			name = parser;
+			path = "../../c++/parser";
+			sourceTree = "<group>";
+		};
 		936B62C814D49BBD00CDE104 = {
 			isa = PBXGroup;
 			children = (
 				936B62FD14D49BDC00CDE104 /* avrocpp */,
-				936B62D814D49BBD00CDE104 /* avro */,
+				936B62D814D49BBD00CDE104 /* avroobjc */,
 				936B62EC14D49BBD00CDE104 /* avroTests */,
 				936B62D514D49BBD00CDE104 /* Frameworks */,
 				936B62D414D49BBD00CDE104 /* Products */,
@@ -219,7 +233,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		936B62D814D49BBD00CDE104 /* avro */ = {
+		936B62D814D49BBD00CDE104 /* avroobjc */ = {
 			isa = PBXGroup;
 			children = (
 				9317B3BE14D5159D0079A430 /* FlexLexer.h */,
@@ -227,6 +241,7 @@
 				9317B3AF14D4A9A20079A430 /* AvroLex.lpp */,
 				936B62D914D49BBD00CDE104 /* Supporting Files */,
 			);
+			name = avroobjc;
 			path = avro;
 			sourceTree = "<group>";
 		};
@@ -260,8 +275,9 @@
 		936B62FD14D49BDC00CDE104 /* avrocpp */ = {
 			isa = PBXGroup;
 			children = (
-				936B634914D4A24F00CDE104 /* impl */,
 				936B62FE14D49BFF00CDE104 /* api */,
+				936B634914D4A24F00CDE104 /* impl */,
+				9328913F14DB414F004EDE98 /* parser */,
 			);
 			name = avrocpp;
 			sourceTree = "<group>";
@@ -330,6 +346,7 @@
 		936B634914D4A24F00CDE104 /* impl */ = {
 			isa = PBXGroup;
 			children = (
+				93934B8C14E1CEA700BCB29C /* avrogencpp.cc */,
 				9317B3D014D6636F0079A430 /* avrogenobjc.cc */,
 				936B636A14D4A33E00CDE104 /* parsing */,
 				936B634A14D4A33900CDE104 /* BinaryDecoder.cc */,
@@ -537,6 +554,7 @@
 				9317B3AC14D4A8C40079A430 /* BinaryEncoder.cc in Sources */,
 				9317B3B114D4A9A20079A430 /* AvroLex.lpp in Sources */,
 				9317B3B414D4AD660079A430 /* AvroYacc.ypp in Sources */,
+				9328914214DB414F004EDE98 /* AvroLex.ll in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

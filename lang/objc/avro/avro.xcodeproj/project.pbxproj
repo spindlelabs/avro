@@ -13,7 +13,6 @@
 		9317B3B114D4A9A20079A430 /* AvroLex.lpp in Sources */ = {isa = PBXBuildFile; fileRef = 9317B3AF14D4A9A20079A430 /* AvroLex.lpp */; };
 		9317B3B414D4AD660079A430 /* AvroYacc.ypp in Sources */ = {isa = PBXBuildFile; fileRef = 9317B3B314D4AD660079A430 /* AvroYacc.ypp */; };
 		9317B3BF14D5159D0079A430 /* FlexLexer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9317B3BE14D5159D0079A430 /* FlexLexer.h */; };
-		9328914214DB414F004EDE98 /* AvroLex.ll in Sources */ = {isa = PBXBuildFile; fileRef = 9328914014DB414F004EDE98 /* AvroLex.ll */; };
 		936B62D714D49BBD00CDE104 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936B62D614D49BBD00CDE104 /* Foundation.framework */; };
 		936B62E514D49BBD00CDE104 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936B62E414D49BBD00CDE104 /* SenTestingKit.framework */; };
 		936B62E814D49BBD00CDE104 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936B62D614D49BBD00CDE104 /* Foundation.framework */; };
@@ -554,7 +553,6 @@
 				9317B3AC14D4A8C40079A430 /* BinaryEncoder.cc in Sources */,
 				9317B3B114D4A9A20079A430 /* AvroLex.lpp in Sources */,
 				9317B3B414D4AD660079A430 /* AvroYacc.ypp in Sources */,
-				9328914214DB414F004EDE98 /* AvroLex.ll in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

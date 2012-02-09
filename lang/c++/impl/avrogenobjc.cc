@@ -687,6 +687,7 @@ void CodeGen::generateUnionImplementation(const NodePtr& n)
         } else {
             os_ << "#warning unknown type: " << nn->type() << "\n";
         }
+        os_ << "                 break;\n";
         os_ << "            }\n";
     }
     os_ << "        }\n"

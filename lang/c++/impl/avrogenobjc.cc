@@ -107,10 +107,10 @@ string CodeGen::objcfullname(const string& name) const
 
 string CodeGen::generateEnumType(const NodePtr& n)
 {
-    os_ << "enum " << n->name() << " {\n";
+    os_ << "enum " << n->name() << "Enum {\n";
     size_t c = n->names();
     for (size_t i = 0; i < c; ++i) {
-        os_ << "    " << n->nameAt(i) << ",\n";
+        os_ << "    v_" << n->nameAt(i) << ",\n";
     }
     os_ << "};\n\n";
     return n->name();
@@ -232,6 +232,7 @@ string CodeGen::generateRecordType(const NodePtr& n)
     // appending "Object" to every class
     << "@interface " << n->name() << "Object : NSObject {\n"    
     << "}\n\n";
+/*    
     if (! noUnion_) {
         for (size_t i = 0; i < c; ++i) {
             if (n->leafAt(i)->type() == avro::AVRO_UNION) {
@@ -240,12 +241,13 @@ string CodeGen::generateRecordType(const NodePtr& n)
             }
         }
     }
+ */
     for (size_t i = 0; i < c; ++i) {
         if (! noUnion_ && n->leafAt(i)->type() == avro::AVRO_UNION) {
-            os_ << "@property (nonatomic, retain, readonly) " << n->nameAt(i) << "_t *";
+            os_ << "@property (nonatomic, retain, readonly) " << types[i] << " *";
         } else if (n->leafAt(i)->type() == avro::AVRO_ENUM) {
             // spit out a generated property that we'll implement
-            os_ << "@property (nonatomic, assign, readonly) enum " << types[i] << " ";
+            os_ << "@property (nonatomic, assign, readonly) enum " << types[i] << "Enum ";
         } else {
             os_ << "@property (nonatomic, retain, readonly) " << types[i];
         }
@@ -467,15 +469,7 @@ string CodeGen::generateDeclaration(const NodePtr& n)
 
 void CodeGen::generateEnumImplementation(const NodePtr& n)
 {
-    string fn = fullname(n->name());
-    os_ << "template<> struct codec_traits<" << fn << "> {\n"
-        << "    static void encode(Encoder& e, " << fn << " v) {\n"
-        << "        e.encodeEnum(v);\n"
-        << "    }\n"
-        << "    static void decode(Decoder& d, " << fn << "& v) {\n"
-        << "        v = static_cast<" << fn << ">(d.decodeEnum());\n"
-        << "    }\n"
-        << "};\n\n";
+    // nothing to do here as long as the enum values stay the same
 }
 
 void CodeGen::generateRecordImplementation(const NodePtr& n)
@@ -530,9 +524,9 @@ void CodeGen::generateRecordImplementation(const NodePtr& n)
             const NodePtr& element = nn->leafAt(0);
             string obcjType = objcTypeOf(element) + "Object";
             string cppType = cppTypeOf(element);
-            os_ << "        vector<" << cppType << "> cppArray = cppStruct." << nameAt << ";\n" 
+            os_ << "        std::vector<" << cppType << "> cppArray = cppStruct." << nameAt << ";\n" 
                 << "        NSMutableArray *array = " << generateObjcInitializer(nn, "cppArray") << ";\n"
-                << "        for (vector<struct " << cppType << ">::const_iterator it = cppArray.begin(); it != cppArray.end(); ++it) {\n"
+                << "        for (std::vector<" << cppType << ">::const_iterator it = cppArray.begin(); it != cppArray.end(); ++it) {\n"
                 << "            [array addObject:" << generateObjcInitializer(element, "*it") << "];\n"
                 << "        }\n"
                 << "        _" << nameAt << " = array;\n";
@@ -543,10 +537,10 @@ void CodeGen::generateRecordImplementation(const NodePtr& n)
             os_ << "        _" << nameAt << " = " << generateObjcInitializer(nn, "cppStruct." + nameAt) << ";\n";
         } else if (nn->type() == avro::AVRO_SYMBOLIC) {
             const NodePtr &resolved = resolveSymbol(nn);
-            const string &resolvedName = resolved->name();
-            os_ << "        _" << resolvedName << " = " << generateObjcInitializer(resolved, "cppStruct." + resolvedName) << ";\n";
+            os_ << "        _" << nameAt << " = " << generateObjcInitializer(resolved, "cppStruct." + nameAt) << ";\n";
         } else if (nn->type() == avro::AVRO_ENUM) {
-            os_ << "        _" << nameAt << " = cppStruct." << nameAt << ";\n";
+            // cast one enum to another
+            os_ << "        _" << nameAt << " = (" << nn->name() << "Enum) cppStruct." << nameAt << ";\n";
         } else if (nn->type() == avro::AVRO_UNION) {
             os_ << "        _" << nameAt << " = [[" << fullname(done[nn]) << " alloc] initWithStruct:cppStruct." << cppNameFromObjcName(nameAt) << "];\n";
         } else {
@@ -564,9 +558,11 @@ string CodeGen::generateObjcInitializer(const NodePtr& node, const string& cppVa
     if (node->type() == avro::AVRO_NULL) {
         return "nil";
     } else if (node->type() == avro::AVRO_STRING) {
-        return "CFStringCreateWithBytes(kCFAllocatorDefault, " + cppValue + ".data(), " + cppValue + ".size(), kCFStringEncodingUTF8, false)";
+        // encase those cpp values in loving parens
+        return "((__bridge_transfer NSString *)CFStringCreateWithBytes(kCFAllocatorDefault, (const UInt8 *)((" + cppValue + ").data()), (" + cppValue + ").size(), kCFStringEncodingUTF8, false))";
     } else if (node->type() == avro::AVRO_BYTES) {
-        return "CFDataCreate(kCFAllocatorDefault, " + cppValue + ".data(), " + cppValue + ".size())";
+        // encase those cpp values in loving parens
+        return "((__bridge_transfer NSData *)CFDataCreate(kCFAllocatorDefault, (const UInt8 *)((" + cppValue + ").data()), (" + cppValue + ").size()))";
     } else if (node->type() == avro::AVRO_INT) {
         return "[NSNumber numberWithInt:" + cppValue + "]";
     } else if (node->type() == avro::AVRO_LONG) {
@@ -624,12 +620,13 @@ void CodeGen::generateUnionImplementation(const NodePtr& n)
         } else {
             string type = objcTypeOf(nn);
             string attrName = objcNameOf(nn);
-            os_ << "- (" <<  type << ")" << attrName << "Value\n"
+            string pointer = (nn->type() == avro::AVRO_RECORD || nn->type() == avro::AVRO_SYMBOLIC) ? "Object *" : "";
+            os_ << "- (" <<  type << pointer << ")" << attrName << "Value\n"
                 << "{\n"
                 << "    if (_idx != " << i << ") {\n"
                 << "        return nil;\n"
                 << "    }\n"
-                << "    return (" << type << ")" << "_value;\n"
+                << "    return (" << type << pointer << ")" << "_value;\n"
                 << "}\n\n";
         }
     }
@@ -644,9 +641,9 @@ void CodeGen::generateUnionImplementation(const NodePtr& n)
         << "{\n"
         << "    self = [super init];\n"
         << "    if (self) {\n"
-        << "        _idx = cppStruct.idx;\n"
+        << "        _idx = cppStruct.idx();\n"
         << "        // now set the value based on the named of the type in the union\n"
-        << "        switch(cppStruct.idx) {\n";
+        << "        switch(_idx) {\n";
     for (size_t i = 0; i < c; ++i) {
         const NodePtr& nn = n->leafAt(i);
         os_ << "            case " << i << ": {\n";
@@ -673,9 +670,9 @@ void CodeGen::generateUnionImplementation(const NodePtr& n)
             const NodePtr& element = nn->leafAt(0);
             string obcjType = objcTypeOf(element) + "Object";
             string cppType = cppTypeOf(element);
-            os_ << "                 vector<" << cppType << "> cppArray = cppStruct.get_array();\n" 
+            os_ << "                 std::vector<" << cppType << "> cppArray = cppStruct.get_array();\n" 
                 << "                 NSMutableArray *array = " << generateObjcInitializer(nn, "cppArray") << ";\n"
-                << "                 for (vector<struct " << cppType << ">::const_iterator it = cppArray.begin(); it != cppArray.end(); ++it) {\n"
+                << "                 for (std::vector<" << cppType << ">::const_iterator it = cppArray.begin(); it != cppArray.end(); ++it) {\n"
                 << "                     [array addObject:" << generateObjcInitializer(element, "*it") << "];\n"
                 << "                 }\n"
                 << "                 _value = array;\n";
@@ -789,7 +786,10 @@ void CodeGen::generate(const ValidSchema& schema)
     
     // output the implementation
     os_ << "/* BEGIN Implementation */\n\n";
+    os_ << "#import <CoreFoundation/CoreFoundation.h>\n";
     os_ << "#import \"" << headerFile_ << "\"\n\n";
+    // include .hh file too
+    os_ << "#import \"" << headerFile_ << "h\"\n\n";
     
     generateImplementation(root);
     

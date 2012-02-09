@@ -282,7 +282,7 @@ string CodeGen::generateRecordType(const NodePtr& n)
             os_ << "@property (nonatomic, retain, readonly) " << types[i];
         }
         // stick a * on for record types
-        if (n->leafAt(i)->type() == avro::AVRO_RECORD) {
+        if (n->leafAt(i)->type() == avro::AVRO_RECORD || n->leafAt(i)->type() == avro::AVRO_SYMBOLIC) {
             os_ << " *";
         }
         os_ << n->nameAt(i);
@@ -507,6 +507,9 @@ string CodeGen::generateUnionType(const NodePtr& n)
             if (nn->type() == avro::AVRO_ENUM) {
                 // add a space for enum types and use assign
                 os_ << "@property (nonatomic, assign, readonly) " << type << " " << name << "Value;\n";
+            } else if (nn->type() == avro::AVRO_SYMBOLIC || nn->type() == avro::AVRO_RECORD) {
+                // add a " *" for named types
+                os_ << "@property (nonatomic, retain, readonly) " << type << " *" << name << "Value;\n";
             } else {
                 os_ << "@property (nonatomic, retain, readonly) " << type << name << "Value;\n";
             }
@@ -655,16 +658,12 @@ void CodeGen::generateRecordImplementation(const NodePtr& n)
         if (nn->type() == avro::AVRO_NULL) {
             os_ << "        _" << nameAt << " = nil;\n";
         } else if (nn->type() == avro::AVRO_STRING) {
-            // enclose in brackets because can have multiple strings
-            os_ << "        {\n"
-                << "            std::string cppString = cppStruct." << nameAt << ";\n"
-                << "            _" << nameAt << " = " << generateObjcInitializer(nn, "cppString") << ";\n"
-                << "        }\n";
+            // give each one a unique name
+            os_ << "        std::string " << nameAt << "String = cppStruct." << nameAt << ";\n"
+                << "        _" << nameAt << " = " << generateObjcInitializer(nn, nameAt + "String") << ";\n";
         } else if (nn->type() == avro::AVRO_BYTES) {
-            os_ << "        {\n"
-                << "            std::vector<uint8_t> cppBytes = cppStruct." << nameAt << ";\n"
-                << "            _" << nameAt << " = " << generateObjcInitializer(nn, "cppBytes") << ";\n"
-                << "        }\n";
+            os_ << "        std::vector<uint8_t> " << nameAt << "Bytes = cppStruct." << nameAt << ";\n"
+                << "        _" << nameAt << " = " << generateObjcInitializer(nn, "cppBytes") << ";\n";                
         } else if (nn->type() == avro::AVRO_INT) {
             os_ << "        _" << nameAt << " = " << generateObjcInitializer(nn, "cppStruct." + nameAt) << ";\n";
         } else if (nn->type() == avro::AVRO_LONG) {
@@ -691,8 +690,16 @@ void CodeGen::generateRecordImplementation(const NodePtr& n)
                 << "        _" << nameAt << " = [[NSMutableDictionary alloc] init];\n";
         } else if (nn->type() == avro::AVRO_RECORD) {
             os_ << "        _" << nameAt << " = " << generateObjcInitializer(nn, "cppStruct." + nameAt) << ";\n";
+        } else if (nn->type() == avro::AVRO_SYMBOLIC) {
+            const NodePtr &resolved = resolveSymbol(nn);
+            const string &resolvedName = resolved->name();
+            os_ << "        _" << resolvedName << " = " << generateObjcInitializer(resolved, "cppStruct." + resolvedName) << ";\n";
         } else if (nn->type() == avro::AVRO_ENUM) {
-            os_ << "            _" << nameAt << " = cppStruct." << nameAt << ";\n";
+            os_ << "        _" << nameAt << " = cppStruct." << nameAt << ";\n";
+        } else if (nn->type() == avro::AVRO_UNION) {
+            os_ << "        _" << nameAt << " = [[" << fullname(done[nn]) << " alloc] initWithStruct:cppStruct." << cppNameFromObjcName(nameAt) << "];\n";
+        } else {
+            os_ << "#warning unknown type: " << nn->type() << "\n";
         }
     }
     os_ << "        }\n"
@@ -700,31 +707,6 @@ void CodeGen::generateRecordImplementation(const NodePtr& n)
     << "    return self;\n";
     os_ << "}\n\n";
     os_ << "@end\n\n";
-
-/*    
-    size_t c = n->leaves();
-    for (size_t i = 0; i < c; ++i) {
-        generateImplementation(n->leafAt(i));
-    }
-
-    string fn = fullname(n->name());
-    os_ << "template<> struct codec_traits<" << fn << "> {\n"
-        << "    static void encode(Encoder& e, const " << fn << "& v) {\n";
-
-    for (size_t i = 0; i < c; ++i) {
-        os_ << "        avro::encode(e, v." << n->nameAt(i) << ");\n";
-    }
-
-    os_ << "    }\n"
-        << "    static void decode(Decoder& d, " << fn << "& v) {\n";
-
-    for (size_t i = 0; i < c; ++i) {
-        os_ << "        avro::decode(d, v." << n->nameAt(i) << ");\n";
-    }
-
-    os_ << "    }\n"
-        << "};\n\n";
-*/
 }
 
 string CodeGen::generateObjcInitializer(const NodePtr& node, const string& cppValue)
@@ -755,6 +737,12 @@ string CodeGen::generateObjcInitializer(const NodePtr& node, const string& cppVa
         return "[[" + name + "Object alloc] initWithStruct:" + cppValue + "]";
     } else if (node->type() == avro::AVRO_FIXED) {
         return "CFDataCreate(kCFAllocatorDefault, " + cppValue + ".data(), " + cppValue + ".size())";
+    } else if (node->type() == avro::AVRO_SYMBOLIC) {
+        return generateObjcInitializer(resolveSymbol(node), cppValue);
+    } else if (node->type() == avro::AVRO_UNION) {
+        // append "Object" to end of name for objc-type, and "struct" to front of name for cpp type, and "get_" for getter
+        const string &name = objcTypeOf(node);
+        return "[[" + name + "Object alloc] initWithStruct:" + cppValue + "]";
     }
     // don't deal with enum?
     return "";
@@ -840,8 +828,13 @@ void CodeGen::generateUnionImplementation(const NodePtr& n)
                 << "                 _value = [[NSMutableDictionary alloc] init];\n";
         } else if (nn->type() == avro::AVRO_RECORD) {
             os_ << "                 _value = " << generateObjcInitializer(nn, "cppStruct.get_" + nn->name() + "()") << ";\n";
+        } else if (nn->type() == avro::AVRO_SYMBOLIC) {
+            const NodePtr &resolved = resolveSymbol(nn);
+            os_ << "                 _value = " << generateObjcInitializer(resolved, "cppStruct.get_" + resolved->name() + "()") << ";\n";
         } else if (nn->type() == avro::AVRO_ENUM) {
             os_ << "                 _value = cppStruct.get_" + nn->name() + "();\n";
+        } else {
+            os_ << "#warning unknown type: " << nn->type() << "\n";
         }
         os_ << "            }\n";
     }

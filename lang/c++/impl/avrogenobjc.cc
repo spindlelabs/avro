@@ -532,7 +532,7 @@ void CodeGen::generateRecordImplementation(const NodePtr& n)
             string cppType = cppTypeOf(element);
             os_ << "        vector<" << cppType << "> cppArray = cppStruct." << nameAt << ";\n" 
                 << "        NSMutableArray *array = " << generateObjcInitializer(nn, "cppArray") << ";\n"
-                << "        for (vector<" << cppType << ">::const_iterator it = cppArray.begin(); it != cppArray.end(); ++it) {\n"
+                << "        for (vector<struct " << cppType << ">::const_iterator it = cppArray.begin(); it != cppArray.end(); ++it) {\n"
                 << "            [array addObject:" << generateObjcInitializer(element, "*it") << "];\n"
                 << "        }\n"
                 << "        _" << nameAt << " = array;\n";
@@ -670,7 +670,7 @@ void CodeGen::generateUnionImplementation(const NodePtr& n)
             string cppType = cppTypeOf(element);
             os_ << "                 vector<" << cppType << "> cppArray = cppStruct.get_array();\n" 
                 << "                 NSMutableArray *array = " << generateObjcInitializer(nn, "cppArray") << ";\n"
-                << "                 for (vector<" << cppType << ">::const_iterator it = cppArray.begin(); it != cppArray.end(); ++it) {\n"
+                << "                 for (vector<struct " << cppType << ">::const_iterator it = cppArray.begin(); it != cppArray.end(); ++it) {\n"
                 << "                     [array addObject:" << generateObjcInitializer(element, "*it") << "];\n"
                 << "                 }\n"
                 << "                 _value = array;\n";

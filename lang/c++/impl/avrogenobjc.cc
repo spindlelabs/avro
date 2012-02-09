@@ -48,7 +48,7 @@ using boost::lexical_cast;
 
 using avro::ValidSchema;
 using avro::compileJsonSchema;
-
+#if 0
 struct PendingSetterGetter {
     string structName;
     string type;
@@ -78,7 +78,7 @@ struct PendingUnionObject {
     
     PendingUnionObject(const string& name) : unionName(name), isNullable(false), nullableIndex(0) { }
 };
-
+#endif
 
 class CodeGen {
     size_t unionNumber_;
@@ -91,9 +91,9 @@ class CodeGen {
     const bool noUnion_;
     const bool implementation_;
     boost::mt19937 random_;
-
+#if 0
     vector<PendingUnionObject> pendingUnions;
-
+#endif
     map<NodePtr, string> done;
     set<NodePtr> doing;
 
@@ -279,6 +279,9 @@ string CodeGen::generateRecordType(const NodePtr& n)
             // spit out a generated property that we'll implement
             os_ << "@property (nonatomic, readonly) " << types[i];
         }
+        if (n->type() == avro::AVRO_ENUM) {
+            os_ << " ";
+        }
         os_ << n->nameAt(i);
         os_ << ";\n";
     }
@@ -326,6 +329,7 @@ string CodeGen::objcUnionName()
     return s + "_UnionObject__" + boost::lexical_cast<string>(unionNumber_) + "__";    
 }
 
+#if 0
 static void generateUnionGetter(ostream& os,
     const string& structName, const string& type, const string& name,
     size_t idx)
@@ -424,7 +428,7 @@ static void generateUnionImplementation(ostream& os, const PendingUnionObject& u
     os << "@end\n\n";
 }
 
-
+#endif
 /**
  * Generates a type that wraps a union but not the implementation
  */
@@ -459,9 +463,10 @@ string CodeGen::generateUnionType(const NodePtr& n)
     const string objcName = objcUnionName();
     // increment unionnumber
     unionNumber_++;
-    
+
+#if 0
     PendingUnionObject pending(objcName);
-    
+#endif    
     os_ << "struct " << result << ";"
     << "\n"
     << "@interface " << objcName << " {\n"
@@ -476,22 +481,34 @@ string CodeGen::generateUnionType(const NodePtr& n)
         const NodePtr& nn = n->leafAt(i);
         if (nn->type() == avro::AVRO_NULL) {
             os_ << "@property (nonatomic, readonly) BOOL isNull;\n";
+#if 0
             pending.isNullable = true;
             pending.nullableIndex = i;
+#endif
         } else {
             const string& type = types[i];
             const string& name = names[i];
             // append "Value" to end of each type in the union since it names a type, not a variable
-            os_ << "@property (nonatomic, readonly) " << type << " " << name << "Value;\n";
+            if (nn->type() == avro::AVRO_ENUM) {
+                // add a space for enum types
+                os_ << "@property (nonatomic, readonly) " << type << " " << name << "Value;\n";
+            } else {
+                os_ << "@property (nonatomic, readonly) " << type << name << "Value;\n";
+            }
+#if 0
             pending.pendingGettersAndSetters.push_back(PendingSetterGetter(result, type, name, i));
+#endif
         }
     }
     os_ << "\n"
     << "- (id)initWithStruct:(struct " << result << ")cppStruct;\n";
+#if 0
     pending.pendingConstructors.push_back(PendingConstructor(result, types, names));
+#endif
     os_ << "@end\n\n";
-    
+#if 0
     pendingUnions.push_back(pending);
+#endif
     // return the objcName
     return objcName;
 }
@@ -740,7 +757,7 @@ void CodeGen::generateUnionImplementation(const NodePtr& n)
             os_ << "#warning incomplete implementation\n"
                 << "                 _value = [[NSMutableDictionary alloc] init];\n";
         } else if (nn->type() == avro::AVRO_RECORD) {
-            os_ << "                 _value = " << generateObjcInitializer(nn, "cppStruct.get_" + name) << ";\n";
+            os_ << "                 _value = " << generateObjcInitializer(nn, "cppStruct.get_" + nn->name() + "()") << ";\n";
         }
         os_ << "            }\n";
     }

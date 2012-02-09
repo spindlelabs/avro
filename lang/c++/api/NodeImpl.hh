@@ -88,7 +88,6 @@ class NodeImpl : public Node
         namespaceAttribute_.add(ns);
     }
     
-    // KEHLI ugh, have to use get
     const std::string &getNamespace() const {
         return namespaceAttribute_.get();
     }
@@ -166,9 +165,9 @@ typedef concepts::SingleAttribute<int> HasSize;
 
 typedef NodeImpl< NoName,  NoLeaves,    NoLeafNames,  NoSize,  NoNamespace > NodeImplPrimitive;
 typedef NodeImpl< HasName, NoLeaves,    NoLeafNames,  NoSize,  NoNamespace > NodeImplSymbolic;
-// KEHLI - modify all the named types (record, enum, fixed) to take a namespace 
-// would've been nice to group namespace and name but I don't want to find every instance of 
-// templated parameters like 'B' elsewhere in the code so I stick it at the end 
+// Modify all the named types (record, enum, fixed) to take a namespace . It would have
+// been nice to group namespace and name but I didn't want to break other code that relied
+// on template parameter order
 typedef NodeImpl< HasName, MultiLeaves, LeafNames,    NoSize,  HasNamespace > NodeImplRecord;
 typedef NodeImpl< HasName, NoLeaves,    LeafNames,    NoSize,  HasNamespace > NodeImplEnum;
 typedef NodeImpl< NoName,  SingleLeaf,  NoLeafNames,  NoSize,  NoNamespace > NodeImplArray;
@@ -417,9 +416,7 @@ NodeImpl<A,B,C,D,E>::setLeafToSymbolic(int index, const NodePtr &node)
         fullname.append(".");
     }
     fullname.append(node->name());
-    std::cout << "fullname: " << fullname << "\n";
     if(replaceNode->name() != fullname) {
-        std::cout << "replace: " << replaceNode->name() << "existing: " << node->name() << "\n";
         throw Exception("Symbolic name does not match the name of the schema it references");
     }
 

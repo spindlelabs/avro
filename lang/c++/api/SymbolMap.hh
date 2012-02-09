@@ -63,8 +63,6 @@ class SymbolMap : private boost::noncopyable
 
         if(lb == map_.end() || map_.key_comp()(symbol, lb->first)) {
             map_.insert(lb, std::make_pair(symbol, node));
-            // KEHLI
-            std::cout << "ns: " << node->getNamespace() << " name: " << name << "\n";
             added = true; 
         }
         return added;

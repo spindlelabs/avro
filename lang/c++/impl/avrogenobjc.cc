@@ -780,16 +780,14 @@ void CodeGen::generate(const ValidSchema& schema)
     if (! ns_.empty()) {
         inNamespace_ = false;
     }
-/*
-    unionNumber_ = 0;
-
-    for (vector<PendingUnionObject>::const_iterator it =
-        pendingUnions.begin();
-        it != pendingUnions.end(); ++it) {
-        generateUnionImplementation(os_, *it);
-    }
-*/
+    
+    // output the implementation
+    os_ << "/* BEGIN Implementation */\n\n";
+    os_ << "#import \"" << headerFile_ << "\"\n\n";
+    
     generateImplementation(root);
+    
+    os_ << "/* END Implementation */\n\n";
     
     os_.flush();
 

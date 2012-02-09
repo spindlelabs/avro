@@ -245,7 +245,7 @@ string CodeGen::generateRecordType(const NodePtr& n)
             os_ << "@property (nonatomic, retain, readonly) " << n->nameAt(i) << "_t *";
         } else if (n->leafAt(i)->type() == avro::AVRO_ENUM) {
             // spit out a generated property that we'll implement
-            os_ << "@property (nonatomic, assign, readonly) " << types[i] << " ";
+            os_ << "@property (nonatomic, assign, readonly) enum " << types[i] << " ";
         } else {
             os_ << "@property (nonatomic, retain, readonly) " << types[i];
         }
@@ -366,7 +366,7 @@ string CodeGen::generateUnionType(const NodePtr& n)
             // append "Value" to end of each type in the union since it names a type, not a variable
             if (nn->type() == avro::AVRO_ENUM) {
                 // add a space for enum types and use assign
-                os_ << "@property (nonatomic, assign, readonly) " << type << " " << name << "Value;\n";
+                os_ << "@property (nonatomic, assign, readonly) enum " << type << " " << name << "Value;\n";
             } else if (nn->type() == avro::AVRO_SYMBOLIC || nn->type() == avro::AVRO_RECORD) {
                 // add a " *" for named types
                 os_ << "@property (nonatomic, retain, readonly) " << type << " *" << name << "Value;\n";
@@ -554,10 +554,9 @@ void CodeGen::generateRecordImplementation(const NodePtr& n)
         }
     }
     os_ << "        }\n"
-    << "    }\n"
-    << "    return self;\n";
-    os_ << "}\n\n";
-    os_ << "@end\n\n";
+        << "    return self;\n"
+        << "}\n\n"
+        << "@end\n\n";
 }
 
 string CodeGen::generateObjcInitializer(const NodePtr& node, const string& cppValue)
@@ -627,14 +626,20 @@ void CodeGen::generateUnionImplementation(const NodePtr& n)
             string attrName = objcNameOf(nn);
             os_ << "- (" <<  type << ")" << attrName << "Value\n"
                 << "{\n"
-                << "    if (idx_ != " << i << ") {\n"
+                << "    if (_idx != " << i << ") {\n"
                 << "        return nil;\n"
                 << "    }\n"
                 << "    return (" << type << ")" << "_value;\n"
                 << "}\n\n";
         }
     }
-        // constructor implementation
+    // index getter
+    os_ << "- (size_t)idx\n"
+        << "{\n"
+        << "    return _idx;\n"
+        << "}\n\n";
+
+    // constructor implementation
     os_ << "- (id)initWithStruct:(struct " << cppUnion  << ")cppStruct\n"
         << "{\n"
         << "    self = [super init];\n"

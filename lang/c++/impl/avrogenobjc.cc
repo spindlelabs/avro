@@ -787,9 +787,11 @@ void CodeGen::generate(const ValidSchema& schema)
     // output the implementation
     os_ << "/* BEGIN Implementation */\n\n";
     os_ << "#import <CoreFoundation/CoreFoundation.h>\n";
-    os_ << "#import \"" << headerFile_ << "\"\n\n";
+    string canonical(headerFile_);
+    makeCanonical(canonical, false);
+    os_ << "#import \"" << canonical << "\"\n";
     // include .hh file too
-    os_ << "#import \"" << headerFile_ << "h\"\n\n";
+    os_ << "#import \"" << canonical << "h\"\n\n";
     
     generateImplementation(root);
     

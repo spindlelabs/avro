@@ -348,7 +348,7 @@ string CodeGen::generateUnionType(const NodePtr& n)
 
     os_ << "struct " << result << ";"
     << "\n"
-    << "@interface " << objcName << " {\n"
+    << "@interface " << objcName << " : NSObject {\n"
     << "@private\n"
     << "    size_t _idx;\n"
     << "    id _value;\n"

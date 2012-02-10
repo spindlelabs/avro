@@ -432,11 +432,18 @@ inline void
 NodeImpl<A,B,C,D,E>::printBasicInfo(std::ostream &os) const
 {
     os << type();
+    /*
     if(hasNamespace() && !namespaceAttribute_.get().empty()) {
         os << " " << namespaceAttribute_.get();
     }
+    */
     if(hasName()) {
-        os << " " << nameAttribute_.get();
+        std::string n(nameAttribute_.get());
+        size_t lastDot = n.rfind('.');
+        if (lastDot != std::string::npos) {
+            n = n.substr(lastDot + 1);
+        }
+        os << " " << n;
     }
     if(D::hasAttribute) {
         os << " " << sizeAttribute_.get();

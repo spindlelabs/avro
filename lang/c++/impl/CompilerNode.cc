@@ -34,11 +34,11 @@ nodeFromCompilerNode(CompilerNode &node)
         break;
     
       case AVRO_ENUM:
-        ptr.reset ( new NodeEnum(node.nameAttribute_, node.symbolsAttribute_));
+        ptr.reset ( new NodeEnum(node.nameAttribute_, node.symbolsAttribute_, node.namespaceAttribute_));
         break;
 
       case AVRO_FIXED:
-        ptr.reset ( new NodeFixed(node.nameAttribute_, node.sizeAttribute_));
+        ptr.reset ( new NodeFixed(node.nameAttribute_, node.sizeAttribute_, node.namespaceAttribute_));
         break;
     
       case AVRO_MAP:
@@ -46,7 +46,7 @@ nodeFromCompilerNode(CompilerNode &node)
         break;
 
       case AVRO_RECORD:
-        ptr.reset ( new NodeRecord(node.nameAttribute_, node.fieldsAttribute_, node.fieldsNamesAttribute_));
+        ptr.reset ( new NodeRecord(node.nameAttribute_, node.fieldsAttribute_, node.fieldsNamesAttribute_, node.namespaceAttribute_));
         break;
     
       case AVRO_UNION:

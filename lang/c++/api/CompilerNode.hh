@@ -97,6 +97,9 @@ class CompilerNode
     // attribute used by records, enums, symbols, and fixed:
     concepts::SingleAttribute<std::string> nameAttribute_;
 
+    // attribute used by records, enums, fixed (ie. named types)
+    concepts::SingleAttribute<std::string> namespaceAttribute_;
+    
     // attribute used by fixed:
     concepts::SingleAttribute<int> sizeAttribute_;
 

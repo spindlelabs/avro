@@ -399,8 +399,6 @@ class NodeFixed : public NodeImplFixed
     }
 };
 
-#include <iostream>    
-
 template < class A, class B, class C, class D, class E >
 inline void 
 NodeImpl<A,B,C,D,E>::setLeafToSymbolic(int index, const NodePtr &node)
@@ -434,9 +432,9 @@ inline void
 NodeImpl<A,B,C,D,E>::printBasicInfo(std::ostream &os) const
 {
     os << type();
-    //if(hasNamespace()) {
-    //    os << " " << namespaceAttribute_.get();
-    //}
+    if(hasNamespace() && !namespaceAttribute_.get().empty()) {
+        os << " " << namespaceAttribute_.get();
+    }
     if(hasName()) {
         os << " " << nameAttribute_.get();
     }

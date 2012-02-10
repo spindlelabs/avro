@@ -19,7 +19,6 @@
 #ifndef avro_SymbolMap_hh__
 #define avro_SymbolMap_hh__
 
-#include <iostream>
 #include <map>
 #include <boost/noncopyable.hpp>
 

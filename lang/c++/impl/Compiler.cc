@@ -25,7 +25,7 @@ extern void yyparse(void *ctx);
 
 namespace avro {
 
-#define DEBUG_VERBOSE
+// #define DEBUG_VERBOSE
 
 void
 compileJsonSchema(std::istream &is, ValidSchema &schema)

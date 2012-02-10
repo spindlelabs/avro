@@ -33,4 +33,14 @@ Node::checkName(const std::string &name) const
     }
 }
 
+void 
+Node::checkNamespace(const std::string &ns) const
+{
+    const boost::regex exp("([A-Za-z_][A-Za-z0-9_]*\\.?)*");
+    if(!ns.empty() && !boost::regex_match(ns, exp)) {
+        throw Exception("Namespaces must match ([A-Za-z_][A-Za-z0-9_]*\\.?)*");
+    }
+}
+    
+    
 } // namespace avro

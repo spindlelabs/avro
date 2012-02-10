@@ -57,6 +57,7 @@ avro::CompilerContext &context(void *ctx) {
 // Tokens that output text:
 %token AVRO_LEX_OUTPUT_TEXT_BEGIN
 %token AVRO_LEX_NAME
+%token AVRO_LEX_NAMESPACE
 %token AVRO_LEX_NAMED_TYPE
 %token AVRO_LEX_FIELD_NAME
 %token AVRO_LEX_SYMBOL
@@ -139,6 +140,10 @@ name_attribute:
         AVRO_LEX_NAME { context(ctx).setNameAttribute(); }
         ;
 
+namespace_attribute:
+        AVRO_LEX_NAMESPACE { context(ctx).setNamespaceAttribute(); }
+        ;
+        
 size_attribute:
         AVRO_LEX_SIZE { context(ctx).setSizeAttribute(); }
         ;
@@ -160,7 +165,7 @@ symbols_attribute:
         ;
 
 attribute:
-        type_attribute | name_attribute | fields_attribute | items_attribute | size_attribute | values_attribute | symbols_attribute | AVRO_LEX_METADATA
+        type_attribute | namespace_attribute | name_attribute | fields_attribute | items_attribute | size_attribute | values_attribute | symbols_attribute | AVRO_LEX_METADATA
         ;
 
 attributelist: 

@@ -25,7 +25,7 @@ extern void yyparse(void *ctx);
 
 namespace avro {
 
-// #define DEBUG_VERBOSE
+#define DEBUG_VERBOSE
 
 void
 compileJsonSchema(std::istream &is, ValidSchema &schema)
@@ -91,6 +91,24 @@ CompilerContext::stopType()
     assert(!stack_.empty());
     NodePtr nodePtr(nodeFromCompilerNode(stack_.back()));
     stack_.pop_back();
+    // if the type is a record/enum/fixed we have to do some special magic for namespaces
+    if (nodePtr->type() == AVRO_RECORD ||
+        nodePtr->type() == AVRO_FIXED ||
+        nodePtr->type() == AVRO_ENUM) {
+        // if the named type ALREADY has a namespace, pop it off the back
+        if (!nodePtr->getNamespace().empty()) {
+#ifdef DEBUG_VERBOSE
+            std::cerr << "Popping namespace " << text_ << '\n';
+#endif
+            namespaceStack_.pop_back();
+        } else if (!namespaceStack_.empty()) {
+            // if there's a namespace on the namespace stack, it means that this type should get that namespace
+#ifdef DEBUG_VERBOSE
+            std::cerr << "Adding container namespace " << namespaceStack_.back() << '\n';
+#endif
+            nodePtr->setNamespace(namespaceStack_.back());
+        }
+    }
     add(nodePtr);
 }
 
@@ -118,9 +136,21 @@ CompilerContext::addNamedType()
 {
 #ifdef DEBUG_VERBOSE
     std::cerr << "Adding named type " << text_ << '\n';
+    if (!namespaceStack_.empty()) {
+        std::cerr << "Namespace on stack is: " << namespaceStack_.back() << '\n'; 
+    }
 #endif
     stack_.back().setType(AVRO_SYMBOLIC);
-    stack_.back().nameAttribute_.add(text_);
+    // If the name does not contain a '.' then it is not a fullname, so make 
+    // it a fullname if the namespace stack has something on it
+    if (text_.find('.') == std::string::npos && !namespaceStack_.empty()) {
+        std::string fullname(namespaceStack_.back());
+        fullname.append(".");
+        fullname.append(text_);
+        stack_.back().nameAttribute_.add(fullname);
+    } else {
+        stack_.back().nameAttribute_.add(text_);
+    }
 }
 
 void 
@@ -132,6 +162,19 @@ CompilerContext::setNameAttribute()
     stack_.back().nameAttribute_.add(text_);
 }
 
+void 
+CompilerContext::setNamespaceAttribute()
+{
+#ifdef DEBUG_VERBOSE
+    std::cerr << "Setting namespace to " << text_ << '\n';
+    std::cerr << "Pushing namespace " << text_ << '\n';
+#endif
+    stack_.back().namespaceAttribute_.add(text_);
+    // Capture the namespace for resolving future symbolic references that may be contained
+    // inside this namespace reference
+    namespaceStack_.push_back(new std::string(text_));
+}
+    
 void 
 CompilerContext::setSymbolsAttribute()
 {

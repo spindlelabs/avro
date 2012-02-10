@@ -88,7 +88,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9317B3A114D4A61A0079A430 /* boost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = boost.framework; path = ../boostoniphone/framework/boost.framework; sourceTree = "<group>"; };
 		9317B3AB14D4A8C40079A430 /* BinaryEncoder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BinaryEncoder.cc; path = "../../c++/impl/BinaryEncoder.cc"; sourceTree = "<group>"; };
 		9317B3AD14D4A8DE0079A430 /* Encoder.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Encoder.hh; path = "../../c++/api/Encoder.hh"; sourceTree = "<group>"; };
 		9317B3AF14D4A9A20079A430 /* AvroLex.lpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.lex; fileEncoding = 4; path = AvroLex.lpp; sourceTree = "<group>"; };
@@ -206,7 +205,6 @@
 			isa = PBXGroup;
 			children = (
 				93C9F7AF14E46433004B2251 /* Foundation.framework */,
-				9317B3A114D4A61A0079A430 /* boost.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -562,7 +560,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				DEAD_CODE_STRIPPING = NO;
-				FRAMEWORK_SEARCH_PATHS = "~/biff/avro/lang/objc/boostoniphone/framework/**";
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../../iosclient/external/boostoniphone/framework\"";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "avro/avro-Prefix.pch";
@@ -574,6 +572,11 @@
 				MACH_O_TYPE = mh_object;
 				MACOSX_DEPLOYMENT_TARGET = "";
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CPLUSPLUSFLAGS = (
+					"-fvisibility=hidden",
+					"-fvisibility-inlines-hidden",
+					"$(OTHER_CFLAGS)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -587,7 +590,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "~/biff/avro/lang/objc/boostoniphone/framework/**";
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../../iosclient/external/boostoniphone/framework\"";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "avro/avro-Prefix.pch";
@@ -599,6 +602,11 @@
 				MACH_O_TYPE = mh_object;
 				MACOSX_DEPLOYMENT_TARGET = "";
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CPLUSPLUSFLAGS = (
+					"-fvisibility=hidden",
+					"-fvisibility-inlines-hidden",
+					"$(OTHER_CFLAGS)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

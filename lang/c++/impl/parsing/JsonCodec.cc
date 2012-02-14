@@ -60,11 +60,16 @@ class JsonGrammarGenerator : public ValidatingGrammarGenerator {
 
 static std::string nameOf(const NodePtr& n)
 {
-    if (n->hasName()) {
-        return n->name();
-    }
     std::ostringstream oss;
-    oss << n->type();
+    if (n->hasName()) {
+        if (n->hasNamespace() && !n->getNamespace().empty()) {
+            oss << n->getNamespace();
+            oss << ".";
+        }
+        oss << n->name();
+    } else {
+        oss << n->type();
+    }
     return oss.str();
 }
 
@@ -343,7 +348,7 @@ JsonParser::Token JsonParser::doAdvance()
     case 'n':
         return tryLiteral("ull", 3, tkNull);
     default:
-        if (isdigit(ch) || '-') {
+        if (isdigit(ch) || ch == '-') {
             return tryNumber(ch);
         } else {
             unexpected(ch);

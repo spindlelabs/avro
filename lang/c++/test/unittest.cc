@@ -27,7 +27,6 @@
 #include "ValidSchema.hh"
 #include "Serializer.hh"
 #include "Parser.hh"
-#include "SymbolMap.hh"
 #include "Compiler.hh"
 #include "SchemaResolution.hh"
 #include "buffer/BufferStream.hh"
@@ -39,6 +38,9 @@ using namespace avro;
 
 static const uint8_t fixeddata[16] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 
+#ifdef max
+#undef max
+#endif
 struct TestSchema
 {
     TestSchema() 
@@ -467,32 +469,6 @@ struct TestEncoding {
 
 };
 
-struct TestSymbolMap
-{
-    TestSymbolMap()
-    {}
-
-    void test() 
-    {
-        std::cout << "TestSymbolMap\n";
-        std::string name("myrecord");
-
-        RecordSchema rec(name);
-
-        NodePtr node = map_.locateSymbol(name);
-        BOOST_CHECK(node == 0);
-
-        map_.registerSymbol(rec.root());
-
-        node = map_.locateSymbol(name);
-        BOOST_CHECK(node);
-        BOOST_CHECK_EQUAL(node->name(), name);
-        std::cout << "Found " << name << " registered\n";
-    }
-
-    SymbolMap map_;
-};
-
 struct TestNested
 {
     TestNested()
@@ -505,7 +481,7 @@ struct TestNested
         rec.addField("value", LongSchema());
         UnionSchema next;
         next.addType(NullSchema());
-        next.addType(rec);
+        next.addType(SymbolicSchema("LongList", rec.root()));
         rec.addField("next", next);
         rec.addField("end", BoolSchema());
 
@@ -808,7 +784,6 @@ init_unit_test_suite( int argc, char* argv[] )
 
     addTestCase<TestEncoding>(*test);
     addTestCase<TestSchema>(*test);
-    addTestCase<TestSymbolMap>(*test);
     addTestCase<TestNested>(*test);
     addTestCase<TestGenerated>(*test);
     addTestCase<TestBadStuff>(*test);

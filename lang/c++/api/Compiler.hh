@@ -19,94 +19,44 @@
 #ifndef avro_Compiler_hh__
 #define avro_Compiler_hh__
 
-#include "Boost.hh"
-
-#include <FlexLexer.h>
-#include "Types.hh"
-#include "Node.hh"
-#include "CompilerNode.hh"
+#include "Config.hh"
+#include <stdint.h>
+#include <istream>
 
 namespace avro {
+
+class AVRO_DECL InputStream;
 
 /// This class is used to implement an avro spec parser using a flex/bison
 /// compiler.  In order for the lexer to be reentrant, this class provides a
 /// lexer object for each parse.  The bison parser also uses this class to
 /// build up an avro parse tree as the avro spec is parsed.
     
-class CompilerContext {
-
-
-  public:
-
-    CompilerContext(std::istream &is) :
-        lexer_(&is)
-    {}
-
-    /// Called by the lexer whenever it encounters text that is not a symbol it recognizes
-    /// (names, fieldnames, values to be converted to integers, etc).
-    void setText(const char *text) {
-        text_ = text;
-    }
-
-    void addNamedType();
-
-    void startType();
-    void stopType();
-
-    void addType(avro::Type type);
-
-    void setSizeAttribute();
-    void setNameAttribute();
-    void setNamespaceAttribute();
-    void setSymbolsAttribute();
-
-    void setFieldsAttribute();
-    void setItemsAttribute();
-    void setValuesAttribute();
-    void setTypesAttribute();
-
-    void textContainsFieldName();
-
-    const FlexLexer &lexer() const {
-        return lexer_;
-    }
-    FlexLexer &lexer() {
-        return lexer_;
-    }
-
-    const NodePtr &getRoot() const {
-        return root_;
-    }
-
-  private:
-
-    typedef boost::ptr_vector<CompilerNode> Stack;
-    typedef boost::ptr_vector<std::string> StringStack;
-
-    void add(const NodePtr &node);
-
-    yyFlexLexer lexer_;
-    std::string text_;
-    
-    NodePtr   root_;
-    Stack     stack_;
-    StringStack     namespaceStack_;
-};
-
-class ValidSchema;
+class AVRO_DECL ValidSchema;
 
 /// Given a stream comtaining a JSON schema, compiles the schema to a
 /// ValidSchema object.  Throws if the schema cannot be compiled to a valid
 /// schema
 
-void compileJsonSchema(std::istream &is, ValidSchema &schema);
+AVRO_DECL void compileJsonSchema(std::istream &is, ValidSchema &schema);
 
 /// Non-throwing version of compileJsonSchema.  
 ///
 /// \return True if no error, false if error (with the error string set)
 ///
 
-bool compileJsonSchema(std::istream &is, ValidSchema &schema, std::string &error);
+AVRO_DECL bool compileJsonSchema(std::istream &is, ValidSchema &schema,
+    std::string &error);
+
+AVRO_DECL ValidSchema compileJsonSchemaFromStream(InputStream& is);
+
+AVRO_DECL ValidSchema compileJsonSchemaFromMemory(const uint8_t* input, size_t len);
+
+AVRO_DECL ValidSchema compileJsonSchemaFromString(const char* input);
+
+AVRO_DECL ValidSchema compileJsonSchemaFromString(const std::string& input);
+
+AVRO_DECL ValidSchema compileJsonSchemaFromFile(const char* filename);
 
 } // namespace avro
 

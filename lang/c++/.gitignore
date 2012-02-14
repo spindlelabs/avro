@@ -1,15 +1,6 @@
-autom4te.cache
-Makefile.in
-configure
-INSTALL
-aclocal.m4
 .svn/
-CMakeCache.txt
-CMakeFiles/
-CPackConfig.cmake
-CPackSourceConfig.cmake
-Makefile
 build/
-cmake_install.cmake
+build.win/
+doc/
 m4/
 test.avro

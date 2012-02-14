@@ -23,6 +23,7 @@
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 
+#include "Config.hh"
 #include "Exception.hh"
 #include "Types.hh"
 #include "SchemaResolution.hh"
@@ -49,7 +50,7 @@ typedef boost::shared_ptr<Node> NodePtr;
 /// different node types.
 ///
 
-class Node : private boost::noncopyable
+class AVRO_DECL Node : private boost::noncopyable
 {
   public:
 
@@ -120,11 +121,9 @@ class Node : private boost::noncopyable
 
     virtual void printBasicInfo(std::ostream &os) const = 0;
 
-  protected:
-
-    friend class ValidSchema;
-
     virtual void setLeafToSymbolic(int index, const NodePtr &node) = 0;
+
+  protected:
 
     void checkLock() const {
         if(locked()) {
@@ -148,5 +147,14 @@ class Node : private boost::noncopyable
 };
 
 } // namespace avro
+
+namespace std {
+inline std::ostream& operator<<(std::ostream& os, const avro::Node& n)
+{
+    n.printJson(os, 0);
+    return os;
+}
+}
+
 
 #endif

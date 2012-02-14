@@ -19,12 +19,12 @@
 #ifndef avro_ValidSchema_hh__ 
 #define avro_ValidSchema_hh__ 
 
+#include "Config.hh"
 #include "Node.hh"
 
 namespace avro {
 
-class Schema;
-class SymbolMap;
+class AVRO_DECL Schema;
 
 /// A ValidSchema is basically a non-mutable Schema that has passed some
 /// minumum of sanity checks.  Once valididated, any Schema that is part of
@@ -37,12 +37,10 @@ class SymbolMap;
 /// parsers/serializers, converted to a json schema, etc.
 ///
 
-class ValidSchema 
-{
-  public:
-
+class AVRO_DECL ValidSchema {
+public:
+    explicit ValidSchema(const NodePtr &root);
     explicit ValidSchema(const Schema &schema);
-    ValidSchema(const ValidSchema &schema);
     ValidSchema();
 
     void setSchema(const Schema &schema);
@@ -56,16 +54,7 @@ class ValidSchema
     void toFlatList(std::ostream &os) const;
 
   protected:
-
-    bool validate(const NodePtr &node, SymbolMap &symbolMap);
-
     NodePtr root_;
-
-  private:
-
-    // not implemented, only copy construct allowed
-    ValidSchema &operator=(const Schema &rhs);
-
 };
 
 } // namespace avro

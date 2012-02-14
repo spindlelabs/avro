@@ -33,6 +33,7 @@ import org.apache.avro.Schema.Field;
 import org.apache.avro.Schema.Type;
 import org.apache.avro.UnresolvedUnionException;
 import org.apache.avro.io.BinaryData;
+import org.apache.avro.io.DatumReader;
 import org.apache.avro.util.Utf8;
 
 /** Utilities for generic Java data. */
@@ -297,6 +298,11 @@ public class GenericData {
 
     @Override
     public String toString() { return symbol; }
+  }
+
+  /** Returns a {@link DatumReader} for this kind of data. */
+  public DatumReader createDatumReader(Schema schema) {
+    return new GenericDatumReader(schema, schema, this);
   }
 
   /** Returns true if a Java datum matches a schema. */
@@ -830,14 +836,8 @@ public class GenericData {
         }
         return new Utf8(value.toString());
       case UNION:
-        for (Schema type : schema.getTypes()) {
-          if (GenericData.get().validate(type, value)) {
-            return deepCopy(type, value);
-          }
-        }
-        throw new AvroRuntimeException(
-            "Deep copy failed for schema \"" + schema + "\" and value \"" +
-            value + "\"");
+        return deepCopy(
+            schema.getTypes().get(resolveUnion(schema, value)), value);
       default:
         throw new AvroRuntimeException(
             "Deep copy failed for schema \"" + schema + "\" and value \"" +

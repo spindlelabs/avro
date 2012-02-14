@@ -19,6 +19,7 @@
 #ifndef avro_Exception_hh__
 #define avro_Exception_hh__
 
+#include "Config.hh"
 #include <stdexcept>
 #include <boost/format.hpp>
 
@@ -27,7 +28,7 @@ namespace avro {
 /// Wrapper for std::runtime_error that provides convenience constructor
 /// for boost::format objects
 
-class Exception : public virtual std::runtime_error
+class AVRO_DECL Exception : public virtual std::runtime_error
 {
   public:
 

@@ -28,7 +28,6 @@ import org.apache.avro.Schema;
 import org.apache.avro.Schema.Field;
 import org.apache.avro.Schema.Type;
 import org.apache.avro.generic.GenericData;
-import org.apache.avro.generic.GenericDatumReader;
 import org.apache.avro.generic.IndexedRecord;
 import org.apache.avro.io.BinaryDecoder;
 import org.apache.avro.io.BinaryEncoder;
@@ -87,7 +86,7 @@ public abstract class RecordBuilderBase<T extends IndexedRecord>
    * 1. If the value is not null, or the field type is null, or the field type 
    * is a union which accepts nulls, returns.
    * 2. Else, if the field has a default value, returns.
-   * 3. Otherwise throws NullPointerException 
+   * 3. Otherwise throws AvroRuntimeException. 
    * @param field the field to validate.
    * @param value the value to validate.
    * @throws NullPointerException if value is null and the given field does 
@@ -147,12 +146,14 @@ public abstract class RecordBuilderBase<T extends IndexedRecord>
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   protected Object defaultValue(Field field) throws IOException {    
-    if (field.schema().getType() == Type.NULL) {
-      return null;
-    }
-    
     JsonNode defaultJsonValue = field.defaultValue();
     if (defaultJsonValue == null) {
+      throw new AvroRuntimeException("Field " + field + " not set and has no default value");
+    }
+    if (defaultJsonValue.isNull()
+        && (field.schema().getType() == Type.NULL
+            || (field.schema().getType() == Type.UNION
+                && field.schema().getTypes().get(0).getType() == Type.NULL))) {
       return null;
     }
     
@@ -179,7 +180,7 @@ public abstract class RecordBuilderBase<T extends IndexedRecord>
       encoder.flush();
       decoder = DecoderFactory.get().binaryDecoder(
           baos.toByteArray(), decoder);
-      defaultValue = new GenericDatumReader(
+      defaultValue = data.createDatumReader(
           field.schema()).read(null, decoder);
       defaultSchemaValues.putIfAbsent(field.pos(), defaultValue);
     }

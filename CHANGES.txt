@@ -1,6 +1,6 @@
 Avro Change Log
 
-Avro 1.6.2 (unreleased)
+Avro 1.6.2 (13 February 2012)
 
   NEW FEATURES
 
@@ -9,8 +9,6 @@ Avro 1.6.2 (unreleased)
 
     AVRO-986. C: avromod utility for modifying structural properties of
     an Avro data file. (dcreager)
-
-  OPTIMIZATIONS
 
   IMPROVEMENTS
 
@@ -43,6 +41,45 @@ Avro 1.6.2 (unreleased)
     Martin-King via dcreager)
 
     AVRO-926. Java: Fix tests to pass under JDK 7.  (cutting)
+
+    AVRO-956. Remove dependency on Flex/Bison. (thiru)
+
+    AVRO-1011. Improve POM structure. (Lars Francke via scottcarey) 
+
+    AVRO-1016. Java: Add Field#getAliases() method to better permit
+    copying of schemas. (cutting)
+
+    AVRO-1005. Java: Extend HttpTransceiver to permit specification of
+    a Proxy. (Craig Landry via cutting)
+
+    AVRO-1010. Java: Improve codec javadoc. (Lars Francke via cutting)
+
+    AVRO-1018. Java: add svn:ignore to eclipse generated files for
+    protobuf, thrift, and archetype modules (scottcarey)
+
+    AVRO-1019. Java: Add unit test for Netty server concurrent
+    execution. (jbaldassari)
+
+    AVRO-995. Java: Update Dependencies for 1.6.2. (scottcarey)
+
+    AVRO-1012. Java: Improve avro-service-archetype: POM and IT
+    changes. (Lars Francke via scottcarey)
+
+    AVRO-971. Java: Permit IDL imports from classpath in Maven.
+    (Victor Chau via cutting)
+
+    AVRO-1007. Java: Enhance builder API's validity checks.
+    (jbaldassari & cutting)
+
+    AVRO-1015. Support for C++ build using Micrsoft Visual Studio on Windows.
+    (thiru)
+
+    AVRO-1021. Clarify some naming issues in the specification.
+    (Raymie Stata via cutting)
+
+    AVRO-980. C: avro_schema_from_json ignores length parameter.  Add
+    avro_schema_from_json_length that doesn't.
+    (Michael Cooper and dcreager)
 
   BUG FIXES
 
@@ -91,6 +128,18 @@ Avro 1.6.2 (unreleased)
 
     AVRO-986. Java: DataFileReader correctly handles sync marker
     appearing within file header. (cutting via dcreager)
+
+    AVRO-1014. C: Check for errors producing JSON output in avrocat.
+    (Lucas Martin-King via dcreager)
+
+    AVRO-996. Java: SpecificRecord builder pattern object copy fails 
+    with unions in some cases. (scottcarey and jbaldassari)
+
+    AVRO-1020. Java: Fix builder API to correctly handle default
+    values for enums.  (cutting)
+
+    AVRO-1013. Java: NettyTransceiver can hang after server
+    restart. (jbaldassari)
 
 Avro 1.6.1 (8 November 2011)
 

@@ -270,6 +270,7 @@ static void generateGetterAndSetter(ostream& os,
         << "    return boost::any_cast<" << type << " >(value_);\n"
         << "}\n\n";
 
+    os << "inline\n";
     os << "void" << sn << "set_" << name
         << "(const " << type << "& v) {\n"
         << "    idx_ = " << idx << ";\n"

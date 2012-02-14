@@ -160,6 +160,17 @@
 		93B583CD14E462720088216E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		93B583CF14E462720088216E /* avro-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "avro-Prefix.pch"; sourceTree = "<group>"; };
 		93C9F7AF14E46433004B2251 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		93F1E2D214E9AF400031D2F1 /* cpx.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = cpx.hh; sourceTree = "<group>"; };
+		93F1E2D314E9AF400031D2F1 /* cpx.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cpx.json; sourceTree = "<group>"; };
+		93F1E2D414E9AF400031D2F1 /* custom.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = custom.cc; sourceTree = "<group>"; };
+		93F1E2D514E9AF400031D2F1 /* datafile.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = datafile.cc; sourceTree = "<group>"; };
+		93F1E2D614E9AF400031D2F1 /* generated.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = generated.cc; sourceTree = "<group>"; };
+		93F1E2D714E9AF400031D2F1 /* generic.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = generic.cc; sourceTree = "<group>"; };
+		93F1E2D814E9AF400031D2F1 /* imaginary.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = imaginary.hh; sourceTree = "<group>"; };
+		93F1E2D914E9AF400031D2F1 /* imaginary.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = imaginary.json; sourceTree = "<group>"; };
+		93F1E2DA14E9AF400031D2F1 /* resolving.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = resolving.cc; sourceTree = "<group>"; };
+		93F1E2DB14E9AF400031D2F1 /* schemaload.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = schemaload.cc; sourceTree = "<group>"; };
+		93F1E2DC14E9AF400031D2F1 /* validating.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = validating.cc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +223,7 @@
 		936B62FD14D49BDC00CDE104 /* avrocpp */ = {
 			isa = PBXGroup;
 			children = (
+				93F1E2D114E9AF400031D2F1 /* examples */,
 				936B62FE14D49BFF00CDE104 /* api */,
 				936B634914D4A24F00CDE104 /* impl */,
 				9328913F14DB414F004EDE98 /* parser */,
@@ -341,6 +353,25 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		93F1E2D114E9AF400031D2F1 /* examples */ = {
+			isa = PBXGroup;
+			children = (
+				93F1E2D214E9AF400031D2F1 /* cpx.hh */,
+				93F1E2D314E9AF400031D2F1 /* cpx.json */,
+				93F1E2D414E9AF400031D2F1 /* custom.cc */,
+				93F1E2D514E9AF400031D2F1 /* datafile.cc */,
+				93F1E2D614E9AF400031D2F1 /* generated.cc */,
+				93F1E2D714E9AF400031D2F1 /* generic.cc */,
+				93F1E2D814E9AF400031D2F1 /* imaginary.hh */,
+				93F1E2D914E9AF400031D2F1 /* imaginary.json */,
+				93F1E2DA14E9AF400031D2F1 /* resolving.cc */,
+				93F1E2DB14E9AF400031D2F1 /* schemaload.cc */,
+				93F1E2DC14E9AF400031D2F1 /* validating.cc */,
+			);
+			name = examples;
+			path = "../../c++/examples";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -348,6 +379,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93C9F7F614E4669B004B2251 /* FlexLexer.h in Headers */,
 				93C9F7CA14E46525004B2251 /* AvroParse.hh in Headers */,
 				93C9F7CB14E46525004B2251 /* AvroSerialize.hh in Headers */,
 				93C9F7CC14E46525004B2251 /* AvroTraits.hh in Headers */,
@@ -358,7 +390,6 @@
 				93C9F7D114E46525004B2251 /* Decoder.hh in Headers */,
 				93C9F7D214E46525004B2251 /* Encoder.hh in Headers */,
 				93C9F7D314E46525004B2251 /* Exception.hh in Headers */,
-				93C9F7F614E4669B004B2251 /* FlexLexer.h in Headers */,
 				93C9F7D414E46525004B2251 /* Generic.hh in Headers */,
 				93C9F7D514E46525004B2251 /* Layout.hh in Headers */,
 				93C9F7D614E46525004B2251 /* Node.hh in Headers */,
@@ -531,7 +562,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -549,7 +580,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -562,6 +593,7 @@
 				DEAD_CODE_STRIPPING = NO;
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../../iosclient/external/boostoniphone/framework\"";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "avro/avro-Prefix.pch";
 				GCC_VERSION = "";
@@ -577,9 +609,12 @@
 					"-fvisibility-inlines-hidden",
 					"$(OTHER_CFLAGS)",
 				);
+				OTHER_LDFLAGS = "";
+				PLIST_FILE_OUTPUT_FORMAT = "same-as-input";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -592,6 +627,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../../iosclient/external/boostoniphone/framework\"";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "avro/avro-Prefix.pch";
 				GCC_VERSION = "";
@@ -607,9 +643,12 @@
 					"-fvisibility-inlines-hidden",
 					"$(OTHER_CFLAGS)",
 				);
+				OTHER_LDFLAGS = "";
+				PLIST_FILE_OUTPUT_FORMAT = "same-as-input";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;

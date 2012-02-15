@@ -17,6 +17,7 @@
  */
 
 #include <boost/format.hpp>
+#include <sstream>
 
 #include "ValidSchema.hh"
 #include "Schema.hh"
@@ -40,7 +41,12 @@ static bool validate(const NodePtr &node, SymbolMap &symbolMap)
     }
 
     if (node->hasName()) {
-        const string& nm = node->name();
+        std::ostringstream oss;
+        if (node->hasNamespace() && !node->getNamespace().empty()) {
+            oss << node->getNamespace() << ".";
+        }
+        oss << node->name();
+        const string& nm = oss.str();
         SymbolMap::iterator it = symbolMap.find(nm);
         bool found = it != symbolMap.end() && nm == it->first;
 

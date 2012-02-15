@@ -216,7 +216,7 @@ class AVRO_DECL NodeSymbolic : public NodeImplSymbolic
     { }
 
     NodeSymbolic(const HasName &name, const NodePtr n) :
-        NodeImplSymbolic(AVRO_SYMBOLIC, name, NoLeaves(), NoLeafNames(), NoSize()), actualNode_(n)
+        NodeImplSymbolic(AVRO_SYMBOLIC, name, NoLeaves(), NoLeafNames(), NoSize(), NoNamespace()), actualNode_(n)
     { }
     SchemaResolution resolve(const Node &reader)  const;
 

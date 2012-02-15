@@ -29,7 +29,6 @@
 		93C9F7B614E464BA004B2251 /* BinaryDecoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B634A14D4A33900CDE104 /* BinaryDecoder.cc */; };
 		93C9F7B714E464BA004B2251 /* BinaryEncoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9317B3AB14D4A8C40079A430 /* BinaryEncoder.cc */; };
 		93C9F7B814E464BA004B2251 /* Compiler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B634B14D4A33900CDE104 /* Compiler.cc */; };
-		93C9F7B914E464BA004B2251 /* CompilerNode.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B634C14D4A33900CDE104 /* CompilerNode.cc */; };
 		93C9F7BA14E464BA004B2251 /* DataFile.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B634D14D4A33900CDE104 /* DataFile.cc */; };
 		93C9F7BB14E464BA004B2251 /* FileStream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B634E14D4A33900CDE104 /* FileStream.cc */; };
 		93C9F7BC14E464BA004B2251 /* Generic.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B634F14D4A33900CDE104 /* Generic.cc */; };
@@ -43,14 +42,11 @@
 		93C9F7C414E464BA004B2251 /* Validator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635714D4A33900CDE104 /* Validator.cc */; };
 		93C9F7C514E464BA004B2251 /* ValidSchema.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635814D4A33900CDE104 /* ValidSchema.cc */; };
 		93C9F7C614E464BA004B2251 /* Zigzag.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635914D4A33900CDE104 /* Zigzag.cc */; };
-		93C9F7C714E464BA004B2251 /* AvroYacc.ypp in Sources */ = {isa = PBXBuildFile; fileRef = 9317B3B314D4AD660079A430 /* AvroYacc.ypp */; };
-		93C9F7C814E464BA004B2251 /* AvroLex.lpp in Sources */ = {isa = PBXBuildFile; fileRef = 9317B3AF14D4A9A20079A430 /* AvroLex.lpp */; };
 		93C9F7CA14E46525004B2251 /* AvroParse.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B62FF14D4A1F900CDE104 /* AvroParse.hh */; settings = {ATTRIBUTES = (Public, ); }; };
 		93C9F7CB14E46525004B2251 /* AvroSerialize.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630014D4A1F900CDE104 /* AvroSerialize.hh */; settings = {ATTRIBUTES = (Public, ); }; };
 		93C9F7CC14E46525004B2251 /* AvroTraits.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630114D4A1F900CDE104 /* AvroTraits.hh */; settings = {ATTRIBUTES = (Public, ); }; };
 		93C9F7CD14E46525004B2251 /* Boost.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630214D4A1F900CDE104 /* Boost.hh */; settings = {ATTRIBUTES = (Public, ); }; };
 		93C9F7CE14E46525004B2251 /* Compiler.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630314D4A1F900CDE104 /* Compiler.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7CF14E46525004B2251 /* CompilerNode.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630414D4A1F900CDE104 /* CompilerNode.hh */; settings = {ATTRIBUTES = (Public, ); }; };
 		93C9F7D014E46525004B2251 /* DataFile.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630514D4A1F900CDE104 /* DataFile.hh */; settings = {ATTRIBUTES = (Public, ); }; };
 		93C9F7D114E46525004B2251 /* Decoder.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630614D4A1F900CDE104 /* Decoder.hh */; settings = {ATTRIBUTES = (Public, ); }; };
 		93C9F7D214E46525004B2251 /* Encoder.hh in Headers */ = {isa = PBXBuildFile; fileRef = 9317B3AD14D4A8DE0079A430 /* Encoder.hh */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -70,7 +66,6 @@
 		93C9F7E014E46525004B2251 /* Serializer.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631414D4A1F900CDE104 /* Serializer.hh */; settings = {ATTRIBUTES = (Public, ); }; };
 		93C9F7E114E46525004B2251 /* Specific.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631514D4A1F900CDE104 /* Specific.hh */; settings = {ATTRIBUTES = (Public, ); }; };
 		93C9F7E214E46525004B2251 /* Stream.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631614D4A1F900CDE104 /* Stream.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7E314E46525004B2251 /* SymbolMap.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631714D4A1F900CDE104 /* SymbolMap.hh */; settings = {ATTRIBUTES = (Public, ); }; };
 		93C9F7E414E46525004B2251 /* Types.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631814D4A1F900CDE104 /* Types.hh */; settings = {ATTRIBUTES = (Public, ); }; };
 		93C9F7E514E46525004B2251 /* Validator.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631914D4A1F900CDE104 /* Validator.hh */; settings = {ATTRIBUTES = (Public, ); }; };
 		93C9F7E614E46525004B2251 /* ValidSchema.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631A14D4A1F900CDE104 /* ValidSchema.hh */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -84,15 +79,17 @@
 		93C9F7EE14E4657C004B2251 /* BufferDetailIterator.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B634114D4A22700CDE104 /* BufferDetailIterator.hh */; settings = {ATTRIBUTES = (Private, ); }; };
 		93C9F7EF14E4657C004B2251 /* Symbol.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B636E14D4A34F00CDE104 /* Symbol.hh */; settings = {ATTRIBUTES = (Private, ); }; };
 		93C9F7F014E4657C004B2251 /* ValidatingCodec.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B637014D4A34F00CDE104 /* ValidatingCodec.hh */; settings = {ATTRIBUTES = (Private, ); }; };
-		93C9F7F614E4669B004B2251 /* FlexLexer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9317B3BE14D5159D0079A430 /* FlexLexer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E35914EB2DEA0031D2F1 /* Config.hh in Headers */ = {isa = PBXBuildFile; fileRef = 93F1E35714EB2DEA0031D2F1 /* Config.hh */; };
+		93F1E35A14EB2DEA0031D2F1 /* Writer.hh in Headers */ = {isa = PBXBuildFile; fileRef = 93F1E35814EB2DEA0031D2F1 /* Writer.hh */; };
+		93F1E36014EB2E0D0031D2F1 /* JsonDom.cc in Sources */ = {isa = PBXBuildFile; fileRef = 93F1E35C14EB2E0D0031D2F1 /* JsonDom.cc */; };
+		93F1E36114EB2E0D0031D2F1 /* JsonDom.hh in Headers */ = {isa = PBXBuildFile; fileRef = 93F1E35D14EB2E0D0031D2F1 /* JsonDom.hh */; };
+		93F1E36214EB2E0D0031D2F1 /* JsonIO.cc in Sources */ = {isa = PBXBuildFile; fileRef = 93F1E35E14EB2E0D0031D2F1 /* JsonIO.cc */; };
+		93F1E36314EB2E0D0031D2F1 /* JsonIO.hh in Headers */ = {isa = PBXBuildFile; fileRef = 93F1E35F14EB2E0D0031D2F1 /* JsonIO.hh */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		9317B3AB14D4A8C40079A430 /* BinaryEncoder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BinaryEncoder.cc; path = "../../c++/impl/BinaryEncoder.cc"; sourceTree = "<group>"; };
 		9317B3AD14D4A8DE0079A430 /* Encoder.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Encoder.hh; path = "../../c++/api/Encoder.hh"; sourceTree = "<group>"; };
-		9317B3AF14D4A9A20079A430 /* AvroLex.lpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.lex; fileEncoding = 4; path = AvroLex.lpp; sourceTree = "<group>"; };
-		9317B3B314D4AD660079A430 /* AvroYacc.ypp */ = {isa = PBXFileReference; explicitFileType = sourcecode.yacc; fileEncoding = 4; path = AvroYacc.ypp; sourceTree = "<group>"; };
-		9317B3BE14D5159D0079A430 /* FlexLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlexLexer.h; sourceTree = "<group>"; };
 		9317B3D014D6636F0079A430 /* avrogenobjc.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = avrogenobjc.cc; path = "../../c++/impl/avrogenobjc.cc"; sourceTree = "<group>"; };
 		9328914014DB414F004EDE98 /* AvroLex.ll */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm.llvm; path = AvroLex.ll; sourceTree = "<group>"; };
 		9328914114DB414F004EDE98 /* AvroYacc.yy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AvroYacc.yy; sourceTree = "<group>"; };
@@ -101,7 +98,6 @@
 		936B630114D4A1F900CDE104 /* AvroTraits.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = AvroTraits.hh; path = "../../c++/api/AvroTraits.hh"; sourceTree = "<group>"; };
 		936B630214D4A1F900CDE104 /* Boost.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Boost.hh; path = "../../c++/api/Boost.hh"; sourceTree = "<group>"; };
 		936B630314D4A1F900CDE104 /* Compiler.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Compiler.hh; path = "../../c++/api/Compiler.hh"; sourceTree = "<group>"; };
-		936B630414D4A1F900CDE104 /* CompilerNode.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CompilerNode.hh; path = "../../c++/api/CompilerNode.hh"; sourceTree = "<group>"; };
 		936B630514D4A1F900CDE104 /* DataFile.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = DataFile.hh; path = "../../c++/api/DataFile.hh"; sourceTree = "<group>"; };
 		936B630614D4A1F900CDE104 /* Decoder.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Decoder.hh; path = "../../c++/api/Decoder.hh"; sourceTree = "<group>"; };
 		936B630714D4A1F900CDE104 /* Exception.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Exception.hh; path = "../../c++/api/Exception.hh"; sourceTree = "<group>"; };
@@ -120,7 +116,6 @@
 		936B631414D4A1F900CDE104 /* Serializer.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Serializer.hh; path = "../../c++/api/Serializer.hh"; sourceTree = "<group>"; };
 		936B631514D4A1F900CDE104 /* Specific.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Specific.hh; path = "../../c++/api/Specific.hh"; sourceTree = "<group>"; };
 		936B631614D4A1F900CDE104 /* Stream.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Stream.hh; path = "../../c++/api/Stream.hh"; sourceTree = "<group>"; };
-		936B631714D4A1F900CDE104 /* SymbolMap.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = SymbolMap.hh; path = "../../c++/api/SymbolMap.hh"; sourceTree = "<group>"; };
 		936B631814D4A1F900CDE104 /* Types.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Types.hh; path = "../../c++/api/Types.hh"; sourceTree = "<group>"; };
 		936B631914D4A1F900CDE104 /* Validator.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Validator.hh; path = "../../c++/api/Validator.hh"; sourceTree = "<group>"; };
 		936B631A14D4A1F900CDE104 /* ValidSchema.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ValidSchema.hh; path = "../../c++/api/ValidSchema.hh"; sourceTree = "<group>"; };
@@ -134,7 +129,6 @@
 		936B634114D4A22700CDE104 /* BufferDetailIterator.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BufferDetailIterator.hh; sourceTree = "<group>"; };
 		936B634A14D4A33900CDE104 /* BinaryDecoder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BinaryDecoder.cc; path = "../../c++/impl/BinaryDecoder.cc"; sourceTree = "<group>"; };
 		936B634B14D4A33900CDE104 /* Compiler.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Compiler.cc; path = "../../c++/impl/Compiler.cc"; sourceTree = "<group>"; };
-		936B634C14D4A33900CDE104 /* CompilerNode.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompilerNode.cc; path = "../../c++/impl/CompilerNode.cc"; sourceTree = "<group>"; };
 		936B634D14D4A33900CDE104 /* DataFile.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataFile.cc; path = "../../c++/impl/DataFile.cc"; sourceTree = "<group>"; };
 		936B634E14D4A33900CDE104 /* FileStream.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FileStream.cc; path = "../../c++/impl/FileStream.cc"; sourceTree = "<group>"; };
 		936B634F14D4A33900CDE104 /* Generic.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Generic.cc; path = "../../c++/impl/Generic.cc"; sourceTree = "<group>"; };
@@ -160,17 +154,12 @@
 		93B583CD14E462720088216E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		93B583CF14E462720088216E /* avro-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "avro-Prefix.pch"; sourceTree = "<group>"; };
 		93C9F7AF14E46433004B2251 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		93F1E2D214E9AF400031D2F1 /* cpx.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = cpx.hh; sourceTree = "<group>"; };
-		93F1E2D314E9AF400031D2F1 /* cpx.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cpx.json; sourceTree = "<group>"; };
-		93F1E2D414E9AF400031D2F1 /* custom.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = custom.cc; sourceTree = "<group>"; };
-		93F1E2D514E9AF400031D2F1 /* datafile.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = datafile.cc; sourceTree = "<group>"; };
-		93F1E2D614E9AF400031D2F1 /* generated.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = generated.cc; sourceTree = "<group>"; };
-		93F1E2D714E9AF400031D2F1 /* generic.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = generic.cc; sourceTree = "<group>"; };
-		93F1E2D814E9AF400031D2F1 /* imaginary.hh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = imaginary.hh; sourceTree = "<group>"; };
-		93F1E2D914E9AF400031D2F1 /* imaginary.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = imaginary.json; sourceTree = "<group>"; };
-		93F1E2DA14E9AF400031D2F1 /* resolving.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = resolving.cc; sourceTree = "<group>"; };
-		93F1E2DB14E9AF400031D2F1 /* schemaload.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = schemaload.cc; sourceTree = "<group>"; };
-		93F1E2DC14E9AF400031D2F1 /* validating.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = validating.cc; sourceTree = "<group>"; };
+		93F1E35714EB2DEA0031D2F1 /* Config.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Config.hh; path = "../../c++/api/Config.hh"; sourceTree = "<group>"; };
+		93F1E35814EB2DEA0031D2F1 /* Writer.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Writer.hh; path = "../../c++/api/Writer.hh"; sourceTree = "<group>"; };
+		93F1E35C14EB2E0D0031D2F1 /* JsonDom.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JsonDom.cc; sourceTree = "<group>"; };
+		93F1E35D14EB2E0D0031D2F1 /* JsonDom.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JsonDom.hh; sourceTree = "<group>"; };
+		93F1E35E14EB2E0D0031D2F1 /* JsonIO.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JsonIO.cc; sourceTree = "<group>"; };
+		93F1E35F14EB2E0D0031D2F1 /* JsonIO.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JsonIO.hh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,7 +212,6 @@
 		936B62FD14D49BDC00CDE104 /* avrocpp */ = {
 			isa = PBXGroup;
 			children = (
-				93F1E2D114E9AF400031D2F1 /* examples */,
 				936B62FE14D49BFF00CDE104 /* api */,
 				936B634914D4A24F00CDE104 /* impl */,
 				9328913F14DB414F004EDE98 /* parser */,
@@ -240,7 +228,7 @@
 				936B630114D4A1F900CDE104 /* AvroTraits.hh */,
 				936B630214D4A1F900CDE104 /* Boost.hh */,
 				936B630314D4A1F900CDE104 /* Compiler.hh */,
-				936B630414D4A1F900CDE104 /* CompilerNode.hh */,
+				93F1E35714EB2DEA0031D2F1 /* Config.hh */,
 				936B630514D4A1F900CDE104 /* DataFile.hh */,
 				936B630614D4A1F900CDE104 /* Decoder.hh */,
 				9317B3AD14D4A8DE0079A430 /* Encoder.hh */,
@@ -260,10 +248,10 @@
 				936B631414D4A1F900CDE104 /* Serializer.hh */,
 				936B631514D4A1F900CDE104 /* Specific.hh */,
 				936B631614D4A1F900CDE104 /* Stream.hh */,
-				936B631714D4A1F900CDE104 /* SymbolMap.hh */,
 				936B631814D4A1F900CDE104 /* Types.hh */,
 				936B631914D4A1F900CDE104 /* Validator.hh */,
 				936B631A14D4A1F900CDE104 /* ValidSchema.hh */,
+				93F1E35814EB2DEA0031D2F1 /* Writer.hh */,
 				936B631B14D4A1F900CDE104 /* Zigzag.hh */,
 			);
 			name = api;
@@ -297,16 +285,16 @@
 			children = (
 				93934B8C14E1CEA700BCB29C /* avrogencpp.cc */,
 				9317B3D014D6636F0079A430 /* avrogenobjc.cc */,
-				936B636A14D4A33E00CDE104 /* parsing */,
 				936B634A14D4A33900CDE104 /* BinaryDecoder.cc */,
 				9317B3AB14D4A8C40079A430 /* BinaryEncoder.cc */,
 				936B634B14D4A33900CDE104 /* Compiler.cc */,
-				936B634C14D4A33900CDE104 /* CompilerNode.cc */,
 				936B634D14D4A33900CDE104 /* DataFile.cc */,
 				936B634E14D4A33900CDE104 /* FileStream.cc */,
 				936B634F14D4A33900CDE104 /* Generic.cc */,
+				93F1E35B14EB2E0C0031D2F1 /* json */,
 				936B635014D4A33900CDE104 /* Node.cc */,
 				936B635114D4A33900CDE104 /* NodeImpl.cc */,
+				936B636A14D4A33E00CDE104 /* parsing */,
 				936B635214D4A33900CDE104 /* Resolver.cc */,
 				936B635314D4A33900CDE104 /* ResolverSchema.cc */,
 				936B635414D4A33900CDE104 /* Schema.cc */,
@@ -335,9 +323,6 @@
 		93B583C914E462720088216E /* avro */ = {
 			isa = PBXGroup;
 			children = (
-				9317B3BE14D5159D0079A430 /* FlexLexer.h */,
-				9317B3B314D4AD660079A430 /* AvroYacc.ypp */,
-				9317B3AF14D4A9A20079A430 /* AvroLex.lpp */,
 				93B583CA14E462720088216E /* Supporting Files */,
 			);
 			path = avro;
@@ -353,23 +338,16 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		93F1E2D114E9AF400031D2F1 /* examples */ = {
+		93F1E35B14EB2E0C0031D2F1 /* json */ = {
 			isa = PBXGroup;
 			children = (
-				93F1E2D214E9AF400031D2F1 /* cpx.hh */,
-				93F1E2D314E9AF400031D2F1 /* cpx.json */,
-				93F1E2D414E9AF400031D2F1 /* custom.cc */,
-				93F1E2D514E9AF400031D2F1 /* datafile.cc */,
-				93F1E2D614E9AF400031D2F1 /* generated.cc */,
-				93F1E2D714E9AF400031D2F1 /* generic.cc */,
-				93F1E2D814E9AF400031D2F1 /* imaginary.hh */,
-				93F1E2D914E9AF400031D2F1 /* imaginary.json */,
-				93F1E2DA14E9AF400031D2F1 /* resolving.cc */,
-				93F1E2DB14E9AF400031D2F1 /* schemaload.cc */,
-				93F1E2DC14E9AF400031D2F1 /* validating.cc */,
+				93F1E35C14EB2E0D0031D2F1 /* JsonDom.cc */,
+				93F1E35D14EB2E0D0031D2F1 /* JsonDom.hh */,
+				93F1E35E14EB2E0D0031D2F1 /* JsonIO.cc */,
+				93F1E35F14EB2E0D0031D2F1 /* JsonIO.hh */,
 			);
-			name = examples;
-			path = "../../c++/examples";
+			name = json;
+			path = "../../c++/impl/json";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -379,13 +357,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				93C9F7F614E4669B004B2251 /* FlexLexer.h in Headers */,
 				93C9F7CA14E46525004B2251 /* AvroParse.hh in Headers */,
 				93C9F7CB14E46525004B2251 /* AvroSerialize.hh in Headers */,
 				93C9F7CC14E46525004B2251 /* AvroTraits.hh in Headers */,
 				93C9F7CD14E46525004B2251 /* Boost.hh in Headers */,
 				93C9F7CE14E46525004B2251 /* Compiler.hh in Headers */,
-				93C9F7CF14E46525004B2251 /* CompilerNode.hh in Headers */,
 				93C9F7D014E46525004B2251 /* DataFile.hh in Headers */,
 				93C9F7D114E46525004B2251 /* Decoder.hh in Headers */,
 				93C9F7D214E46525004B2251 /* Encoder.hh in Headers */,
@@ -405,7 +381,6 @@
 				93C9F7E014E46525004B2251 /* Serializer.hh in Headers */,
 				93C9F7E114E46525004B2251 /* Specific.hh in Headers */,
 				93C9F7E214E46525004B2251 /* Stream.hh in Headers */,
-				93C9F7E314E46525004B2251 /* SymbolMap.hh in Headers */,
 				93C9F7E414E46525004B2251 /* Types.hh in Headers */,
 				93C9F7E514E46525004B2251 /* Validator.hh in Headers */,
 				93C9F7E614E46525004B2251 /* ValidSchema.hh in Headers */,
@@ -419,6 +394,10 @@
 				93C9F7EE14E4657C004B2251 /* BufferDetailIterator.hh in Headers */,
 				93C9F7EF14E4657C004B2251 /* Symbol.hh in Headers */,
 				93C9F7F014E4657C004B2251 /* ValidatingCodec.hh in Headers */,
+				93F1E35914EB2DEA0031D2F1 /* Config.hh in Headers */,
+				93F1E35A14EB2DEA0031D2F1 /* Writer.hh in Headers */,
+				93F1E36114EB2E0D0031D2F1 /* JsonDom.hh in Headers */,
+				93F1E36314EB2E0D0031D2F1 /* JsonIO.hh in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,7 +488,6 @@
 				93C9F7B614E464BA004B2251 /* BinaryDecoder.cc in Sources */,
 				93C9F7B714E464BA004B2251 /* BinaryEncoder.cc in Sources */,
 				93C9F7B814E464BA004B2251 /* Compiler.cc in Sources */,
-				93C9F7B914E464BA004B2251 /* CompilerNode.cc in Sources */,
 				93C9F7BA14E464BA004B2251 /* DataFile.cc in Sources */,
 				93C9F7BB14E464BA004B2251 /* FileStream.cc in Sources */,
 				93C9F7BC14E464BA004B2251 /* Generic.cc in Sources */,
@@ -523,8 +501,8 @@
 				93C9F7C414E464BA004B2251 /* Validator.cc in Sources */,
 				93C9F7C514E464BA004B2251 /* ValidSchema.cc in Sources */,
 				93C9F7C614E464BA004B2251 /* Zigzag.cc in Sources */,
-				93C9F7C714E464BA004B2251 /* AvroYacc.ypp in Sources */,
-				93C9F7C814E464BA004B2251 /* AvroLex.lpp in Sources */,
+				93F1E36014EB2E0D0031D2F1 /* JsonDom.cc in Sources */,
+				93F1E36214EB2E0D0031D2F1 /* JsonIO.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

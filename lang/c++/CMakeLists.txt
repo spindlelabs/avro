@@ -135,6 +135,9 @@ gen (circulardep cd)
 add_executable (avrogencpp impl/avrogencpp.cc)
 target_link_libraries (avrogencpp avrocpp_s ${Boost_LIBRARIES})
 
+add_executable (avrogenobjc impl/avrogenobjc.cc)
+target_link_libraries (avrogenobjc avrocpp_s ${Boost_LIBRARIES})
+
 enable_testing()
 
 macro (unittest name)
@@ -175,6 +178,8 @@ install (TARGETS avrocpp avrocpp_s
     RUNTIME DESTINATION lib)
 
 install (TARGETS avrogencpp RUNTIME DESTINATION bin)
+
+install (TARGETS avrogenobjc RUNTIME DESTINATION bin)
 
 install (DIRECTORY api/ DESTINATION include/avro
     FILES_MATCHING PATTERN *.hh)

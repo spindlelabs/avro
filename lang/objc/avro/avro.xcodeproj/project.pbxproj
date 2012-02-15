@@ -569,8 +569,8 @@
 				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "avro/avro-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "avro/avro-Info.plist";
@@ -584,12 +584,11 @@
 					"-fvisibility-inlines-hidden",
 					"$(OTHER_CFLAGS)",
 				);
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-lstdc++";
 				PLIST_FILE_OUTPUT_FORMAT = "same-as-input";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
-				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -606,8 +605,8 @@
 				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "avro/avro-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "avro/avro-Info.plist";
@@ -621,12 +620,11 @@
 					"-fvisibility-inlines-hidden",
 					"$(OTHER_CFLAGS)",
 				);
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-lstdc++";
 				PLIST_FILE_OUTPUT_FORMAT = "same-as-input";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
-				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;

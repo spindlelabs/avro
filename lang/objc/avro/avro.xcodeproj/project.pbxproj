@@ -42,49 +42,45 @@
 		93C9F7C414E464BA004B2251 /* Validator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635714D4A33900CDE104 /* Validator.cc */; };
 		93C9F7C514E464BA004B2251 /* ValidSchema.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635814D4A33900CDE104 /* ValidSchema.cc */; };
 		93C9F7C614E464BA004B2251 /* Zigzag.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635914D4A33900CDE104 /* Zigzag.cc */; };
-		93C9F7CA14E46525004B2251 /* AvroParse.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B62FF14D4A1F900CDE104 /* AvroParse.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7CB14E46525004B2251 /* AvroSerialize.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630014D4A1F900CDE104 /* AvroSerialize.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7CC14E46525004B2251 /* AvroTraits.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630114D4A1F900CDE104 /* AvroTraits.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7CD14E46525004B2251 /* Boost.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630214D4A1F900CDE104 /* Boost.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7CE14E46525004B2251 /* Compiler.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630314D4A1F900CDE104 /* Compiler.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7D014E46525004B2251 /* DataFile.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630514D4A1F900CDE104 /* DataFile.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7D114E46525004B2251 /* Decoder.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630614D4A1F900CDE104 /* Decoder.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7D214E46525004B2251 /* Encoder.hh in Headers */ = {isa = PBXBuildFile; fileRef = 9317B3AD14D4A8DE0079A430 /* Encoder.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7D314E46525004B2251 /* Exception.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630714D4A1F900CDE104 /* Exception.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7D414E46525004B2251 /* Generic.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630814D4A1F900CDE104 /* Generic.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7D514E46525004B2251 /* Layout.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630914D4A1F900CDE104 /* Layout.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7D614E46525004B2251 /* Node.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630A14D4A1F900CDE104 /* Node.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7D714E46525004B2251 /* NodeConcepts.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630B14D4A1F900CDE104 /* NodeConcepts.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7D814E46525004B2251 /* NodeImpl.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630C14D4A1F900CDE104 /* NodeImpl.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7D914E46525004B2251 /* Parser.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630D14D4A1F900CDE104 /* Parser.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7DA14E46525004B2251 /* Reader.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630E14D4A1F900CDE104 /* Reader.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7DB14E46525004B2251 /* Resolver.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630F14D4A1F900CDE104 /* Resolver.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7DC14E46525004B2251 /* ResolverSchema.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631014D4A1F900CDE104 /* ResolverSchema.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7DD14E46525004B2251 /* ResolvingReader.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631114D4A1F900CDE104 /* ResolvingReader.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7DE14E46525004B2251 /* Schema.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631214D4A1F900CDE104 /* Schema.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7DF14E46525004B2251 /* SchemaResolution.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631314D4A1F900CDE104 /* SchemaResolution.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7E014E46525004B2251 /* Serializer.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631414D4A1F900CDE104 /* Serializer.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7E114E46525004B2251 /* Specific.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631514D4A1F900CDE104 /* Specific.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7E214E46525004B2251 /* Stream.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631614D4A1F900CDE104 /* Stream.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7E414E46525004B2251 /* Types.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631814D4A1F900CDE104 /* Types.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7E514E46525004B2251 /* Validator.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631914D4A1F900CDE104 /* Validator.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7E614E46525004B2251 /* ValidSchema.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631A14D4A1F900CDE104 /* ValidSchema.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7E714E46525004B2251 /* Zigzag.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631B14D4A1F900CDE104 /* Zigzag.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93C9F7E814E4657C004B2251 /* Buffer.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633A14D4A22700CDE104 /* Buffer.hh */; settings = {ATTRIBUTES = (Private, ); }; };
-		93C9F7E914E4657C004B2251 /* BufferPrint.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633B14D4A22700CDE104 /* BufferPrint.hh */; settings = {ATTRIBUTES = (Private, ); }; };
-		93C9F7EA14E4657C004B2251 /* BufferReader.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633C14D4A22700CDE104 /* BufferReader.hh */; settings = {ATTRIBUTES = (Private, ); }; };
-		93C9F7EB14E4657C004B2251 /* BufferStream.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633D14D4A22700CDE104 /* BufferStream.hh */; settings = {ATTRIBUTES = (Private, ); }; };
-		93C9F7EC14E4657C004B2251 /* BufferStreambuf.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633E14D4A22700CDE104 /* BufferStreambuf.hh */; settings = {ATTRIBUTES = (Private, ); }; };
-		93C9F7ED14E4657C004B2251 /* BufferDetail.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B634014D4A22700CDE104 /* BufferDetail.hh */; settings = {ATTRIBUTES = (Private, ); }; };
-		93C9F7EE14E4657C004B2251 /* BufferDetailIterator.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B634114D4A22700CDE104 /* BufferDetailIterator.hh */; settings = {ATTRIBUTES = (Private, ); }; };
-		93C9F7EF14E4657C004B2251 /* Symbol.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B636E14D4A34F00CDE104 /* Symbol.hh */; settings = {ATTRIBUTES = (Private, ); }; };
-		93C9F7F014E4657C004B2251 /* ValidatingCodec.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B637014D4A34F00CDE104 /* ValidatingCodec.hh */; settings = {ATTRIBUTES = (Private, ); }; };
-		93F1E35914EB2DEA0031D2F1 /* Config.hh in Headers */ = {isa = PBXBuildFile; fileRef = 93F1E35714EB2DEA0031D2F1 /* Config.hh */; };
-		93F1E35A14EB2DEA0031D2F1 /* Writer.hh in Headers */ = {isa = PBXBuildFile; fileRef = 93F1E35814EB2DEA0031D2F1 /* Writer.hh */; };
 		93F1E36014EB2E0D0031D2F1 /* JsonDom.cc in Sources */ = {isa = PBXBuildFile; fileRef = 93F1E35C14EB2E0D0031D2F1 /* JsonDom.cc */; };
-		93F1E36114EB2E0D0031D2F1 /* JsonDom.hh in Headers */ = {isa = PBXBuildFile; fileRef = 93F1E35D14EB2E0D0031D2F1 /* JsonDom.hh */; };
 		93F1E36214EB2E0D0031D2F1 /* JsonIO.cc in Sources */ = {isa = PBXBuildFile; fileRef = 93F1E35E14EB2E0D0031D2F1 /* JsonIO.cc */; };
-		93F1E36314EB2E0D0031D2F1 /* JsonIO.hh in Headers */ = {isa = PBXBuildFile; fileRef = 93F1E35F14EB2E0D0031D2F1 /* JsonIO.hh */; };
+		93F1E37514EC54510031D2F1 /* AvroParse.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B62FF14D4A1F900CDE104 /* AvroParse.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E37614EC54510031D2F1 /* AvroSerialize.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630014D4A1F900CDE104 /* AvroSerialize.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E37714EC54510031D2F1 /* AvroTraits.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630114D4A1F900CDE104 /* AvroTraits.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E37814EC54510031D2F1 /* Boost.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630214D4A1F900CDE104 /* Boost.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E37914EC54510031D2F1 /* Compiler.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630314D4A1F900CDE104 /* Compiler.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E37A14EC54510031D2F1 /* Config.hh in Headers */ = {isa = PBXBuildFile; fileRef = 93F1E35714EB2DEA0031D2F1 /* Config.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E37B14EC54510031D2F1 /* DataFile.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630514D4A1F900CDE104 /* DataFile.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E37C14EC54510031D2F1 /* Decoder.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630614D4A1F900CDE104 /* Decoder.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E37D14EC54510031D2F1 /* Encoder.hh in Headers */ = {isa = PBXBuildFile; fileRef = 9317B3AD14D4A8DE0079A430 /* Encoder.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E37E14EC54510031D2F1 /* Exception.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630714D4A1F900CDE104 /* Exception.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E37F14EC54510031D2F1 /* Generic.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630814D4A1F900CDE104 /* Generic.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E38014EC54510031D2F1 /* Layout.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630914D4A1F900CDE104 /* Layout.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E38114EC54510031D2F1 /* Node.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630A14D4A1F900CDE104 /* Node.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E38214EC54510031D2F1 /* NodeConcepts.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630B14D4A1F900CDE104 /* NodeConcepts.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E38314EC54510031D2F1 /* NodeImpl.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630C14D4A1F900CDE104 /* NodeImpl.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E38414EC54510031D2F1 /* Parser.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630D14D4A1F900CDE104 /* Parser.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E38514EC54510031D2F1 /* Reader.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630E14D4A1F900CDE104 /* Reader.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E38614EC54510031D2F1 /* Resolver.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630F14D4A1F900CDE104 /* Resolver.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E38714EC54510031D2F1 /* ResolverSchema.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631014D4A1F900CDE104 /* ResolverSchema.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E38814EC54510031D2F1 /* ResolvingReader.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631114D4A1F900CDE104 /* ResolvingReader.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E38914EC54510031D2F1 /* Schema.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631214D4A1F900CDE104 /* Schema.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E38A14EC54510031D2F1 /* SchemaResolution.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631314D4A1F900CDE104 /* SchemaResolution.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E38B14EC54510031D2F1 /* Serializer.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631414D4A1F900CDE104 /* Serializer.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E38C14EC54510031D2F1 /* Specific.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631514D4A1F900CDE104 /* Specific.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E38D14EC54510031D2F1 /* Stream.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631614D4A1F900CDE104 /* Stream.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E38E14EC54510031D2F1 /* Types.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631814D4A1F900CDE104 /* Types.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E38F14EC54510031D2F1 /* Validator.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631914D4A1F900CDE104 /* Validator.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E39014EC54510031D2F1 /* ValidSchema.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631A14D4A1F900CDE104 /* ValidSchema.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E39114EC54510031D2F1 /* Writer.hh in Headers */ = {isa = PBXBuildFile; fileRef = 93F1E35814EB2DEA0031D2F1 /* Writer.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E39214EC54510031D2F1 /* Zigzag.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631B14D4A1F900CDE104 /* Zigzag.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93F1E39314EC54830031D2F1 /* Buffer.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633A14D4A22700CDE104 /* Buffer.hh */; };
+		93F1E39414EC54830031D2F1 /* BufferPrint.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633B14D4A22700CDE104 /* BufferPrint.hh */; };
+		93F1E39514EC54830031D2F1 /* BufferReader.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633C14D4A22700CDE104 /* BufferReader.hh */; };
+		93F1E39614EC54830031D2F1 /* BufferStream.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633D14D4A22700CDE104 /* BufferStream.hh */; };
+		93F1E39714EC54830031D2F1 /* BufferStreambuf.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633E14D4A22700CDE104 /* BufferStreambuf.hh */; };
+		93F1E39814EC548D0031D2F1 /* BufferDetail.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B634014D4A22700CDE104 /* BufferDetail.hh */; };
+		93F1E39914EC548D0031D2F1 /* BufferDetailIterator.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B634114D4A22700CDE104 /* BufferDetailIterator.hh */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -160,6 +156,7 @@
 		93F1E35D14EB2E0D0031D2F1 /* JsonDom.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JsonDom.hh; sourceTree = "<group>"; };
 		93F1E35E14EB2E0D0031D2F1 /* JsonIO.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JsonIO.cc; sourceTree = "<group>"; };
 		93F1E35F14EB2E0D0031D2F1 /* JsonIO.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JsonIO.hh; sourceTree = "<group>"; };
+		93F1E39A14EC55000031D2F1 /* boost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = boost.framework; path = ../../../../iosclient/external/boostoniphone/framework/boost.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +201,7 @@
 		936B62D514D49BBD00CDE104 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				93F1E39A14EC55000031D2F1 /* boost.framework */,
 				93C9F7AF14E46433004B2251 /* Foundation.framework */,
 			);
 			name = Frameworks;
@@ -357,47 +355,43 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				93C9F7CA14E46525004B2251 /* AvroParse.hh in Headers */,
-				93C9F7CB14E46525004B2251 /* AvroSerialize.hh in Headers */,
-				93C9F7CC14E46525004B2251 /* AvroTraits.hh in Headers */,
-				93C9F7CD14E46525004B2251 /* Boost.hh in Headers */,
-				93C9F7CE14E46525004B2251 /* Compiler.hh in Headers */,
-				93C9F7D014E46525004B2251 /* DataFile.hh in Headers */,
-				93C9F7D114E46525004B2251 /* Decoder.hh in Headers */,
-				93C9F7D214E46525004B2251 /* Encoder.hh in Headers */,
-				93C9F7D314E46525004B2251 /* Exception.hh in Headers */,
-				93C9F7D414E46525004B2251 /* Generic.hh in Headers */,
-				93C9F7D514E46525004B2251 /* Layout.hh in Headers */,
-				93C9F7D614E46525004B2251 /* Node.hh in Headers */,
-				93C9F7D714E46525004B2251 /* NodeConcepts.hh in Headers */,
-				93C9F7D814E46525004B2251 /* NodeImpl.hh in Headers */,
-				93C9F7D914E46525004B2251 /* Parser.hh in Headers */,
-				93C9F7DA14E46525004B2251 /* Reader.hh in Headers */,
-				93C9F7DB14E46525004B2251 /* Resolver.hh in Headers */,
-				93C9F7DC14E46525004B2251 /* ResolverSchema.hh in Headers */,
-				93C9F7DD14E46525004B2251 /* ResolvingReader.hh in Headers */,
-				93C9F7DE14E46525004B2251 /* Schema.hh in Headers */,
-				93C9F7DF14E46525004B2251 /* SchemaResolution.hh in Headers */,
-				93C9F7E014E46525004B2251 /* Serializer.hh in Headers */,
-				93C9F7E114E46525004B2251 /* Specific.hh in Headers */,
-				93C9F7E214E46525004B2251 /* Stream.hh in Headers */,
-				93C9F7E414E46525004B2251 /* Types.hh in Headers */,
-				93C9F7E514E46525004B2251 /* Validator.hh in Headers */,
-				93C9F7E614E46525004B2251 /* ValidSchema.hh in Headers */,
-				93C9F7E714E46525004B2251 /* Zigzag.hh in Headers */,
-				93C9F7E814E4657C004B2251 /* Buffer.hh in Headers */,
-				93C9F7E914E4657C004B2251 /* BufferPrint.hh in Headers */,
-				93C9F7EA14E4657C004B2251 /* BufferReader.hh in Headers */,
-				93C9F7EB14E4657C004B2251 /* BufferStream.hh in Headers */,
-				93C9F7EC14E4657C004B2251 /* BufferStreambuf.hh in Headers */,
-				93C9F7ED14E4657C004B2251 /* BufferDetail.hh in Headers */,
-				93C9F7EE14E4657C004B2251 /* BufferDetailIterator.hh in Headers */,
-				93C9F7EF14E4657C004B2251 /* Symbol.hh in Headers */,
-				93C9F7F014E4657C004B2251 /* ValidatingCodec.hh in Headers */,
-				93F1E35914EB2DEA0031D2F1 /* Config.hh in Headers */,
-				93F1E35A14EB2DEA0031D2F1 /* Writer.hh in Headers */,
-				93F1E36114EB2E0D0031D2F1 /* JsonDom.hh in Headers */,
-				93F1E36314EB2E0D0031D2F1 /* JsonIO.hh in Headers */,
+				93F1E37514EC54510031D2F1 /* AvroParse.hh in Headers */,
+				93F1E37614EC54510031D2F1 /* AvroSerialize.hh in Headers */,
+				93F1E37714EC54510031D2F1 /* AvroTraits.hh in Headers */,
+				93F1E37814EC54510031D2F1 /* Boost.hh in Headers */,
+				93F1E37914EC54510031D2F1 /* Compiler.hh in Headers */,
+				93F1E37A14EC54510031D2F1 /* Config.hh in Headers */,
+				93F1E37B14EC54510031D2F1 /* DataFile.hh in Headers */,
+				93F1E37C14EC54510031D2F1 /* Decoder.hh in Headers */,
+				93F1E37D14EC54510031D2F1 /* Encoder.hh in Headers */,
+				93F1E37E14EC54510031D2F1 /* Exception.hh in Headers */,
+				93F1E37F14EC54510031D2F1 /* Generic.hh in Headers */,
+				93F1E38014EC54510031D2F1 /* Layout.hh in Headers */,
+				93F1E38114EC54510031D2F1 /* Node.hh in Headers */,
+				93F1E38214EC54510031D2F1 /* NodeConcepts.hh in Headers */,
+				93F1E38314EC54510031D2F1 /* NodeImpl.hh in Headers */,
+				93F1E38414EC54510031D2F1 /* Parser.hh in Headers */,
+				93F1E38514EC54510031D2F1 /* Reader.hh in Headers */,
+				93F1E38614EC54510031D2F1 /* Resolver.hh in Headers */,
+				93F1E38714EC54510031D2F1 /* ResolverSchema.hh in Headers */,
+				93F1E38814EC54510031D2F1 /* ResolvingReader.hh in Headers */,
+				93F1E38914EC54510031D2F1 /* Schema.hh in Headers */,
+				93F1E38A14EC54510031D2F1 /* SchemaResolution.hh in Headers */,
+				93F1E38B14EC54510031D2F1 /* Serializer.hh in Headers */,
+				93F1E38C14EC54510031D2F1 /* Specific.hh in Headers */,
+				93F1E38D14EC54510031D2F1 /* Stream.hh in Headers */,
+				93F1E38E14EC54510031D2F1 /* Types.hh in Headers */,
+				93F1E38F14EC54510031D2F1 /* Validator.hh in Headers */,
+				93F1E39014EC54510031D2F1 /* ValidSchema.hh in Headers */,
+				93F1E39114EC54510031D2F1 /* Writer.hh in Headers */,
+				93F1E39214EC54510031D2F1 /* Zigzag.hh in Headers */,
+				93F1E39814EC548D0031D2F1 /* BufferDetail.hh in Headers */,
+				93F1E39914EC548D0031D2F1 /* BufferDetailIterator.hh in Headers */,
+				93F1E39314EC54830031D2F1 /* Buffer.hh in Headers */,
+				93F1E39414EC54830031D2F1 /* BufferPrint.hh in Headers */,
+				93F1E39514EC54830031D2F1 /* BufferReader.hh in Headers */,
+				93F1E39614EC54830031D2F1 /* BufferStream.hh in Headers */,
+				93F1E39714EC54830031D2F1 /* BufferStreambuf.hh in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,7 +563,10 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				DEAD_CODE_STRIPPING = NO;
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../../iosclient/external/boostoniphone/framework\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../iosclient/external/boostoniphone/framework\"",
+				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -603,7 +600,10 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../../iosclient/external/boostoniphone/framework\"";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../iosclient/external/boostoniphone/framework\"",
+				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

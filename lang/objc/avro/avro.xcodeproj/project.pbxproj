@@ -21,6 +21,13 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		93941CB91501EFBC003266DD /* Buffer.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633A14D4A22700CDE104 /* Buffer.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93941CBA1501EFBC003266DD /* BufferPrint.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633B14D4A22700CDE104 /* BufferPrint.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93941CBB1501EFBC003266DD /* BufferReader.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633C14D4A22700CDE104 /* BufferReader.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93941CBC1501EFBC003266DD /* BufferStream.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633D14D4A22700CDE104 /* BufferStream.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93941CBD1501EFBC003266DD /* BufferStreambuf.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633E14D4A22700CDE104 /* BufferStreambuf.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93941CBE1501EFBC003266DD /* BufferDetail.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B634014D4A22700CDE104 /* BufferDetail.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93941CBF1501EFBC003266DD /* BufferDetailIterator.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B634114D4A22700CDE104 /* BufferDetailIterator.hh */; settings = {ATTRIBUTES = (Public, ); }; };
 		93B583CE14E462720088216E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 93B583CC14E462720088216E /* InfoPlist.strings */; };
 		93C9F7B214E464BA004B2251 /* JsonCodec.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B636B14D4A34F00CDE104 /* JsonCodec.cc */; };
 		93C9F7B314E464BA004B2251 /* ResolvingDecoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B636C14D4A34F00CDE104 /* ResolvingDecoder.cc */; };
@@ -74,13 +81,6 @@
 		93F1E39014EC54510031D2F1 /* ValidSchema.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631A14D4A1F900CDE104 /* ValidSchema.hh */; settings = {ATTRIBUTES = (Public, ); }; };
 		93F1E39114EC54510031D2F1 /* Writer.hh in Headers */ = {isa = PBXBuildFile; fileRef = 93F1E35814EB2DEA0031D2F1 /* Writer.hh */; settings = {ATTRIBUTES = (Public, ); }; };
 		93F1E39214EC54510031D2F1 /* Zigzag.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631B14D4A1F900CDE104 /* Zigzag.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E39314EC54830031D2F1 /* Buffer.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633A14D4A22700CDE104 /* Buffer.hh */; };
-		93F1E39414EC54830031D2F1 /* BufferPrint.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633B14D4A22700CDE104 /* BufferPrint.hh */; };
-		93F1E39514EC54830031D2F1 /* BufferReader.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633C14D4A22700CDE104 /* BufferReader.hh */; };
-		93F1E39614EC54830031D2F1 /* BufferStream.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633D14D4A22700CDE104 /* BufferStream.hh */; };
-		93F1E39714EC54830031D2F1 /* BufferStreambuf.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633E14D4A22700CDE104 /* BufferStreambuf.hh */; };
-		93F1E39814EC548D0031D2F1 /* BufferDetail.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B634014D4A22700CDE104 /* BufferDetail.hh */; };
-		93F1E39914EC548D0031D2F1 /* BufferDetailIterator.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B634114D4A22700CDE104 /* BufferDetailIterator.hh */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -359,6 +359,13 @@
 				93F1E37614EC54510031D2F1 /* AvroSerialize.hh in Headers */,
 				93F1E37714EC54510031D2F1 /* AvroTraits.hh in Headers */,
 				93F1E37814EC54510031D2F1 /* Boost.hh in Headers */,
+				93941CB91501EFBC003266DD /* Buffer.hh in Headers */,
+				93941CBA1501EFBC003266DD /* BufferPrint.hh in Headers */,
+				93941CBB1501EFBC003266DD /* BufferReader.hh in Headers */,
+				93941CBC1501EFBC003266DD /* BufferStream.hh in Headers */,
+				93941CBD1501EFBC003266DD /* BufferStreambuf.hh in Headers */,
+				93941CBE1501EFBC003266DD /* BufferDetail.hh in Headers */,
+				93941CBF1501EFBC003266DD /* BufferDetailIterator.hh in Headers */,
 				93F1E37914EC54510031D2F1 /* Compiler.hh in Headers */,
 				93F1E37A14EC54510031D2F1 /* Config.hh in Headers */,
 				93F1E37B14EC54510031D2F1 /* DataFile.hh in Headers */,
@@ -385,13 +392,6 @@
 				93F1E39014EC54510031D2F1 /* ValidSchema.hh in Headers */,
 				93F1E39114EC54510031D2F1 /* Writer.hh in Headers */,
 				93F1E39214EC54510031D2F1 /* Zigzag.hh in Headers */,
-				93F1E39814EC548D0031D2F1 /* BufferDetail.hh in Headers */,
-				93F1E39914EC548D0031D2F1 /* BufferDetailIterator.hh in Headers */,
-				93F1E39314EC54830031D2F1 /* Buffer.hh in Headers */,
-				93F1E39414EC54830031D2F1 /* BufferPrint.hh in Headers */,
-				93F1E39514EC54830031D2F1 /* BufferReader.hh in Headers */,
-				93F1E39614EC54830031D2F1 /* BufferStream.hh in Headers */,
-				93F1E39714EC54830031D2F1 /* BufferStreambuf.hh in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,7 +466,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Sets the target folders and the final framework product.\nFMK_NAME=avro\nFMK_VERSION=A\n\n# Install dir will be the final output to the framework.\n# The following line create it in the root folder of the current project.\nINSTALL_DIR=${SRCROOT}/Products/${FMK_NAME}.framework\n\n# Working dir will be deleted after the framework creation.\nWRK_DIR=build\nDEVICE_DIR=${WRK_DIR}/Release-iphoneos/${FMK_NAME}.framework\nSIMULATOR_DIR=${WRK_DIR}/Release-iphonesimulator/${FMK_NAME}.framework\n\n# Building both architectures.\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphoneos\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphonesimulator\n\n# Cleaning the oldest.\nif [ -d \"${INSTALL_DIR}\" ]\nthen\nrm -rf \"${INSTALL_DIR}\"\nfi\n\n# Creates and renews the final product folder.\nmkdir -p \"${INSTALL_DIR}\"\nmkdir -p \"${INSTALL_DIR}/Versions\"\nmkdir -p \"${INSTALL_DIR}/Versions/${FMK_VERSION}\"\nmkdir -p \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources\"\nmkdir -p \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Headers\"\n\n# Creates the internal links.\n# It MUST uses relative path, otherwise will not work when the folder is copied/moved.\nln -s \"${FMK_VERSION}\" \"${INSTALL_DIR}/Versions/Current\"\nln -s \"Versions/Current/Headers\" \"${INSTALL_DIR}/Headers\"\nln -s \"Versions/Current/Resources\" \"${INSTALL_DIR}/Resources\"\nln -s \"Versions/Current/${FMK_NAME}\" \"${INSTALL_DIR}/${FMK_NAME}\"\n\n# Copies the headers and resources files to the final product folder.\ncp -R \"${DEVICE_DIR}/Headers/\" \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Headers/\"\ncp -R \"${DEVICE_DIR}/\" \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources/\"\n\n# Removes the binary and header from the resources folder.\nrm -r \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources/Headers\" \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources/${FMK_NAME}\"\n\n# Uses the Lipo Tool to merge both binary files (i386 + armv6/armv7) into one Universal final product.\nlipo -create \"${DEVICE_DIR}/${FMK_NAME}\" \"${SIMULATOR_DIR}/${FMK_NAME}\" -output \"${INSTALL_DIR}/Versions/${FMK_VERSION}/${FMK_NAME}\"\n\nrm -r \"${WRK_DIR}\"";
+			shellScript = "# Sets the target folders and the final framework product.\nFMK_NAME=avro\nFMK_VERSION=A\n\n# Install dir will be the final output to the framework.\n# The following line create it in the root folder of the current project.\nINSTALL_DIR=${SRCROOT}/Products/${FMK_NAME}.framework\n\n# Working dir will be deleted after the framework creation.\nWRK_DIR=build\nDEVICE_DIR=${WRK_DIR}/Release-iphoneos/${FMK_NAME}.framework\nSIMULATOR_DIR=${WRK_DIR}/Release-iphonesimulator/${FMK_NAME}.framework\n\n# Building both architectures.\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphoneos\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphonesimulator\n\n# Cleaning the oldest.\nif [ -d \"${INSTALL_DIR}\" ]\nthen\nrm -rf \"${INSTALL_DIR}\"\nfi\n\n# Creates and renews the final product folder.\nmkdir -p \"${INSTALL_DIR}\"\nmkdir -p \"${INSTALL_DIR}/Versions\"\nmkdir -p \"${INSTALL_DIR}/Versions/${FMK_VERSION}\"\nmkdir -p \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources\"\nmkdir -p \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Headers\"\n# hack to preserve subdirectory structure\nmkdir -p \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Headers/buffer/detail\"\n\n# Creates the internal links.\n# It MUST uses relative path, otherwise will not work when the folder is copied/moved.\nln -s \"${FMK_VERSION}\" \"${INSTALL_DIR}/Versions/Current\"\nln -s \"Versions/Current/Headers\" \"${INSTALL_DIR}/Headers\"\nln -s \"Versions/Current/Resources\" \"${INSTALL_DIR}/Resources\"\nln -s \"Versions/Current/${FMK_NAME}\" \"${INSTALL_DIR}/${FMK_NAME}\"\n\n# Copies the headers and resources files to the final product folder.\ncp -R \"${DEVICE_DIR}/Headers/\" \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Headers/\"\n# hack to preserve subdirectory structure\nmv ${INSTALL_DIR}/Versions/${FMK_VERSION}/Headers/Buffer*.hh \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Headers/buffer/\"\nmv ${INSTALL_DIR}/Versions/${FMK_VERSION}/Headers/buffer/BufferDetail*.hh \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Headers/buffer/detail/\"\ncp -R \"${DEVICE_DIR}/\" \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources/\"\n\n# Removes the binary and header from the resources folder.\nrm -r \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources/Headers\" \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources/${FMK_NAME}\"\n\n# Uses the Lipo Tool to merge both binary files (i386 + armv6/armv7) into one Universal final product.\nlipo -create \"${DEVICE_DIR}/${FMK_NAME}\" \"${SIMULATOR_DIR}/${FMK_NAME}\" -output \"${INSTALL_DIR}/Versions/${FMK_VERSION}/${FMK_NAME}\"\n\nrm -r \"${WRK_DIR}\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 

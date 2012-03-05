@@ -5,23 +5,17 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleIconFile</key>
-	<string></string>
+	<string>avro</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.bifflabs.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>org.apache</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
-	<key>CFBundleName</key>
-	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
-	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>1.6.2</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2012 Biff Labs. All rights reserved.</string>
 </dict>

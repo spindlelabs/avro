@@ -406,6 +406,7 @@
 				93B583C314E462720088216E /* Frameworks */,
 				93B583C414E462720088216E /* Resources */,
 				93C9F7C914E464F8004B2251 /* Headers */,
+				93C72B461505461D00FC0846 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -455,6 +456,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		93C72B461505461D00FC0846 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo \"${TARGET_BUILD_DIR}\"\necho \"${PUBLIC_HEADERS_FOLDER_PATH}\"\nmkdir -p ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/buffer/detail\nmv ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/Buffer.hh ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/buffer/Buffer.hh\nmv ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/BufferPrint.hh ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/buffer/BufferPrint.hh\nmv ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/BufferReader.hh ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/buffer/BufferReader.hh\nmv ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/BufferStream.hh ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/buffer/BufferStream.hh\nmv ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/BufferStreambuf.hh ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/buffer/BufferStreambuf.hh\nmv ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/BufferDetail.hh ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/buffer/detail/BufferDetail.hh\nmv ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/BufferDetailIterator.hh ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/buffer/detail/BufferDetailIterator.hh";
+		};
 		93C9F7F514E465CB004B2251 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -466,7 +480,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Sets the target folders and the final framework product.\nFMK_NAME=avro\nFMK_VERSION=A\n\n# Install dir will be the final output to the framework.\n# The following line create it in the root folder of the current project.\nINSTALL_DIR=${SRCROOT}/Products/${FMK_NAME}.framework\n\n# Working dir will be deleted after the framework creation.\nWRK_DIR=build\nDEVICE_DIR=${WRK_DIR}/Release-iphoneos/${FMK_NAME}.framework\nSIMULATOR_DIR=${WRK_DIR}/Release-iphonesimulator/${FMK_NAME}.framework\n\n# Building both architectures.\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphoneos\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphonesimulator\n\n# Cleaning the oldest.\nif [ -d \"${INSTALL_DIR}\" ]\nthen\nrm -rf \"${INSTALL_DIR}\"\nfi\n\n# Creates and renews the final product folder.\nmkdir -p \"${INSTALL_DIR}\"\nmkdir -p \"${INSTALL_DIR}/Versions\"\nmkdir -p \"${INSTALL_DIR}/Versions/${FMK_VERSION}\"\nmkdir -p \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources\"\nmkdir -p \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Headers\"\n# hack to preserve subdirectory structure\nmkdir -p \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Headers/buffer/detail\"\n\n# Creates the internal links.\n# It MUST uses relative path, otherwise will not work when the folder is copied/moved.\nln -s \"${FMK_VERSION}\" \"${INSTALL_DIR}/Versions/Current\"\nln -s \"Versions/Current/Headers\" \"${INSTALL_DIR}/Headers\"\nln -s \"Versions/Current/Resources\" \"${INSTALL_DIR}/Resources\"\nln -s \"Versions/Current/${FMK_NAME}\" \"${INSTALL_DIR}/${FMK_NAME}\"\n\n# Copies the headers and resources files to the final product folder.\ncp -R \"${DEVICE_DIR}/Headers/\" \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Headers/\"\n# hack to preserve subdirectory structure\nmv ${INSTALL_DIR}/Versions/${FMK_VERSION}/Headers/Buffer*.hh \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Headers/buffer/\"\nmv ${INSTALL_DIR}/Versions/${FMK_VERSION}/Headers/buffer/BufferDetail*.hh \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Headers/buffer/detail/\"\ncp -R \"${DEVICE_DIR}/\" \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources/\"\n\n# Removes the binary and header from the resources folder.\nrm -r \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources/Headers\" \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources/${FMK_NAME}\"\n\n# Uses the Lipo Tool to merge both binary files (i386 + armv6/armv7) into one Universal final product.\nlipo -create \"${DEVICE_DIR}/${FMK_NAME}\" \"${SIMULATOR_DIR}/${FMK_NAME}\" -output \"${INSTALL_DIR}/Versions/${FMK_VERSION}/${FMK_NAME}\"\n\nrm -r \"${WRK_DIR}\"";
+			shellScript = "# Sets the target folders and the final framework product.\nFMK_NAME=avro\nFMK_VERSION=1.6.2\n\n# Install dir will be the final output to the framework.\n# The following line create it in the root folder of the current project.\nINSTALL_DIR=${SRCROOT}/Products/${FMK_NAME}.framework\n\n# Working dir will be deleted after the framework creation.\nWRK_DIR=build\nDEVICE_DIR=${WRK_DIR}/Release-iphoneos/${FMK_NAME}.framework\nSIMULATOR_DIR=${WRK_DIR}/Release-iphonesimulator/${FMK_NAME}.framework\n\n# Building both architectures.\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphoneos\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphonesimulator\n\n# Cleaning the oldest.\nif [ -d \"${INSTALL_DIR}\" ]\nthen\nrm -rf \"${INSTALL_DIR}\"\nfi\n\n# Creates and renews the final product folder.\nmkdir -p \"${INSTALL_DIR}\"\nmkdir -p \"${INSTALL_DIR}/Versions\"\nmkdir -p \"${INSTALL_DIR}/Versions/${FMK_VERSION}\"\nmkdir -p \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources\"\nmkdir -p \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Headers\"\n\n# Creates the internal links.\n# It MUST uses relative path, otherwise will not work when the folder is copied/moved.\nln -s \"${FMK_VERSION}\" \"${INSTALL_DIR}/Versions/Current\"\nln -s \"Versions/Current/Headers\" \"${INSTALL_DIR}/Headers\"\nln -s \"Versions/Current/Resources\" \"${INSTALL_DIR}/Resources\"\nln -s \"Versions/Current/${FMK_NAME}\" \"${INSTALL_DIR}/${FMK_NAME}\"\n\n# Copies the headers and resources files to the final product folder.\ncp -R \"${DEVICE_DIR}/Headers/\" \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Headers/\"\ncp -R \"${DEVICE_DIR}/\" \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources/\"\n\n# Removes the binary and header from the resources folder.\nrm -r \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources/Headers\" \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources/${FMK_NAME}\"\n\n# NOTE: stealing a hint from boost.sh build in boostoniphone project. The thing you lipo into the final frameworks\n# should still be lib<FMK_NAME.a files since that's what the linker is going to look for when it cracks the framework open\n# Uses the Lipo Tool to merge both binary files (i386 + armv6/armv7) into one Universal final product.  \ncp \"${DEVICE_DIR}/${FMK_NAME}\" \"${DEVICE_DIR}/lib${FMK_NAME}.a\"\ncp \"${SIMULATOR_DIR}/${FMK_NAME}\" \"${SIMULATOR_DIR}/lib${FMK_NAME}.a\"\nlipo -create -arch armv7 \"${DEVICE_DIR}/lib${FMK_NAME}.a\" -arch i386 \"${SIMULATOR_DIR}/lib${FMK_NAME}.a\" -output \"${INSTALL_DIR}/Versions/${FMK_VERSION}/${FMK_NAME}\"\n\nrm -r \"${WRK_DIR}\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -595,9 +609,11 @@
 					"-fvisibility-inlines-hidden",
 					"$(OTHER_CFLAGS)",
 				);
-				OTHER_LDFLAGS = "-lstdc++";
+				OTHER_LDFLAGS = "";
 				PLIST_FILE_OUTPUT_FORMAT = "same-as-input";
+				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = framework;
@@ -632,9 +648,11 @@
 					"-fvisibility-inlines-hidden",
 					"$(OTHER_CFLAGS)",
 				);
-				OTHER_LDFLAGS = "-lstdc++";
+				OTHER_LDFLAGS = "";
 				PLIST_FILE_OUTPUT_FORMAT = "same-as-input";
+				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = framework;

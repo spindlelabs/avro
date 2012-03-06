@@ -7,81 +7,160 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		93C9F7F114E465B5004B2251 /* avro Universal Framework */ = {
+		93C72C57150578F800FC0846 /* Merge */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 93C9F7F214E465B6004B2251 /* Build configuration list for PBXAggregateTarget "avro Universal Framework" */;
+			buildConfigurationList = 93C72C58150578F800FC0846 /* Build configuration list for PBXAggregateTarget "Merge" */;
 			buildPhases = (
-				93C9F7F514E465CB004B2251 /* ShellScript */,
+				93C72C5F1505797E00FC0846 /* ShellScript */,
 			);
 			dependencies = (
+				93C72C5C1505795A00FC0846 /* PBXTargetDependency */,
+				93C72C5E1505795A00FC0846 /* PBXTargetDependency */,
 			);
-			name = "avro Universal Framework";
-			productName = "avro Universal Framework";
+			name = Merge;
+			productName = Merge;
 		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		93941CB91501EFBC003266DD /* Buffer.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633A14D4A22700CDE104 /* Buffer.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93941CBA1501EFBC003266DD /* BufferPrint.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633B14D4A22700CDE104 /* BufferPrint.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93941CBB1501EFBC003266DD /* BufferReader.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633C14D4A22700CDE104 /* BufferReader.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93941CBC1501EFBC003266DD /* BufferStream.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633D14D4A22700CDE104 /* BufferStream.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93941CBD1501EFBC003266DD /* BufferStreambuf.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633E14D4A22700CDE104 /* BufferStreambuf.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93941CBE1501EFBC003266DD /* BufferDetail.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B634014D4A22700CDE104 /* BufferDetail.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93941CBF1501EFBC003266DD /* BufferDetailIterator.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B634114D4A22700CDE104 /* BufferDetailIterator.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93B583CE14E462720088216E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 93B583CC14E462720088216E /* InfoPlist.strings */; };
-		93C9F7B214E464BA004B2251 /* JsonCodec.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B636B14D4A34F00CDE104 /* JsonCodec.cc */; };
-		93C9F7B314E464BA004B2251 /* ResolvingDecoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B636C14D4A34F00CDE104 /* ResolvingDecoder.cc */; };
-		93C9F7B414E464BA004B2251 /* Symbol.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B636D14D4A34F00CDE104 /* Symbol.cc */; };
-		93C9F7B514E464BA004B2251 /* ValidatingCodec.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B636F14D4A34F00CDE104 /* ValidatingCodec.cc */; };
-		93C9F7B614E464BA004B2251 /* BinaryDecoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B634A14D4A33900CDE104 /* BinaryDecoder.cc */; };
-		93C9F7B714E464BA004B2251 /* BinaryEncoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9317B3AB14D4A8C40079A430 /* BinaryEncoder.cc */; };
-		93C9F7B814E464BA004B2251 /* Compiler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B634B14D4A33900CDE104 /* Compiler.cc */; };
-		93C9F7BA14E464BA004B2251 /* DataFile.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B634D14D4A33900CDE104 /* DataFile.cc */; };
-		93C9F7BB14E464BA004B2251 /* FileStream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B634E14D4A33900CDE104 /* FileStream.cc */; };
-		93C9F7BC14E464BA004B2251 /* Generic.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B634F14D4A33900CDE104 /* Generic.cc */; };
-		93C9F7BD14E464BA004B2251 /* Node.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635014D4A33900CDE104 /* Node.cc */; };
-		93C9F7BE14E464BA004B2251 /* NodeImpl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635114D4A33900CDE104 /* NodeImpl.cc */; };
-		93C9F7BF14E464BA004B2251 /* Resolver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635214D4A33900CDE104 /* Resolver.cc */; };
-		93C9F7C014E464BA004B2251 /* ResolverSchema.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635314D4A33900CDE104 /* ResolverSchema.cc */; };
-		93C9F7C114E464BA004B2251 /* Schema.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635414D4A33900CDE104 /* Schema.cc */; };
-		93C9F7C214E464BA004B2251 /* Stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635514D4A33900CDE104 /* Stream.cc */; };
-		93C9F7C314E464BA004B2251 /* Types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635614D4A33900CDE104 /* Types.cc */; };
-		93C9F7C414E464BA004B2251 /* Validator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635714D4A33900CDE104 /* Validator.cc */; };
-		93C9F7C514E464BA004B2251 /* ValidSchema.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635814D4A33900CDE104 /* ValidSchema.cc */; };
-		93C9F7C614E464BA004B2251 /* Zigzag.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635914D4A33900CDE104 /* Zigzag.cc */; };
-		93F1E36014EB2E0D0031D2F1 /* JsonDom.cc in Sources */ = {isa = PBXBuildFile; fileRef = 93F1E35C14EB2E0D0031D2F1 /* JsonDom.cc */; };
-		93F1E36214EB2E0D0031D2F1 /* JsonIO.cc in Sources */ = {isa = PBXBuildFile; fileRef = 93F1E35E14EB2E0D0031D2F1 /* JsonIO.cc */; };
-		93F1E37514EC54510031D2F1 /* AvroParse.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B62FF14D4A1F900CDE104 /* AvroParse.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E37614EC54510031D2F1 /* AvroSerialize.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630014D4A1F900CDE104 /* AvroSerialize.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E37714EC54510031D2F1 /* AvroTraits.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630114D4A1F900CDE104 /* AvroTraits.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E37814EC54510031D2F1 /* Boost.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630214D4A1F900CDE104 /* Boost.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E37914EC54510031D2F1 /* Compiler.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630314D4A1F900CDE104 /* Compiler.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E37A14EC54510031D2F1 /* Config.hh in Headers */ = {isa = PBXBuildFile; fileRef = 93F1E35714EB2DEA0031D2F1 /* Config.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E37B14EC54510031D2F1 /* DataFile.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630514D4A1F900CDE104 /* DataFile.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E37C14EC54510031D2F1 /* Decoder.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630614D4A1F900CDE104 /* Decoder.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E37D14EC54510031D2F1 /* Encoder.hh in Headers */ = {isa = PBXBuildFile; fileRef = 9317B3AD14D4A8DE0079A430 /* Encoder.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E37E14EC54510031D2F1 /* Exception.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630714D4A1F900CDE104 /* Exception.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E37F14EC54510031D2F1 /* Generic.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630814D4A1F900CDE104 /* Generic.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E38014EC54510031D2F1 /* Layout.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630914D4A1F900CDE104 /* Layout.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E38114EC54510031D2F1 /* Node.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630A14D4A1F900CDE104 /* Node.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E38214EC54510031D2F1 /* NodeConcepts.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630B14D4A1F900CDE104 /* NodeConcepts.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E38314EC54510031D2F1 /* NodeImpl.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630C14D4A1F900CDE104 /* NodeImpl.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E38414EC54510031D2F1 /* Parser.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630D14D4A1F900CDE104 /* Parser.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E38514EC54510031D2F1 /* Reader.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630E14D4A1F900CDE104 /* Reader.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E38614EC54510031D2F1 /* Resolver.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630F14D4A1F900CDE104 /* Resolver.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E38714EC54510031D2F1 /* ResolverSchema.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631014D4A1F900CDE104 /* ResolverSchema.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E38814EC54510031D2F1 /* ResolvingReader.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631114D4A1F900CDE104 /* ResolvingReader.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E38914EC54510031D2F1 /* Schema.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631214D4A1F900CDE104 /* Schema.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E38A14EC54510031D2F1 /* SchemaResolution.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631314D4A1F900CDE104 /* SchemaResolution.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E38B14EC54510031D2F1 /* Serializer.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631414D4A1F900CDE104 /* Serializer.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E38C14EC54510031D2F1 /* Specific.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631514D4A1F900CDE104 /* Specific.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E38D14EC54510031D2F1 /* Stream.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631614D4A1F900CDE104 /* Stream.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E38E14EC54510031D2F1 /* Types.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631814D4A1F900CDE104 /* Types.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E38F14EC54510031D2F1 /* Validator.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631914D4A1F900CDE104 /* Validator.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E39014EC54510031D2F1 /* ValidSchema.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631A14D4A1F900CDE104 /* ValidSchema.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E39114EC54510031D2F1 /* Writer.hh in Headers */ = {isa = PBXBuildFile; fileRef = 93F1E35814EB2DEA0031D2F1 /* Writer.hh */; settings = {ATTRIBUTES = (Public, ); }; };
-		93F1E39214EC54510031D2F1 /* Zigzag.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631B14D4A1F900CDE104 /* Zigzag.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72BD3150575C400FC0846 /* boost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F1E39A14EC55000031D2F1 /* boost.framework */; };
+		93C72BD41505767500FC0846 /* BinaryDecoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B634A14D4A33900CDE104 /* BinaryDecoder.cc */; };
+		93C72BD51505767500FC0846 /* BinaryEncoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9317B3AB14D4A8C40079A430 /* BinaryEncoder.cc */; };
+		93C72BD61505767500FC0846 /* Compiler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B634B14D4A33900CDE104 /* Compiler.cc */; };
+		93C72BD71505767500FC0846 /* DataFile.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B634D14D4A33900CDE104 /* DataFile.cc */; };
+		93C72BD81505767500FC0846 /* FileStream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B634E14D4A33900CDE104 /* FileStream.cc */; };
+		93C72BD91505767500FC0846 /* Generic.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B634F14D4A33900CDE104 /* Generic.cc */; };
+		93C72BDA1505767500FC0846 /* JsonDom.cc in Sources */ = {isa = PBXBuildFile; fileRef = 93F1E35C14EB2E0D0031D2F1 /* JsonDom.cc */; };
+		93C72BDC1505767500FC0846 /* JsonIO.cc in Sources */ = {isa = PBXBuildFile; fileRef = 93F1E35E14EB2E0D0031D2F1 /* JsonIO.cc */; };
+		93C72BDE1505767500FC0846 /* Node.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635014D4A33900CDE104 /* Node.cc */; };
+		93C72BDF1505767500FC0846 /* NodeImpl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635114D4A33900CDE104 /* NodeImpl.cc */; };
+		93C72BE01505767500FC0846 /* JsonCodec.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B636B14D4A34F00CDE104 /* JsonCodec.cc */; };
+		93C72BE11505767500FC0846 /* ResolvingDecoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B636C14D4A34F00CDE104 /* ResolvingDecoder.cc */; };
+		93C72BE21505767500FC0846 /* Symbol.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B636D14D4A34F00CDE104 /* Symbol.cc */; };
+		93C72BE41505767500FC0846 /* ValidatingCodec.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B636F14D4A34F00CDE104 /* ValidatingCodec.cc */; };
+		93C72BE61505767500FC0846 /* Resolver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635214D4A33900CDE104 /* Resolver.cc */; };
+		93C72BE71505767500FC0846 /* ResolverSchema.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635314D4A33900CDE104 /* ResolverSchema.cc */; };
+		93C72BE81505767500FC0846 /* Schema.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635414D4A33900CDE104 /* Schema.cc */; };
+		93C72BE91505767500FC0846 /* Stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635514D4A33900CDE104 /* Stream.cc */; };
+		93C72BEA1505767500FC0846 /* Types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635614D4A33900CDE104 /* Types.cc */; };
+		93C72BEB1505767500FC0846 /* Validator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635714D4A33900CDE104 /* Validator.cc */; };
+		93C72BEC1505767500FC0846 /* ValidSchema.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635814D4A33900CDE104 /* ValidSchema.cc */; };
+		93C72BED1505767500FC0846 /* Zigzag.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635914D4A33900CDE104 /* Zigzag.cc */; };
+		93C72BEE1505768100FC0846 /* Buffer.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633A14D4A22700CDE104 /* Buffer.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72BEF1505768100FC0846 /* BufferPrint.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633B14D4A22700CDE104 /* BufferPrint.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72BF01505768100FC0846 /* BufferReader.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633C14D4A22700CDE104 /* BufferReader.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72BF11505768100FC0846 /* BufferStream.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633D14D4A22700CDE104 /* BufferStream.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72BF21505768100FC0846 /* BufferStreambuf.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633E14D4A22700CDE104 /* BufferStreambuf.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72BF31505768100FC0846 /* BufferDetail.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B634014D4A22700CDE104 /* BufferDetail.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72BF41505768100FC0846 /* BufferDetailIterator.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B634114D4A22700CDE104 /* BufferDetailIterator.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72BF51505768100FC0846 /* AvroParse.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B62FF14D4A1F900CDE104 /* AvroParse.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72BF61505768100FC0846 /* AvroSerialize.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630014D4A1F900CDE104 /* AvroSerialize.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72BF71505768100FC0846 /* AvroTraits.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630114D4A1F900CDE104 /* AvroTraits.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72BF81505768200FC0846 /* Boost.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630214D4A1F900CDE104 /* Boost.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72BF91505768200FC0846 /* Compiler.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630314D4A1F900CDE104 /* Compiler.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72BFA1505768200FC0846 /* Config.hh in Headers */ = {isa = PBXBuildFile; fileRef = 93F1E35714EB2DEA0031D2F1 /* Config.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72BFB1505768200FC0846 /* DataFile.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630514D4A1F900CDE104 /* DataFile.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72BFC1505768200FC0846 /* Decoder.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630614D4A1F900CDE104 /* Decoder.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72BFD1505768200FC0846 /* Encoder.hh in Headers */ = {isa = PBXBuildFile; fileRef = 9317B3AD14D4A8DE0079A430 /* Encoder.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72BFE1505768200FC0846 /* Exception.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630714D4A1F900CDE104 /* Exception.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72BFF1505768200FC0846 /* Generic.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630814D4A1F900CDE104 /* Generic.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C001505768200FC0846 /* Layout.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630914D4A1F900CDE104 /* Layout.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C011505768200FC0846 /* Node.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630A14D4A1F900CDE104 /* Node.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C021505768200FC0846 /* NodeConcepts.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630B14D4A1F900CDE104 /* NodeConcepts.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C031505768200FC0846 /* NodeImpl.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630C14D4A1F900CDE104 /* NodeImpl.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C041505768200FC0846 /* Parser.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630D14D4A1F900CDE104 /* Parser.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C051505768200FC0846 /* Reader.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630E14D4A1F900CDE104 /* Reader.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C061505768200FC0846 /* Resolver.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630F14D4A1F900CDE104 /* Resolver.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C071505768200FC0846 /* ResolverSchema.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631014D4A1F900CDE104 /* ResolverSchema.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C081505768200FC0846 /* ResolvingReader.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631114D4A1F900CDE104 /* ResolvingReader.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C091505768200FC0846 /* Schema.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631214D4A1F900CDE104 /* Schema.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C0A1505768200FC0846 /* SchemaResolution.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631314D4A1F900CDE104 /* SchemaResolution.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C0B1505768200FC0846 /* Serializer.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631414D4A1F900CDE104 /* Serializer.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C0C1505768200FC0846 /* Specific.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631514D4A1F900CDE104 /* Specific.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C0D1505768200FC0846 /* Stream.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631614D4A1F900CDE104 /* Stream.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C0E1505768200FC0846 /* Types.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631814D4A1F900CDE104 /* Types.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C0F1505768200FC0846 /* Validator.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631914D4A1F900CDE104 /* Validator.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C101505768200FC0846 /* ValidSchema.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631A14D4A1F900CDE104 /* ValidSchema.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C111505768200FC0846 /* Writer.hh in Headers */ = {isa = PBXBuildFile; fileRef = 93F1E35814EB2DEA0031D2F1 /* Writer.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C121505768200FC0846 /* Zigzag.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631B14D4A1F900CDE104 /* Zigzag.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C151505770D00FC0846 /* BinaryDecoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B634A14D4A33900CDE104 /* BinaryDecoder.cc */; };
+		93C72C161505770D00FC0846 /* BinaryEncoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9317B3AB14D4A8C40079A430 /* BinaryEncoder.cc */; };
+		93C72C171505770D00FC0846 /* Compiler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B634B14D4A33900CDE104 /* Compiler.cc */; };
+		93C72C181505770D00FC0846 /* DataFile.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B634D14D4A33900CDE104 /* DataFile.cc */; };
+		93C72C191505770D00FC0846 /* FileStream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B634E14D4A33900CDE104 /* FileStream.cc */; };
+		93C72C1A1505770D00FC0846 /* Generic.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B634F14D4A33900CDE104 /* Generic.cc */; };
+		93C72C1B1505770D00FC0846 /* JsonDom.cc in Sources */ = {isa = PBXBuildFile; fileRef = 93F1E35C14EB2E0D0031D2F1 /* JsonDom.cc */; };
+		93C72C1C1505770D00FC0846 /* JsonIO.cc in Sources */ = {isa = PBXBuildFile; fileRef = 93F1E35E14EB2E0D0031D2F1 /* JsonIO.cc */; };
+		93C72C1D1505770D00FC0846 /* Node.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635014D4A33900CDE104 /* Node.cc */; };
+		93C72C1E1505770D00FC0846 /* NodeImpl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635114D4A33900CDE104 /* NodeImpl.cc */; };
+		93C72C1F1505770D00FC0846 /* JsonCodec.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B636B14D4A34F00CDE104 /* JsonCodec.cc */; };
+		93C72C201505770D00FC0846 /* ResolvingDecoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B636C14D4A34F00CDE104 /* ResolvingDecoder.cc */; };
+		93C72C211505770D00FC0846 /* Symbol.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B636D14D4A34F00CDE104 /* Symbol.cc */; };
+		93C72C221505770D00FC0846 /* ValidatingCodec.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B636F14D4A34F00CDE104 /* ValidatingCodec.cc */; };
+		93C72C231505770D00FC0846 /* Resolver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635214D4A33900CDE104 /* Resolver.cc */; };
+		93C72C241505770D00FC0846 /* ResolverSchema.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635314D4A33900CDE104 /* ResolverSchema.cc */; };
+		93C72C251505770D00FC0846 /* Schema.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635414D4A33900CDE104 /* Schema.cc */; };
+		93C72C261505770D00FC0846 /* Stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635514D4A33900CDE104 /* Stream.cc */; };
+		93C72C271505770D00FC0846 /* Types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635614D4A33900CDE104 /* Types.cc */; };
+		93C72C281505770D00FC0846 /* Validator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635714D4A33900CDE104 /* Validator.cc */; };
+		93C72C291505770D00FC0846 /* ValidSchema.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635814D4A33900CDE104 /* ValidSchema.cc */; };
+		93C72C2A1505770D00FC0846 /* Zigzag.cc in Sources */ = {isa = PBXBuildFile; fileRef = 936B635914D4A33900CDE104 /* Zigzag.cc */; };
+		93C72C2C1505770D00FC0846 /* boost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F1E39A14EC55000031D2F1 /* boost.framework */; };
+		93C72C2E1505770D00FC0846 /* Buffer.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633A14D4A22700CDE104 /* Buffer.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C2F1505770D00FC0846 /* BufferPrint.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633B14D4A22700CDE104 /* BufferPrint.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C301505770D00FC0846 /* BufferReader.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633C14D4A22700CDE104 /* BufferReader.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C311505770D00FC0846 /* BufferStream.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633D14D4A22700CDE104 /* BufferStream.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C321505770D00FC0846 /* BufferStreambuf.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B633E14D4A22700CDE104 /* BufferStreambuf.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C331505770D00FC0846 /* BufferDetail.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B634014D4A22700CDE104 /* BufferDetail.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C341505770D00FC0846 /* BufferDetailIterator.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B634114D4A22700CDE104 /* BufferDetailIterator.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C351505770D00FC0846 /* AvroParse.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B62FF14D4A1F900CDE104 /* AvroParse.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C361505770D00FC0846 /* AvroSerialize.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630014D4A1F900CDE104 /* AvroSerialize.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C371505770D00FC0846 /* AvroTraits.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630114D4A1F900CDE104 /* AvroTraits.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C381505770D00FC0846 /* Boost.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630214D4A1F900CDE104 /* Boost.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C391505770D00FC0846 /* Compiler.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630314D4A1F900CDE104 /* Compiler.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C3A1505770D00FC0846 /* Config.hh in Headers */ = {isa = PBXBuildFile; fileRef = 93F1E35714EB2DEA0031D2F1 /* Config.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C3B1505770D00FC0846 /* DataFile.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630514D4A1F900CDE104 /* DataFile.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C3C1505770D00FC0846 /* Decoder.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630614D4A1F900CDE104 /* Decoder.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C3D1505770D00FC0846 /* Encoder.hh in Headers */ = {isa = PBXBuildFile; fileRef = 9317B3AD14D4A8DE0079A430 /* Encoder.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C3E1505770D00FC0846 /* Exception.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630714D4A1F900CDE104 /* Exception.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C3F1505770D00FC0846 /* Generic.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630814D4A1F900CDE104 /* Generic.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C401505770D00FC0846 /* Layout.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630914D4A1F900CDE104 /* Layout.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C411505770D00FC0846 /* Node.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630A14D4A1F900CDE104 /* Node.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C421505770D00FC0846 /* NodeConcepts.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630B14D4A1F900CDE104 /* NodeConcepts.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C431505770D00FC0846 /* NodeImpl.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630C14D4A1F900CDE104 /* NodeImpl.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C441505770D00FC0846 /* Parser.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630D14D4A1F900CDE104 /* Parser.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C451505770D00FC0846 /* Reader.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630E14D4A1F900CDE104 /* Reader.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C461505770D00FC0846 /* Resolver.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B630F14D4A1F900CDE104 /* Resolver.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C471505770D00FC0846 /* ResolverSchema.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631014D4A1F900CDE104 /* ResolverSchema.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C481505770D00FC0846 /* ResolvingReader.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631114D4A1F900CDE104 /* ResolvingReader.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C491505770D00FC0846 /* Schema.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631214D4A1F900CDE104 /* Schema.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C4A1505770D00FC0846 /* SchemaResolution.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631314D4A1F900CDE104 /* SchemaResolution.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C4B1505770D00FC0846 /* Serializer.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631414D4A1F900CDE104 /* Serializer.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C4C1505770D00FC0846 /* Specific.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631514D4A1F900CDE104 /* Specific.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C4D1505770D00FC0846 /* Stream.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631614D4A1F900CDE104 /* Stream.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C4E1505770D00FC0846 /* Types.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631814D4A1F900CDE104 /* Types.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C4F1505770D00FC0846 /* Validator.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631914D4A1F900CDE104 /* Validator.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C501505770D00FC0846 /* ValidSchema.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631A14D4A1F900CDE104 /* ValidSchema.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C511505770D00FC0846 /* Writer.hh in Headers */ = {isa = PBXBuildFile; fileRef = 93F1E35814EB2DEA0031D2F1 /* Writer.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		93C72C521505770D00FC0846 /* Zigzag.hh in Headers */ = {isa = PBXBuildFile; fileRef = 936B631B14D4A1F900CDE104 /* Zigzag.hh */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		93C72C5B1505795A00FC0846 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 936B62CA14D49BBD00CDE104 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 93C72BC71505757A00FC0846;
+			remoteInfo = "avro simulator";
+		};
+		93C72C5D1505795A00FC0846 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 936B62CA14D49BBD00CDE104 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 93C72C131505770D00FC0846;
+			remoteInfo = "avro device";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		9317B3AB14D4A8C40079A430 /* BinaryEncoder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BinaryEncoder.cc; path = "../../c++/impl/BinaryEncoder.cc"; sourceTree = "<group>"; };
@@ -145,10 +224,9 @@
 		936B636F14D4A34F00CDE104 /* ValidatingCodec.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ValidatingCodec.cc; path = "../../c++/impl/parsing/ValidatingCodec.cc"; sourceTree = "<group>"; };
 		936B637014D4A34F00CDE104 /* ValidatingCodec.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ValidatingCodec.hh; path = "../../c++/impl/parsing/ValidatingCodec.hh"; sourceTree = "<group>"; };
 		93934B8C14E1CEA700BCB29C /* avrogencpp.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = avrogencpp.cc; path = "../../c++/impl/avrogencpp.cc"; sourceTree = "<group>"; };
-		93B583C614E462720088216E /* avro.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = avro.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		93B583CB14E462720088216E /* avro-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "avro-Info.plist"; sourceTree = "<group>"; };
-		93B583CD14E462720088216E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		93B583CF14E462720088216E /* avro-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "avro-Prefix.pch"; sourceTree = "<group>"; };
+		93C72BC31505752B00FC0846 /* avro-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "avro-Info.plist"; sourceTree = "<group>"; };
+		93C72BC81505757A00FC0846 /* libavro.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libavro.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		93C72C561505770D00FC0846 /* libavro.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libavro.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		93C9F7AF14E46433004B2251 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		93F1E35714EB2DEA0031D2F1 /* Config.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Config.hh; path = "../../c++/api/Config.hh"; sourceTree = "<group>"; };
 		93F1E35814EB2DEA0031D2F1 /* Writer.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Writer.hh; path = "../../c++/api/Writer.hh"; sourceTree = "<group>"; };
@@ -160,10 +238,19 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		93B583C314E462720088216E /* Frameworks */ = {
+		93C72BC51505757A00FC0846 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93C72BD3150575C400FC0846 /* boost.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		93C72C2B1505770D00FC0846 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93C72C2C1505770D00FC0846 /* boost.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,7 +271,7 @@
 			isa = PBXGroup;
 			children = (
 				936B62FD14D49BDC00CDE104 /* avrocpp */,
-				93B583C914E462720088216E /* avro */,
+				93C72BC21505752B00FC0846 /* avro */,
 				936B62D514D49BBD00CDE104 /* Frameworks */,
 				936B62D414D49BBD00CDE104 /* Products */,
 			);
@@ -193,7 +280,8 @@
 		936B62D414D49BBD00CDE104 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				93B583C614E462720088216E /* avro.framework */,
+				93C72BC81505757A00FC0846 /* libavro.a */,
+				93C72C561505770D00FC0846 /* libavro.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -318,22 +406,12 @@
 			name = parsing;
 			sourceTree = "<group>";
 		};
-		93B583C914E462720088216E /* avro */ = {
+		93C72BC21505752B00FC0846 /* avro */ = {
 			isa = PBXGroup;
 			children = (
-				93B583CA14E462720088216E /* Supporting Files */,
+				93C72BC31505752B00FC0846 /* avro-Info.plist */,
 			);
 			path = avro;
-			sourceTree = "<group>";
-		};
-		93B583CA14E462720088216E /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				93B583CB14E462720088216E /* avro-Info.plist */,
-				93B583CC14E462720088216E /* InfoPlist.strings */,
-				93B583CF14E462720088216E /* avro-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		93F1E35B14EB2E0C0031D2F1 /* json */ = {
@@ -351,71 +429,130 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		93C9F7C914E464F8004B2251 /* Headers */ = {
+		93C72BC61505757A00FC0846 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				93F1E37514EC54510031D2F1 /* AvroParse.hh in Headers */,
-				93F1E37614EC54510031D2F1 /* AvroSerialize.hh in Headers */,
-				93F1E37714EC54510031D2F1 /* AvroTraits.hh in Headers */,
-				93F1E37814EC54510031D2F1 /* Boost.hh in Headers */,
-				93941CB91501EFBC003266DD /* Buffer.hh in Headers */,
-				93941CBA1501EFBC003266DD /* BufferPrint.hh in Headers */,
-				93941CBB1501EFBC003266DD /* BufferReader.hh in Headers */,
-				93941CBC1501EFBC003266DD /* BufferStream.hh in Headers */,
-				93941CBD1501EFBC003266DD /* BufferStreambuf.hh in Headers */,
-				93941CBE1501EFBC003266DD /* BufferDetail.hh in Headers */,
-				93941CBF1501EFBC003266DD /* BufferDetailIterator.hh in Headers */,
-				93F1E37914EC54510031D2F1 /* Compiler.hh in Headers */,
-				93F1E37A14EC54510031D2F1 /* Config.hh in Headers */,
-				93F1E37B14EC54510031D2F1 /* DataFile.hh in Headers */,
-				93F1E37C14EC54510031D2F1 /* Decoder.hh in Headers */,
-				93F1E37D14EC54510031D2F1 /* Encoder.hh in Headers */,
-				93F1E37E14EC54510031D2F1 /* Exception.hh in Headers */,
-				93F1E37F14EC54510031D2F1 /* Generic.hh in Headers */,
-				93F1E38014EC54510031D2F1 /* Layout.hh in Headers */,
-				93F1E38114EC54510031D2F1 /* Node.hh in Headers */,
-				93F1E38214EC54510031D2F1 /* NodeConcepts.hh in Headers */,
-				93F1E38314EC54510031D2F1 /* NodeImpl.hh in Headers */,
-				93F1E38414EC54510031D2F1 /* Parser.hh in Headers */,
-				93F1E38514EC54510031D2F1 /* Reader.hh in Headers */,
-				93F1E38614EC54510031D2F1 /* Resolver.hh in Headers */,
-				93F1E38714EC54510031D2F1 /* ResolverSchema.hh in Headers */,
-				93F1E38814EC54510031D2F1 /* ResolvingReader.hh in Headers */,
-				93F1E38914EC54510031D2F1 /* Schema.hh in Headers */,
-				93F1E38A14EC54510031D2F1 /* SchemaResolution.hh in Headers */,
-				93F1E38B14EC54510031D2F1 /* Serializer.hh in Headers */,
-				93F1E38C14EC54510031D2F1 /* Specific.hh in Headers */,
-				93F1E38D14EC54510031D2F1 /* Stream.hh in Headers */,
-				93F1E38E14EC54510031D2F1 /* Types.hh in Headers */,
-				93F1E38F14EC54510031D2F1 /* Validator.hh in Headers */,
-				93F1E39014EC54510031D2F1 /* ValidSchema.hh in Headers */,
-				93F1E39114EC54510031D2F1 /* Writer.hh in Headers */,
-				93F1E39214EC54510031D2F1 /* Zigzag.hh in Headers */,
+				93C72BEE1505768100FC0846 /* Buffer.hh in Headers */,
+				93C72BEF1505768100FC0846 /* BufferPrint.hh in Headers */,
+				93C72BF01505768100FC0846 /* BufferReader.hh in Headers */,
+				93C72BF11505768100FC0846 /* BufferStream.hh in Headers */,
+				93C72BF21505768100FC0846 /* BufferStreambuf.hh in Headers */,
+				93C72BF31505768100FC0846 /* BufferDetail.hh in Headers */,
+				93C72BF41505768100FC0846 /* BufferDetailIterator.hh in Headers */,
+				93C72BF51505768100FC0846 /* AvroParse.hh in Headers */,
+				93C72BF61505768100FC0846 /* AvroSerialize.hh in Headers */,
+				93C72BF71505768100FC0846 /* AvroTraits.hh in Headers */,
+				93C72BF81505768200FC0846 /* Boost.hh in Headers */,
+				93C72BF91505768200FC0846 /* Compiler.hh in Headers */,
+				93C72BFA1505768200FC0846 /* Config.hh in Headers */,
+				93C72BFB1505768200FC0846 /* DataFile.hh in Headers */,
+				93C72BFC1505768200FC0846 /* Decoder.hh in Headers */,
+				93C72BFD1505768200FC0846 /* Encoder.hh in Headers */,
+				93C72BFE1505768200FC0846 /* Exception.hh in Headers */,
+				93C72BFF1505768200FC0846 /* Generic.hh in Headers */,
+				93C72C001505768200FC0846 /* Layout.hh in Headers */,
+				93C72C011505768200FC0846 /* Node.hh in Headers */,
+				93C72C021505768200FC0846 /* NodeConcepts.hh in Headers */,
+				93C72C031505768200FC0846 /* NodeImpl.hh in Headers */,
+				93C72C041505768200FC0846 /* Parser.hh in Headers */,
+				93C72C051505768200FC0846 /* Reader.hh in Headers */,
+				93C72C061505768200FC0846 /* Resolver.hh in Headers */,
+				93C72C071505768200FC0846 /* ResolverSchema.hh in Headers */,
+				93C72C081505768200FC0846 /* ResolvingReader.hh in Headers */,
+				93C72C091505768200FC0846 /* Schema.hh in Headers */,
+				93C72C0A1505768200FC0846 /* SchemaResolution.hh in Headers */,
+				93C72C0B1505768200FC0846 /* Serializer.hh in Headers */,
+				93C72C0C1505768200FC0846 /* Specific.hh in Headers */,
+				93C72C0D1505768200FC0846 /* Stream.hh in Headers */,
+				93C72C0E1505768200FC0846 /* Types.hh in Headers */,
+				93C72C0F1505768200FC0846 /* Validator.hh in Headers */,
+				93C72C101505768200FC0846 /* ValidSchema.hh in Headers */,
+				93C72C111505768200FC0846 /* Writer.hh in Headers */,
+				93C72C121505768200FC0846 /* Zigzag.hh in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		93C72C2D1505770D00FC0846 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93C72C2E1505770D00FC0846 /* Buffer.hh in Headers */,
+				93C72C2F1505770D00FC0846 /* BufferPrint.hh in Headers */,
+				93C72C301505770D00FC0846 /* BufferReader.hh in Headers */,
+				93C72C311505770D00FC0846 /* BufferStream.hh in Headers */,
+				93C72C321505770D00FC0846 /* BufferStreambuf.hh in Headers */,
+				93C72C331505770D00FC0846 /* BufferDetail.hh in Headers */,
+				93C72C341505770D00FC0846 /* BufferDetailIterator.hh in Headers */,
+				93C72C351505770D00FC0846 /* AvroParse.hh in Headers */,
+				93C72C361505770D00FC0846 /* AvroSerialize.hh in Headers */,
+				93C72C371505770D00FC0846 /* AvroTraits.hh in Headers */,
+				93C72C381505770D00FC0846 /* Boost.hh in Headers */,
+				93C72C391505770D00FC0846 /* Compiler.hh in Headers */,
+				93C72C3A1505770D00FC0846 /* Config.hh in Headers */,
+				93C72C3B1505770D00FC0846 /* DataFile.hh in Headers */,
+				93C72C3C1505770D00FC0846 /* Decoder.hh in Headers */,
+				93C72C3D1505770D00FC0846 /* Encoder.hh in Headers */,
+				93C72C3E1505770D00FC0846 /* Exception.hh in Headers */,
+				93C72C3F1505770D00FC0846 /* Generic.hh in Headers */,
+				93C72C401505770D00FC0846 /* Layout.hh in Headers */,
+				93C72C411505770D00FC0846 /* Node.hh in Headers */,
+				93C72C421505770D00FC0846 /* NodeConcepts.hh in Headers */,
+				93C72C431505770D00FC0846 /* NodeImpl.hh in Headers */,
+				93C72C441505770D00FC0846 /* Parser.hh in Headers */,
+				93C72C451505770D00FC0846 /* Reader.hh in Headers */,
+				93C72C461505770D00FC0846 /* Resolver.hh in Headers */,
+				93C72C471505770D00FC0846 /* ResolverSchema.hh in Headers */,
+				93C72C481505770D00FC0846 /* ResolvingReader.hh in Headers */,
+				93C72C491505770D00FC0846 /* Schema.hh in Headers */,
+				93C72C4A1505770D00FC0846 /* SchemaResolution.hh in Headers */,
+				93C72C4B1505770D00FC0846 /* Serializer.hh in Headers */,
+				93C72C4C1505770D00FC0846 /* Specific.hh in Headers */,
+				93C72C4D1505770D00FC0846 /* Stream.hh in Headers */,
+				93C72C4E1505770D00FC0846 /* Types.hh in Headers */,
+				93C72C4F1505770D00FC0846 /* Validator.hh in Headers */,
+				93C72C501505770D00FC0846 /* ValidSchema.hh in Headers */,
+				93C72C511505770D00FC0846 /* Writer.hh in Headers */,
+				93C72C521505770D00FC0846 /* Zigzag.hh in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		93B583C514E462720088216E /* avro */ = {
+		93C72BC71505757A00FC0846 /* avro simulator */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 93B583D014E462720088216E /* Build configuration list for PBXNativeTarget "avro" */;
+			buildConfigurationList = 93C72BD01505757A00FC0846 /* Build configuration list for PBXNativeTarget "avro simulator" */;
 			buildPhases = (
-				93B583C214E462720088216E /* Sources */,
-				93B583C314E462720088216E /* Frameworks */,
-				93B583C414E462720088216E /* Resources */,
-				93C9F7C914E464F8004B2251 /* Headers */,
-				93C72B461505461D00FC0846 /* ShellScript */,
+				93C72BC41505757A00FC0846 /* Sources */,
+				93C72BC51505757A00FC0846 /* Frameworks */,
+				93C72BC61505757A00FC0846 /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = avro;
+			name = "avro simulator";
 			productName = avro;
-			productReference = 93B583C614E462720088216E /* avro.framework */;
-			productType = "com.apple.product-type.bundle";
+			productReference = 93C72BC81505757A00FC0846 /* libavro.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		93C72C131505770D00FC0846 /* avro device */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 93C72C531505770D00FC0846 /* Build configuration list for PBXNativeTarget "avro device" */;
+			buildPhases = (
+				93C72C141505770D00FC0846 /* Sources */,
+				93C72C2B1505770D00FC0846 /* Frameworks */,
+				93C72C2D1505770D00FC0846 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "avro device";
+			productName = avro;
+			productReference = 93C72C561505770D00FC0846 /* libavro.a */;
+			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
@@ -438,25 +575,15 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				93B583C514E462720088216E /* avro */,
-				93C9F7F114E465B5004B2251 /* avro Universal Framework */,
+				93C72BC71505757A00FC0846 /* avro simulator */,
+				93C72C131505770D00FC0846 /* avro device */,
+				93C72C57150578F800FC0846 /* Merge */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXResourcesBuildPhase section */
-		93B583C414E462720088216E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				93B583CE14E462720088216E /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
 /* Begin PBXShellScriptBuildPhase section */
-		93C72B461505461D00FC0846 /* ShellScript */ = {
+		93C72C5F1505797E00FC0846 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -467,65 +594,83 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"${TARGET_BUILD_DIR}\"\necho \"${PUBLIC_HEADERS_FOLDER_PATH}\"\nmkdir -p ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/buffer/detail\nmv ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/Buffer.hh ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/buffer/Buffer.hh\nmv ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/BufferPrint.hh ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/buffer/BufferPrint.hh\nmv ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/BufferReader.hh ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/buffer/BufferReader.hh\nmv ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/BufferStream.hh ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/buffer/BufferStream.hh\nmv ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/BufferStreambuf.hh ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/buffer/BufferStreambuf.hh\nmv ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/BufferDetail.hh ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/buffer/detail/BufferDetail.hh\nmv ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/BufferDetailIterator.hh ${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/buffer/detail/BufferDetailIterator.hh";
-		};
-		93C9F7F514E465CB004B2251 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Sets the target folders and the final framework product.\nFMK_NAME=avro\nFMK_VERSION=1.6.2\n\n# Install dir will be the final output to the framework.\n# The following line create it in the root folder of the current project.\nINSTALL_DIR=${SRCROOT}/Products/${FMK_NAME}.framework\n\n# Working dir will be deleted after the framework creation.\nWRK_DIR=build\nDEVICE_DIR=${WRK_DIR}/Release-iphoneos/${FMK_NAME}.framework\nSIMULATOR_DIR=${WRK_DIR}/Release-iphonesimulator/${FMK_NAME}.framework\n\n# Building both architectures.\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphoneos\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphonesimulator\n\n# Cleaning the oldest.\nif [ -d \"${INSTALL_DIR}\" ]\nthen\nrm -rf \"${INSTALL_DIR}\"\nfi\n\n# Creates and renews the final product folder.\nmkdir -p \"${INSTALL_DIR}\"\nmkdir -p \"${INSTALL_DIR}/Versions\"\nmkdir -p \"${INSTALL_DIR}/Versions/${FMK_VERSION}\"\nmkdir -p \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources\"\nmkdir -p \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Headers\"\n\n# Creates the internal links.\n# It MUST uses relative path, otherwise will not work when the folder is copied/moved.\nln -s \"${FMK_VERSION}\" \"${INSTALL_DIR}/Versions/Current\"\nln -s \"Versions/Current/Headers\" \"${INSTALL_DIR}/Headers\"\nln -s \"Versions/Current/Resources\" \"${INSTALL_DIR}/Resources\"\nln -s \"Versions/Current/${FMK_NAME}\" \"${INSTALL_DIR}/${FMK_NAME}\"\n\n# Copies the headers and resources files to the final product folder.\ncp -R \"${DEVICE_DIR}/Headers/\" \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Headers/\"\ncp -R \"${DEVICE_DIR}/\" \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources/\"\n\n# Removes the binary and header from the resources folder.\nrm -r \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources/Headers\" \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources/${FMK_NAME}\"\n\n# NOTE: stealing a hint from boost.sh build in boostoniphone project. The thing you lipo into the final frameworks\n# should still be lib<FMK_NAME.a files since that's what the linker is going to look for when it cracks the framework open\n# Uses the Lipo Tool to merge both binary files (i386 + armv6/armv7) into one Universal final product.  \ncp \"${DEVICE_DIR}/${FMK_NAME}\" \"${DEVICE_DIR}/lib${FMK_NAME}.a\"\ncp \"${SIMULATOR_DIR}/${FMK_NAME}\" \"${SIMULATOR_DIR}/lib${FMK_NAME}.a\"\nlipo -create -arch armv7 \"${DEVICE_DIR}/lib${FMK_NAME}.a\" -arch i386 \"${SIMULATOR_DIR}/lib${FMK_NAME}.a\" -output \"${INSTALL_DIR}/Versions/${FMK_VERSION}/${FMK_NAME}\"\n\nrm -r \"${WRK_DIR}\"";
+			shellScript = "# name and build location\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_BUILD_PATH=\"${PROJECT_DIR}/build/Framework\"\n\n# these never change\nFRAMEWORK_VERSION=A\nFRAMEWORK_CURRENT_VERSION=1\nFRAMEWORK_COMPATIBILITY_VERSION=1\n\n# Clean any existing framework that might be there\nif [ -d \"$FRAMEWORK_BUILD_PATH\" ]\nthen\necho \"Framework: Cleaning framework...\"\nrm -rf \"$FRAMEWORK_BUILD_PATH\"\nfi\n\n# Build the canonical Framework bundle directory structure\necho \"Framework: Setting up directories...\"\nFRAMEWORK_DIR=$FRAMEWORK_BUILD_PATH/$FRAMEWORK_NAME.framework\nmkdir -p $FRAMEWORK_DIR\nmkdir -p $FRAMEWORK_DIR/Versions\nmkdir -p $FRAMEWORK_DIR/Versions/$FRAMEWORK_VERSION\nmkdir -p $FRAMEWORK_DIR/Versions/$FRAMEWORK_VERSION/Resources\nmkdir -p $FRAMEWORK_DIR/Versions/$FRAMEWORK_VERSION/Headers\n\necho \"Framework: Creating symlinks...\"\nln -s $FRAMEWORK_VERSION $FRAMEWORK_DIR/Versions/Current\nln -s Versions/Current/Headers $FRAMEWORK_DIR/Headers\nln -s Versions/Current/Resources $FRAMEWORK_DIR/Resources\nln -s Versions/Current/$FRAMEWORK_NAME $FRAMEWORK_DIR/$FRAMEWORK_NAME\n\n# combine lib files for various platforms into one\necho \"Framework: Creating library...\"\nlipo -create \"${BUILD_ROOT}/${CONFIGURATION}-iphoneos/lib${PROJECT_NAME}.a\" \"${BUILD_ROOT}/${CONFIGURATION}-iphonesimulator/lib${PROJECT_NAME}.a\" -o \"$FRAMEWORK_DIR/Versions/Current/$FRAMEWORK_NAME\"\n\necho \"Framework: Copying assets into current version...\"\ncp -r ${BUILT_PRODUCTS_DIR}/include/$FRAMEWORK_NAME/ $FRAMEWORK_DIR/Headers/\n# avro specific\necho \"Framework: Restoring avro directory structure...\"\nmkdir -p $FRAMEWORK_DIR/Headers/buffer/detail\nmv $FRAMEWORK_DIR/Headers/Buffer*.hh $FRAMEWORK_DIR/Headers/buffer\nmv $FRAMEWORK_DIR/Headers/buffer/BufferDetail*.hh $FRAMEWORK_DIR/Headers/buffer/detail\n\n#replace placeholder in plist with project name\ncat \"${SRCROOT}/avro/avro-Info.plist\" | sed 's/${PROJECT_NAME}/'\"${PROJECT_NAME}\"'/' > $FRAMEWORK_DIR/Resources/Info.plist";
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		93B583C214E462720088216E /* Sources */ = {
+		93C72BC41505757A00FC0846 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				93C9F7B214E464BA004B2251 /* JsonCodec.cc in Sources */,
-				93C9F7B314E464BA004B2251 /* ResolvingDecoder.cc in Sources */,
-				93C9F7B414E464BA004B2251 /* Symbol.cc in Sources */,
-				93C9F7B514E464BA004B2251 /* ValidatingCodec.cc in Sources */,
-				93C9F7B614E464BA004B2251 /* BinaryDecoder.cc in Sources */,
-				93C9F7B714E464BA004B2251 /* BinaryEncoder.cc in Sources */,
-				93C9F7B814E464BA004B2251 /* Compiler.cc in Sources */,
-				93C9F7BA14E464BA004B2251 /* DataFile.cc in Sources */,
-				93C9F7BB14E464BA004B2251 /* FileStream.cc in Sources */,
-				93C9F7BC14E464BA004B2251 /* Generic.cc in Sources */,
-				93C9F7BD14E464BA004B2251 /* Node.cc in Sources */,
-				93C9F7BE14E464BA004B2251 /* NodeImpl.cc in Sources */,
-				93C9F7BF14E464BA004B2251 /* Resolver.cc in Sources */,
-				93C9F7C014E464BA004B2251 /* ResolverSchema.cc in Sources */,
-				93C9F7C114E464BA004B2251 /* Schema.cc in Sources */,
-				93C9F7C214E464BA004B2251 /* Stream.cc in Sources */,
-				93C9F7C314E464BA004B2251 /* Types.cc in Sources */,
-				93C9F7C414E464BA004B2251 /* Validator.cc in Sources */,
-				93C9F7C514E464BA004B2251 /* ValidSchema.cc in Sources */,
-				93C9F7C614E464BA004B2251 /* Zigzag.cc in Sources */,
-				93F1E36014EB2E0D0031D2F1 /* JsonDom.cc in Sources */,
-				93F1E36214EB2E0D0031D2F1 /* JsonIO.cc in Sources */,
+				93C72BD41505767500FC0846 /* BinaryDecoder.cc in Sources */,
+				93C72BD51505767500FC0846 /* BinaryEncoder.cc in Sources */,
+				93C72BD61505767500FC0846 /* Compiler.cc in Sources */,
+				93C72BD71505767500FC0846 /* DataFile.cc in Sources */,
+				93C72BD81505767500FC0846 /* FileStream.cc in Sources */,
+				93C72BD91505767500FC0846 /* Generic.cc in Sources */,
+				93C72BDA1505767500FC0846 /* JsonDom.cc in Sources */,
+				93C72BDC1505767500FC0846 /* JsonIO.cc in Sources */,
+				93C72BDE1505767500FC0846 /* Node.cc in Sources */,
+				93C72BDF1505767500FC0846 /* NodeImpl.cc in Sources */,
+				93C72BE01505767500FC0846 /* JsonCodec.cc in Sources */,
+				93C72BE11505767500FC0846 /* ResolvingDecoder.cc in Sources */,
+				93C72BE21505767500FC0846 /* Symbol.cc in Sources */,
+				93C72BE41505767500FC0846 /* ValidatingCodec.cc in Sources */,
+				93C72BE61505767500FC0846 /* Resolver.cc in Sources */,
+				93C72BE71505767500FC0846 /* ResolverSchema.cc in Sources */,
+				93C72BE81505767500FC0846 /* Schema.cc in Sources */,
+				93C72BE91505767500FC0846 /* Stream.cc in Sources */,
+				93C72BEA1505767500FC0846 /* Types.cc in Sources */,
+				93C72BEB1505767500FC0846 /* Validator.cc in Sources */,
+				93C72BEC1505767500FC0846 /* ValidSchema.cc in Sources */,
+				93C72BED1505767500FC0846 /* Zigzag.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		93C72C141505770D00FC0846 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93C72C151505770D00FC0846 /* BinaryDecoder.cc in Sources */,
+				93C72C161505770D00FC0846 /* BinaryEncoder.cc in Sources */,
+				93C72C171505770D00FC0846 /* Compiler.cc in Sources */,
+				93C72C181505770D00FC0846 /* DataFile.cc in Sources */,
+				93C72C191505770D00FC0846 /* FileStream.cc in Sources */,
+				93C72C1A1505770D00FC0846 /* Generic.cc in Sources */,
+				93C72C1B1505770D00FC0846 /* JsonDom.cc in Sources */,
+				93C72C1C1505770D00FC0846 /* JsonIO.cc in Sources */,
+				93C72C1D1505770D00FC0846 /* Node.cc in Sources */,
+				93C72C1E1505770D00FC0846 /* NodeImpl.cc in Sources */,
+				93C72C1F1505770D00FC0846 /* JsonCodec.cc in Sources */,
+				93C72C201505770D00FC0846 /* ResolvingDecoder.cc in Sources */,
+				93C72C211505770D00FC0846 /* Symbol.cc in Sources */,
+				93C72C221505770D00FC0846 /* ValidatingCodec.cc in Sources */,
+				93C72C231505770D00FC0846 /* Resolver.cc in Sources */,
+				93C72C241505770D00FC0846 /* ResolverSchema.cc in Sources */,
+				93C72C251505770D00FC0846 /* Schema.cc in Sources */,
+				93C72C261505770D00FC0846 /* Stream.cc in Sources */,
+				93C72C271505770D00FC0846 /* Types.cc in Sources */,
+				93C72C281505770D00FC0846 /* Validator.cc in Sources */,
+				93C72C291505770D00FC0846 /* ValidSchema.cc in Sources */,
+				93C72C2A1505770D00FC0846 /* Zigzag.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		93B583CC14E462720088216E /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				93B583CD14E462720088216E /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
+/* Begin PBXTargetDependency section */
+		93C72C5C1505795A00FC0846 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 93C72BC71505757A00FC0846 /* avro simulator */;
+			targetProxy = 93C72C5B1505795A00FC0846 /* PBXContainerItemProxy */;
 		};
-/* End PBXVariantGroup section */
+		93C72C5E1505795A00FC0846 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 93C72C131505770D00FC0846 /* avro device */;
+			targetProxy = 93C72C5D1505795A00FC0846 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		936B62F514D49BBD00CDE104 /* Debug */ = {
@@ -582,91 +727,110 @@
 			};
 			name = Release;
 		};
-		93B583D114E462720088216E /* Debug */ = {
+		93C72BD11505757A00FC0846 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				DEAD_CODE_STRIPPING = NO;
+				ARCHS = i386;
+				DSTROOT = /tmp/avro.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../iosclient/external/boostoniphone/framework\"",
 				);
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
-				GCC_VERSION = "";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				INFOPLIST_FILE = "avro/avro-Info.plist";
-				INFOPLIST_OUTPUT_FORMAT = "same-as-input";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LINK_WITH_STANDARD_LIBRARIES = NO;
-				MACH_O_TYPE = mh_object;
-				MACOSX_DEPLOYMENT_TARGET = "";
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_CPLUSPLUSFLAGS = (
-					"-fvisibility=hidden",
-					"-fvisibility-inlines-hidden",
-					"$(OTHER_CFLAGS)",
-				);
-				OTHER_LDFLAGS = "";
-				PLIST_FILE_OUTPUT_FORMAT = "same-as-input";
-				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers";
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = 1;
-				WRAPPER_EXTENSION = framework;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRIVATE_HEADERS_FOLDER_PATH = include/avro;
+				PRODUCT_NAME = avro;
+				PUBLIC_HEADERS_FOLDER_PATH = include/avro;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = iphonesimulator;
+				UNEXPORTED_SYMBOLS_FILE = "";
 			};
 			name = Debug;
 		};
-		93B583D214E462720088216E /* Release */ = {
+		93C72BD21505757A00FC0846 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				DEAD_CODE_STRIPPING = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ARCHS = i386;
+				DSTROOT = /tmp/avro.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../iosclient/external/boostoniphone/framework\"",
 				);
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
-				GCC_VERSION = "";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				INFOPLIST_FILE = "avro/avro-Info.plist";
-				INFOPLIST_OUTPUT_FORMAT = "same-as-input";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LINK_WITH_STANDARD_LIBRARIES = NO;
-				MACH_O_TYPE = mh_object;
-				MACOSX_DEPLOYMENT_TARGET = "";
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_CPLUSPLUSFLAGS = (
-					"-fvisibility=hidden",
-					"-fvisibility-inlines-hidden",
-					"$(OTHER_CFLAGS)",
-				);
-				OTHER_LDFLAGS = "";
-				PLIST_FILE_OUTPUT_FORMAT = "same-as-input";
-				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers";
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = 1;
-				WRAPPER_EXTENSION = framework;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRIVATE_HEADERS_FOLDER_PATH = include/avro;
+				PRODUCT_NAME = avro;
+				PUBLIC_HEADERS_FOLDER_PATH = include/avro;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = iphonesimulator;
+				UNEXPORTED_SYMBOLS_FILE = "";
 			};
 			name = Release;
 		};
-		93C9F7F314E465B6004B2251 /* Debug */ = {
+		93C72C541505770D00FC0846 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = armv7;
+				DSTROOT = /tmp/avro.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../iosclient/external/boostoniphone/framework\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				INSTALL_PATH = /usr/local/lib;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LINK_WITH_STANDARD_LIBRARIES = NO;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRIVATE_HEADERS_FOLDER_PATH = include/avro;
+				PRODUCT_NAME = avro;
+				PUBLIC_HEADERS_FOLDER_PATH = include/avro;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = iphoneos;
+			};
+			name = Debug;
+		};
+		93C72C551505770D00FC0846 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = armv7;
+				DSTROOT = /tmp/avro.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../iosclient/external/boostoniphone/framework\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				INSTALL_PATH = /usr/local/lib;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LINK_WITH_STANDARD_LIBRARIES = NO;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRIVATE_HEADERS_FOLDER_PATH = include/avro;
+				PRODUCT_NAME = avro;
+				PUBLIC_HEADERS_FOLDER_PATH = include/avro;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = iphoneos;
+			};
+			name = Release;
+		};
+		93C72C59150578F800FC0846 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		93C9F7F414E465B6004B2251 /* Release */ = {
+		93C72C5A150578F800FC0846 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -685,23 +849,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		93B583D014E462720088216E /* Build configuration list for PBXNativeTarget "avro" */ = {
+		93C72BD01505757A00FC0846 /* Build configuration list for PBXNativeTarget "avro simulator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				93B583D114E462720088216E /* Debug */,
-				93B583D214E462720088216E /* Release */,
+				93C72BD11505757A00FC0846 /* Debug */,
+				93C72BD21505757A00FC0846 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
-		93C9F7F214E465B6004B2251 /* Build configuration list for PBXAggregateTarget "avro Universal Framework" */ = {
+		93C72C531505770D00FC0846 /* Build configuration list for PBXNativeTarget "avro device" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				93C9F7F314E465B6004B2251 /* Debug */,
-				93C9F7F414E465B6004B2251 /* Release */,
+				93C72C541505770D00FC0846 /* Debug */,
+				93C72C551505770D00FC0846 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+		};
+		93C72C58150578F800FC0846 /* Build configuration list for PBXAggregateTarget "Merge" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				93C72C59150578F800FC0846 /* Debug */,
+				93C72C5A150578F800FC0846 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

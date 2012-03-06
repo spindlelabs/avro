@@ -521,15 +521,18 @@ void CodeGen::generateRecordImplementation(const NodePtr& n)
             os_ << "        _" << nameAt << " = " << generateObjcInitializer(nn, "cppStruct." + nameAt) << ";\n";
         } else if (nn->type() == avro::AVRO_ARRAY) {
             // the array has a single leaf that is the element type
+            // IPHONE-300 give each array a unique name
             const NodePtr& element = nn->leafAt(0);
             string obcjType = objcTypeOf(element) + "Object";
             string cppType = cppTypeOf(element);
-            os_ << "        std::vector<" << cppType << "> cppArray = cppStruct." << nameAt << ";\n" 
-                << "        NSMutableArray *array = " << generateObjcInitializer(nn, "cppArray") << ";\n"
-                << "        for (std::vector<" << cppType << ">::const_iterator it = cppArray.begin(); it != cppArray.end(); ++it) {\n"
-                << "            [array addObject:" << generateObjcInitializer(element, "*it") << "];\n"
+            string cppArrayName = "cpp" + nameAt + "Array";
+            string objcArrayName = "objc" + nameAt + "Array";
+            os_ << "        std::vector< " << cppType << " > " << cppArrayName << " = cppStruct." << nameAt << ";\n" 
+                << "        NSMutableArray *" << objcArrayName << " = " << generateObjcInitializer(nn, cppArrayName) << ";\n"
+                << "        for (std::vector<" << cppType << ">::const_iterator it = " << cppArrayName << ".begin(); it != " << cppArrayName << ".end(); ++it) {\n"
+                << "            [" << objcArrayName << " addObject:" << generateObjcInitializer(element, "*it") << "];\n"
                 << "        }\n"
-                << "        _" << nameAt << " = array;\n";
+                << "        _" << nameAt << " = " << objcArrayName << ";\n";
         } else if (nn->type() == avro::AVRO_MAP) {
             os_ << "#warning incomplete implementation\n"
                 << "        _" << nameAt << " = [[NSMutableDictionary alloc] init];\n";
@@ -566,7 +569,8 @@ string CodeGen::generateObjcInitializer(const NodePtr& node, const string& cppVa
     } else if (node->type() == avro::AVRO_INT) {
         return "[NSNumber numberWithInt:" + cppValue + "]";
     } else if (node->type() == avro::AVRO_LONG) {
-        return "[NSNumber numberWithLong:" + cppValue + "]";
+        // IPHONE-294 init with longlong
+        return "[NSNumber numberWithLongLong:" + cppValue + "]";
     } else if (node->type() == avro::AVRO_FLOAT) {
         return "[NSNumber numberWithFloat:" + cppValue + "]";
     } else if (node->type() == avro::AVRO_DOUBLE) {

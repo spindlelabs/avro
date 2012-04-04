@@ -73,7 +73,7 @@ public class SchemaTool implements Tool {
     for (Schema type : p.getTypes()) {
         // make an output stream
         if (dir != null) {
-            parseOut = new PrintStream(new FileOutputStream(new File(dir, type.getName() + ".avsc")));   
+            parseOut = new PrintStream(new FileOutputStream(new File(dir, type.getFullName() + ".avsc")));   
         }
         parseOut.print(type.toString(true));
         parseOut.flush();

@@ -24,7 +24,6 @@
 
 #include "testgen.hh" // < generated header
 #include "testgen2.hh" // < generated header
-#include "testgen3.hh" // < generated header
 
 #include "Serializer.hh"
 #include "Writer.hh"

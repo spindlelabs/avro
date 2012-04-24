@@ -282,7 +282,8 @@ class AVRO_DECL NodeRecord : public NodeImplRecord
     bool isValid() const {
         return (
                 (nameAttribute_.size() == 1) && 
-                (leafAttributes_.size() > 0) &&
+                // SEE AVRO-1065
+                //(leafAttributes_.size() > 0) &&
                 (leafAttributes_.size() == leafNameAttributes_.size())
                );
     }

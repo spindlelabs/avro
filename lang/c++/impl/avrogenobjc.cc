@@ -529,7 +529,7 @@ void CodeGen::generateRecordImplementation(const NodePtr& n)
             string objcArrayName = "objc" + nameAt + "Array";
             os_ << "        std::vector< " << cppType << " > " << cppArrayName << " = cppStruct." << nameAt << ";\n" 
                 << "        NSMutableArray *" << objcArrayName << " = " << generateObjcInitializer(nn, cppArrayName) << ";\n"
-                << "        for (std::vector<" << cppType << ">::const_iterator it = " << cppArrayName << ".begin(); it != " << cppArrayName << ".end(); ++it) {\n"
+                << "        for (std::vector<" << cppType << " >::const_iterator it = " << cppArrayName << ".begin(); it != " << cppArrayName << ".end(); ++it) {\n"
                 << "            [" << objcArrayName << " addObject:" << generateObjcInitializer(element, "*it") << "];\n"
                 << "        }\n"
                 << "        _" << nameAt << " = " << objcArrayName << ";\n";
@@ -578,7 +578,7 @@ string CodeGen::generateObjcInitializer(const NodePtr& node, const string& cppVa
     } else if (node->type() == avro::AVRO_BOOL) {
         return "[NSNumber numberWithBool:" + cppValue + "]";
     } else if (node->type() == avro::AVRO_ARRAY) {
-        return "[NSMutableArray arrayWithCapacity:" + cppValue + ".size()]";
+        return "[NSMutableArray arrayWithCapacity:(" + cppValue + ").size()]";
     } else if (node->type() == avro::AVRO_MAP) {
         return "[[NSMutableDictionary alloc] init]";
     } else if (node->type() == avro::AVRO_RECORD) {

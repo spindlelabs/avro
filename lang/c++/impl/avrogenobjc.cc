@@ -95,6 +95,11 @@ public:
     void generate(const ValidSchema& schema);
 };
 
+static string decorate(const avro::Name& name)
+{
+    return name.simpleName();
+}
+
 string CodeGen::fullname(const string& name) const
 {
     return ns_.empty() ? name : (ns_ + "::" + name);
@@ -107,13 +112,13 @@ string CodeGen::objcfullname(const string& name) const
 
 string CodeGen::generateEnumType(const NodePtr& n)
 {
-    os_ << "enum " << n->name() << "Enum {\n";
+    os_ << "enum " << decorate(n->name()) << "Enum {\n";
     size_t c = n->names();
     for (size_t i = 0; i < c; ++i) {
         os_ << "    v_" << n->nameAt(i) << ",\n";
     }
     os_ << "};\n\n";
-    return n->name();
+    return decorate(n->name());
 }
 
 string CodeGen::objcTypeOf(const NodePtr& n)
@@ -132,7 +137,10 @@ string CodeGen::objcTypeOf(const NodePtr& n)
         return "NSNumber *";
     case avro::AVRO_RECORD:
     case avro::AVRO_ENUM:
-        return inNamespace_ ? n->name() : fullname(n->name());
+        {
+            return decorate(n->name());
+            //return inNamespace_ ? nm : fullname(nm);
+        }
     case avro::AVRO_ARRAY:
         return "NSArray *";
     case avro::AVRO_MAP:
@@ -165,7 +173,10 @@ string CodeGen::cppTypeOf(const NodePtr& n)
             return "bool";
         case avro::AVRO_RECORD:
         case avro::AVRO_ENUM:
-            return inNamespace_ ? n->name() : fullname(n->name());
+            {
+                string nm = decorate(n->name());
+                return inNamespace_ ? nm : fullname(nm);
+            }
         case avro::AVRO_ARRAY:
             return "std::vector<" + cppTypeOf(n->leafAt(0)) + " >";
         case avro::AVRO_MAP:
@@ -202,7 +213,7 @@ static string objcNameOf(const NodePtr& n)
     case avro::AVRO_RECORD:
     case avro::AVRO_ENUM:
     case avro::AVRO_FIXED:
-        return n->name();
+        return decorate(n->name());
     case avro::AVRO_ARRAY:
         return "array";
     case avro::AVRO_MAP:
@@ -228,9 +239,9 @@ string CodeGen::generateRecordType(const NodePtr& n)
     }
 
     // forward declaration
-    os_ << "struct " << n->name() << ";\n\n"
+    os_ << "struct " << decorate(n->name()) << ";\n\n"
     // appending "Object" to every class
-    << "@interface " << n->name() << "Object : NSObject {\n"    
+    << "@interface " << decorate(n->name()) << "Object : NSObject {\n"    
     << "}\n\n";
 /*    
     if (! noUnion_) {
@@ -248,20 +259,25 @@ string CodeGen::generateRecordType(const NodePtr& n)
         } else if (n->leafAt(i)->type() == avro::AVRO_ENUM) {
             // spit out a generated property that we'll implement
             os_ << "@property (nonatomic, assign, readonly) enum " << types[i] << "Enum ";
+        } else if (n->leafAt(i)->type() == avro::AVRO_SYMBOLIC) {
+            NodePtr resolved = resolveSymbol(n->leafAt(i));
+            if (resolved->type() == avro::AVRO_ENUM) {
+                os_ << "@property (nonatomic, assign, readonly) enum " << types[i] << "Enum ";
+            } else {
+                os_ << "@property (nonatomic, retain, readonly) " << types[i] << " *";
+            }
+        } else if (n->leafAt(i)->type() == avro::AVRO_RECORD) {
+            os_ << "@property (nonatomic, retain, readonly) " << types[i] << " *";
         } else {
             os_ << "@property (nonatomic, retain, readonly) " << types[i];
-        }
-        // stick a * on for record types
-        if (n->leafAt(i)->type() == avro::AVRO_RECORD || n->leafAt(i)->type() == avro::AVRO_SYMBOLIC) {
-            os_ << " *";
         }
         os_ << n->nameAt(i);
         os_ << ";\n";
     }
     os_ << "\n"
-    << "- (id)initWithStruct:(struct " << n->name() << ")cppStruct;\n";
+    << "- (id)initWithStruct:(struct " << decorate(n->name()) << ")cppStruct;\n";
     os_ << "@end\n\n";
-    return n->name() + "Object";
+    return decorate(n->name()) + "Object";
 }
 
 void makeCanonical(string& s, bool foldCase)
@@ -370,7 +386,7 @@ string CodeGen::generateUnionType(const NodePtr& n)
                 // add a space for enum types and use assign
                 os_ << "@property (nonatomic, assign, readonly) enum " << type << " " << name << "Value;\n";
             } else if (nn->type() == avro::AVRO_SYMBOLIC || nn->type() == avro::AVRO_RECORD) {
-                // add a " *" for named types
+                // add a " *" for named types                
                 os_ << "@property (nonatomic, retain, readonly) " << type << " *" << name << "Value;\n";
             } else {
                 os_ << "@property (nonatomic, retain, readonly) " << type << name << "Value;\n";
@@ -543,14 +559,14 @@ void CodeGen::generateRecordImplementation(const NodePtr& n)
             os_ << "        _" << nameAt << " = " << generateObjcInitializer(resolved, "cppStruct." + nameAt) << ";\n";
         } else if (nn->type() == avro::AVRO_ENUM) {
             // cast one enum to another
-            os_ << "        _" << nameAt << " = (" << nn->name() << "Enum) cppStruct." << nameAt << ";\n";
+            os_ << "        _" << nameAt << " = (" << decorate(nn->name()) << "Enum) cppStruct." << nameAt << ";\n";
         } else if (nn->type() == avro::AVRO_UNION) {
             os_ << "        _" << nameAt << " = [[" << fullname(done[nn]) << " alloc] initWithStruct:cppStruct." << cppNameFromObjcName(nameAt) << "];\n";
         } else {
             os_ << "#warning unknown type: " << nn->type() << "\n";
         }
     }
-    os_ << "        }\n"
+    os_ << "    }\n"
         << "    return self;\n"
         << "}\n\n"
         << "@end\n\n";
@@ -593,6 +609,8 @@ string CodeGen::generateObjcInitializer(const NodePtr& node, const string& cppVa
         // append "Object" to end of name for objc-type, and "struct" to front of name for cpp type, and "get_" for getter
         const string &name = objcTypeOf(node);
         return "[[" + name + "Object alloc] initWithStruct:" + cppValue + "]";
+    } else if (node->type() == avro::AVRO_ENUM) {
+        return "(" + decorate(node->name()) + "Enum) " + cppValue + ";";
     }
     // don't deal with enum?
     return "";
@@ -684,12 +702,12 @@ void CodeGen::generateUnionImplementation(const NodePtr& n)
             os_ << "#warning incomplete implementation\n"
                 << "                 _value = [[NSMutableDictionary alloc] init];\n";
         } else if (nn->type() == avro::AVRO_RECORD) {
-            os_ << "                 _value = " << generateObjcInitializer(nn, "cppStruct.get_" + nn->name() + "()") << ";\n";
+            os_ << "                 _value = " << generateObjcInitializer(nn, "cppStruct.get_" + decorate(nn->name()) + "()") << ";\n";
         } else if (nn->type() == avro::AVRO_SYMBOLIC) {
             const NodePtr &resolved = resolveSymbol(nn);
-            os_ << "                 _value = " << generateObjcInitializer(resolved, "cppStruct.get_" + resolved->name() + "()") << ";\n";
+            os_ << "                 _value = " << generateObjcInitializer(resolved, "cppStruct.get_" + decorate(resolved->name()) + "()") << ";\n";
         } else if (nn->type() == avro::AVRO_ENUM) {
-            os_ << "                 _value = cppStruct.get_" + nn->name() + "();\n";
+            os_ << "                 _value = cppStruct.get_" + decorate(nn->name()) + "();\n";
         } else {
             os_ << "#warning unknown type: " << nn->type() << "\n";
         }
@@ -789,7 +807,7 @@ void CodeGen::generate(const ValidSchema& schema)
     }
     
     // output the implementation
-    os_ << "/* BEGIN Implementation */\n\n";
+    os_ << "/* AUTO-GENERATED BY AVROGENOBJC -- DO NOT EDIT */\n\n";
     os_ << "#import <CoreFoundation/CoreFoundation.h>\n";
     string canonical(headerFile_);
     makeCanonical(canonical, false);
@@ -799,7 +817,7 @@ void CodeGen::generate(const ValidSchema& schema)
     
     generateImplementation(root);
     
-    os_ << "/* END Implementation */\n\n";
+    os_ << "/* END AUTO-GENERATED CODE */\n\n";
     
     os_.flush();
 

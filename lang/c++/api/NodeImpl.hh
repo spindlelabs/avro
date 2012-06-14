@@ -19,11 +19,12 @@
 #ifndef avro_NodeImpl_hh__
 #define avro_NodeImpl_hh__
 
+#include "Config.hh"
+
 #include <limits>
 #include <set>
 #include <boost/weak_ptr.hpp>
 
-#include "Config.hh"
 #include "Node.hh"
 #include "NodeConcepts.hh"
 
@@ -37,8 +38,7 @@ template
     class NameConcept,
     class LeavesConcept,
     class LeafNamesConcept,
-    class SizeConcept,
-    class NamespaceConcept
+    class SizeConcept
 >
 class NodeImpl : public Node
 {
@@ -50,23 +50,19 @@ class NodeImpl : public Node
         nameAttribute_(),
         leafAttributes_(),
         leafNameAttributes_(),
-        sizeAttribute_(),
-        namespaceAttribute_()
+        sizeAttribute_()
     { }
 
     NodeImpl(Type type, 
              const NameConcept &name, 
              const LeavesConcept &leaves, 
              const LeafNamesConcept &leafNames,
-             const SizeConcept &size,
-             const NamespaceConcept &ns
-             ) :
-    Node(type),
-    nameAttribute_(name),
-    leafAttributes_(leaves),
-    leafNameAttributes_(leafNames),
-    sizeAttribute_(size),
-    namespaceAttribute_(ns)
+             const SizeConcept &size) :
+        Node(type),
+        nameAttribute_(name),
+        leafAttributes_(leaves),
+        leafNameAttributes_(leafNames),
+        sizeAttribute_(size)
     { }
 
     void swap(NodeImpl& impl) {
@@ -75,30 +71,18 @@ class NodeImpl : public Node
         std::swap(leafNameAttributes_, impl.leafNameAttributes_);
         std::swap(sizeAttribute_, impl.sizeAttribute_);
         std::swap(nameIndex_, impl.nameIndex_);
-		std::swap(namespaceAttribute_, impl.namespaceAttribute_);
     }
+
     bool hasName() const {
         return NameConcept::hasAttribute;
     }
 
-    void doSetName(const std::string &name) {
+    void doSetName(const Name &name) {
         nameAttribute_.add(name);
     }
     
-    const std::string &name() const {
+    const Name &name() const {
         return nameAttribute_.get();
-    }
-
-    bool hasNamespace() const {
-        return NamespaceConcept::hasAttribute;
-    }
-    
-    void doSetNamespace(const std::string &ns) {
-        namespaceAttribute_.add(ns);
-    }
-    
-    const std::string &getNamespace() const {
-        return namespaceAttribute_.get();
     }
 
     void doAddLeaf(const NodePtr &newLeaf) { 
@@ -114,7 +98,7 @@ class NodeImpl : public Node
     }
 
     void doAddName(const std::string &name) { 
-        if(! nameIndex_.add(name, leafNameAttributes_.size())) {
+        if (! nameIndex_.add(name, leafNameAttributes_.size())) {
             throw Exception(boost::format("Cannot add duplicate name: %1%") % name);
         }
         leafNameAttributes_.add(name);
@@ -146,21 +130,52 @@ class NodeImpl : public Node
 
     void setLeafToSymbolic(int index, const NodePtr &node);
    
-    SchemaResolution furtherResolution(const Node &node) const;
+    SchemaResolution furtherResolution(const Node &reader) const {
+        SchemaResolution match = RESOLVE_NO_MATCH;
 
+        if (reader.type() == AVRO_SYMBOLIC) {
+    
+            // resolve the symbolic type, and check again
+            const NodePtr &node = reader.leafAt(0);
+            match = resolve(*node);
+        }
+        else if(reader.type() == AVRO_UNION) {
+
+            // in this case, need to see if there is an exact match for the
+            // writer's type, or if not, the first one that can be promoted to a
+            // match
+        
+            for(size_t i= 0; i < reader.leaves(); ++i)  {
+
+                const NodePtr &node = reader.leafAt(i);
+                SchemaResolution thisMatch = resolve(*node);
+
+                // if matched then the search is done
+                if(thisMatch == RESOLVE_MATCH) {
+                    match = thisMatch;
+                    break;
+                }
+
+                // thisMatch is either no match, or promotable, this will set match to 
+                // promotable if it hasn't been set already
+                if (match == RESOLVE_NO_MATCH) {
+                    match = thisMatch;
+                }
+            }
+        }
+
+        return match;
+    }
 
     NameConcept nameAttribute_;
     LeavesConcept leafAttributes_;
     LeafNamesConcept leafNameAttributes_;
     SizeConcept sizeAttribute_;
-    NamespaceConcept namespaceAttribute_;
     concepts::NameIndexConcept<LeafNamesConcept> nameIndex_;
 };
 
-typedef concepts::NoAttribute<std::string>     NoName;
-typedef concepts::SingleAttribute<std::string> HasName;
-typedef concepts::NoAttribute<std::string>     NoNamespace;
-typedef concepts::SingleAttribute<std::string> HasNamespace;
+typedef concepts::NoAttribute<Name>     NoName;
+typedef concepts::SingleAttribute<Name> HasName;
 
 typedef concepts::NoAttribute<NodePtr>      NoLeaves;
 typedef concepts::SingleAttribute<NodePtr>  SingleLeaf;
@@ -172,17 +187,15 @@ typedef concepts::MultiAttribute<std::string>  LeafNames;
 typedef concepts::NoAttribute<int>     NoSize;
 typedef concepts::SingleAttribute<int> HasSize;
 
-typedef NodeImpl< NoName,  NoLeaves,    NoLeafNames,  NoSize,  NoNamespace > NodeImplPrimitive;
-typedef NodeImpl< HasName, NoLeaves,    NoLeafNames,  NoSize,  NoNamespace > NodeImplSymbolic;
-// Modify all the named types (record, enum, fixed) to take a namespace . It would have
-// been nice to group namespace and name but I didn't want to break other code that relied
-// on template parameter order
-typedef NodeImpl< HasName, MultiLeaves, LeafNames,    NoSize,  HasNamespace > NodeImplRecord;
-typedef NodeImpl< HasName, NoLeaves,    LeafNames,    NoSize,  HasNamespace > NodeImplEnum;
-typedef NodeImpl< NoName,  SingleLeaf,  NoLeafNames,  NoSize,  NoNamespace > NodeImplArray;
-typedef NodeImpl< NoName,  MultiLeaves, NoLeafNames,  NoSize,  NoNamespace> NodeImplMap;
-typedef NodeImpl< NoName,  MultiLeaves, NoLeafNames,  NoSize,  NoNamespace > NodeImplUnion;
-typedef NodeImpl< HasName, NoLeaves,    NoLeafNames,  HasSize, HasNamespace > NodeImplFixed;
+typedef NodeImpl< NoName,  NoLeaves,    NoLeafNames,  NoSize  > NodeImplPrimitive;
+typedef NodeImpl< HasName, NoLeaves,    NoLeafNames,  NoSize  > NodeImplSymbolic;
+
+typedef NodeImpl< HasName, MultiLeaves, LeafNames,    NoSize  > NodeImplRecord;
+typedef NodeImpl< HasName, NoLeaves,    LeafNames,    NoSize  > NodeImplEnum;
+typedef NodeImpl< NoName,  SingleLeaf,  NoLeafNames,  NoSize  > NodeImplArray;
+typedef NodeImpl< NoName,  MultiLeaves, NoLeafNames,  NoSize  > NodeImplMap;
+typedef NodeImpl< NoName,  MultiLeaves, NoLeafNames,  NoSize  > NodeImplUnion;
+typedef NodeImpl< HasName, NoLeaves,    NoLeafNames,  HasSize > NodeImplFixed;
 
 class AVRO_DECL NodePrimitive : public NodeImplPrimitive
 {
@@ -212,11 +225,11 @@ class AVRO_DECL NodeSymbolic : public NodeImplSymbolic
     { }
 
     explicit NodeSymbolic(const HasName &name) :
-        NodeImplSymbolic(AVRO_SYMBOLIC, name, NoLeaves(), NoLeafNames(), NoSize(), NoNamespace())
+        NodeImplSymbolic(AVRO_SYMBOLIC, name, NoLeaves(), NoLeafNames(), NoSize())
     { }
 
     NodeSymbolic(const HasName &name, const NodePtr n) :
-        NodeImplSymbolic(AVRO_SYMBOLIC, name, NoLeaves(), NoLeafNames(), NoSize(), NoNamespace()), actualNode_(n)
+        NodeImplSymbolic(AVRO_SYMBOLIC, name, NoLeaves(), NoLeafNames(), NoSize()), actualNode_(n)
     { }
     SchemaResolution resolve(const Node &reader)  const;
 
@@ -242,11 +255,6 @@ class AVRO_DECL NodeSymbolic : public NodeImplSymbolic
         actualNode_ = node;
     }
 
-    virtual void checkName(const std::string &name) const {
-        // use namespace version since a symbol may be a fullname
-        checkNamespace(name);
-    }
-
   protected:
 
     NodeWeakPtr actualNode_;
@@ -261,8 +269,8 @@ class AVRO_DECL NodeRecord : public NodeImplRecord
         NodeImplRecord(AVRO_RECORD) 
     { }
 
-    NodeRecord(const HasName &name, const MultiLeaves &fields, const LeafNames &fieldsNames, const HasNamespace &ns) :
-        NodeImplRecord(AVRO_RECORD, name, fields, fieldsNames, NoSize(), ns)
+    NodeRecord(const HasName &name, const MultiLeaves &fields, const LeafNames &fieldsNames) :
+        NodeImplRecord(AVRO_RECORD, name, fields, fieldsNames, NoSize())
     { 
         for(size_t i=0; i < leafNameAttributes_.size(); ++i) {
             if(!nameIndex_.add(leafNameAttributes_.get(i), i)) {
@@ -282,8 +290,6 @@ class AVRO_DECL NodeRecord : public NodeImplRecord
     bool isValid() const {
         return (
                 (nameAttribute_.size() == 1) && 
-                // SEE AVRO-1065
-                //(leafAttributes_.size() > 0) &&
                 (leafAttributes_.size() == leafNameAttributes_.size())
                );
     }
@@ -297,8 +303,8 @@ class AVRO_DECL NodeEnum : public NodeImplEnum
         NodeImplEnum(AVRO_ENUM) 
     { }
 
-    NodeEnum(const HasName &name, const LeafNames &symbols, const HasNamespace &ns) :
-        NodeImplEnum(AVRO_ENUM, name, NoLeaves(), symbols, NoSize(), ns)
+    NodeEnum(const HasName &name, const LeafNames &symbols) :
+        NodeImplEnum(AVRO_ENUM, name, NoLeaves(), symbols, NoSize())
     { 
         for(size_t i=0; i < leafNameAttributes_.size(); ++i) {
             if(!nameIndex_.add(leafNameAttributes_.get(i), i)) {
@@ -328,7 +334,7 @@ class AVRO_DECL NodeArray : public NodeImplArray
     { }
 
     explicit NodeArray(const SingleLeaf &items) :
-        NodeImplArray(AVRO_ARRAY, NoName(), items, NoLeafNames(), NoSize(), NoNamespace())
+        NodeImplArray(AVRO_ARRAY, NoName(), items, NoLeafNames(), NoSize())
     { }
 
     SchemaResolution resolve(const Node &reader)  const;
@@ -352,7 +358,7 @@ class AVRO_DECL NodeMap : public NodeImplMap
     }
 
     explicit NodeMap(const SingleLeaf &values) :
-        NodeImplMap(AVRO_MAP, NoName(), values, NoLeafNames(), NoSize(), NoNamespace())
+        NodeImplMap(AVRO_MAP, NoName(), values, NoLeafNames(), NoSize())
     { 
         // need to add the key for the map too
         NodePtr key(new NodePrimitive(AVRO_STRING));
@@ -380,7 +386,7 @@ class AVRO_DECL NodeUnion : public NodeImplUnion
     { }
 
     explicit NodeUnion(const MultiLeaves &types) :
-        NodeImplUnion(AVRO_UNION, NoName(), types, NoLeafNames(), NoSize(), NoNamespace())
+        NodeImplUnion(AVRO_UNION, NoName(), types, NoLeafNames(), NoSize())
     { }
 
     SchemaResolution resolve(const Node &reader)  const;
@@ -429,7 +435,7 @@ class AVRO_DECL NodeUnion : public NodeImplUnion
                 case AVRO_UNION:
                 case AVRO_FIXED:
                 case AVRO_SYMBOLIC:
-                    name = n->name();
+                    name = n->name().fullname();
                     break;
                 default:
                     return false;
@@ -453,8 +459,8 @@ class AVRO_DECL NodeFixed : public NodeImplFixed
         NodeImplFixed(AVRO_FIXED)
     { }
 
-    NodeFixed(const HasName &name, const HasSize &size, const HasNamespace &ns) :
-        NodeImplFixed(AVRO_FIXED, name, NoLeaves(), NoLeafNames(), size, ns)
+    NodeFixed(const HasName &name, const HasSize &size) :
+        NodeImplFixed(AVRO_FIXED, name, NoLeaves(), NoLeafNames(), size)
     { }
 
     SchemaResolution resolve(const Node &reader)  const;
@@ -469,52 +475,36 @@ class AVRO_DECL NodeFixed : public NodeImplFixed
     }
 };
 
-template < class A, class B, class C, class D, class E >
+template < class A, class B, class C, class D >
 inline void 
-NodeImpl<A,B,C,D,E>::setLeafToSymbolic(int index, const NodePtr &node)
+NodeImpl<A,B,C,D>::setLeafToSymbolic(int index, const NodePtr &node)
 {
     if(!B::hasAttribute) {
         throw Exception("Cannot change leaf node for nonexistent leaf");
     } 
 
     NodePtr &replaceNode = const_cast<NodePtr &>(leafAttributes_.get(index));
-    std::string fullname;
-    if (!node->getNamespace().empty()) {
-        fullname.append(node->getNamespace());
-        fullname.append(".");
-    }
-    fullname.append(node->name());
-    if(replaceNode->name() != fullname) {
+    if(replaceNode->name() != node->name()) {
         throw Exception("Symbolic name does not match the name of the schema it references");
     }
 
     NodePtr symbol(new NodeSymbolic);
     NodeSymbolic *ptr = static_cast<NodeSymbolic *> (symbol.get());
 
-    // set it to its full symbol name
-    ptr->setName(fullname);
+    ptr->setName(node->name());
     ptr->setNode(node);
     replaceNode.swap(symbol);
 }
 
-template < class A, class B, class C, class D, class E >
+template < class A, class B, class C, class D >
 inline void 
-NodeImpl<A,B,C,D,E>::printBasicInfo(std::ostream &os) const
+NodeImpl<A,B,C,D>::printBasicInfo(std::ostream &os) const
 {
     os << type();
-    /*
-    if(hasNamespace() && !namespaceAttribute_.get().empty()) {
-        os << " " << namespaceAttribute_.get();
-    }
-    */
     if(hasName()) {
-        std::string n(nameAttribute_.get());
-        size_t lastDot = n.rfind('.');
-        if (lastDot != std::string::npos) {
-            n = n.substr(lastDot + 1);
-        }
-        os << " " << n;
+        os << ' ' << nameAttribute_.get();
     }
+
     if(D::hasAttribute) {
         os << " " << sizeAttribute_.get();
     }

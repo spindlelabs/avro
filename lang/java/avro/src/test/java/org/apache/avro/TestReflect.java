@@ -101,7 +101,8 @@ public class TestReflect {
   }
 
   @Test public void testBytes() {
-    check(new byte[0], "\"bytes\"");
+    check(ByteBuffer.allocate(0), "\"bytes\"");
+    check(new byte[0], "{\"type\":\"bytes\",\"java-class\":\"[B\"}");
   }
 
   @Test public void testUnionWithCollection() {
@@ -109,6 +110,13 @@ public class TestReflect {
       ("[\"null\", {\"type\":\"array\",\"items\":\"float\"}]");
     GenericData data = ReflectData.get();
     assertEquals(1, data.resolveUnion(s, new ArrayList<Float>()));
+  }
+
+  @Test public void testUnionWithMap() {
+    Schema s = Schema.parse
+      ("[\"null\", {\"type\":\"map\",\"values\":\"float\"}]");
+    GenericData data = ReflectData.get();
+    assertEquals(1, data.resolveUnion(s, new HashMap<String,Float>()));
   }
 
   @Test public void testUnionWithBytes() {
@@ -144,7 +152,7 @@ public class TestReflect {
 
   @Test public void testArray() throws Exception {
     check(R1.class.getDeclaredField("arrayField").getGenericType(),
-          "{\"type\":\"array\",\"items\":\"string\"}");
+          "{\"type\":\"array\",\"items\":\"string\",\"java-class\":\"[Ljava.lang.String;\"}");
   }
   @Test public void testList() throws Exception {
     check(R1.class.getDeclaredField("listField").getGenericType(),

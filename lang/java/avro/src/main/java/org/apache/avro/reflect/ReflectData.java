@@ -113,6 +113,7 @@ public class ReflectData extends SpecificData {
     if (datum == null) return false;
     if (super.isRecord(datum)) return true;
     if (datum instanceof Collection) return false;
+    if (datum instanceof Map) return false;
     return getSchema(datum.getClass()).getType() == Schema.Type.RECORD;
   }
 
@@ -262,9 +263,13 @@ public class ReflectData extends SpecificData {
         return super.createSchema(type, names);
       if (c.isArray()) {                                     // array
         Class component = c.getComponentType();
-        if (component == Byte.TYPE)                          // byte array
-          return Schema.create(Schema.Type.BYTES);
+        if (component == Byte.TYPE) {                        // byte array
+          Schema result = Schema.create(Schema.Type.BYTES);
+          result.addProp(CLASS_PROP, c.getName());
+          return result;
+        }
         Schema result = Schema.createArray(createSchema(component, names));
+        result.addProp(CLASS_PROP, c.getName());
         setElement(result, component);
         return result;
       }

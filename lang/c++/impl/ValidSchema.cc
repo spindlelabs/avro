@@ -31,7 +31,7 @@ using boost::static_pointer_cast;
 
 namespace avro {
 
-typedef std::map<std::string, NodePtr> SymbolMap;
+typedef std::map<Name, NodePtr> SymbolMap;
 
 static bool validate(const NodePtr &node, SymbolMap &symbolMap) 
 {
@@ -41,12 +41,7 @@ static bool validate(const NodePtr &node, SymbolMap &symbolMap)
     }
 
     if (node->hasName()) {
-        std::ostringstream oss;
-        if (node->hasNamespace() && !node->getNamespace().empty()) {
-            oss << node->getNamespace() << ".";
-        }
-        oss << node->name();
-        const string& nm = oss.str();
+        const Name& nm = node->name();
         SymbolMap::iterator it = symbolMap.find(nm);
         bool found = it != symbolMap.end() && nm == it->first;
 

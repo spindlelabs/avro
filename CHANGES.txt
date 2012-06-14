@@ -1,17 +1,150 @@
 Avro Change Log
 
-Avro 1.7.0 (unreleased)
+Avro 1.7.0 (11 June 2012)
 
   NEW FEATURES
+
+    AVRO-301. Handle non-reserved properties appropriately in the Python
+    implementation. (Macrio Silva via tebeka)
+
+    AVRO-300. Support "doc" field in schemas in Python implementation.
+    (Harsh J via tebeka)
 
     AVRO-1006.  Add schema fingerprinting to specification and Java.
     (Raymie Stata via cutting)
 
+    AVRO-593. Java: Add support for Hadoop's newer mapreduce API.
+    (Garrett Wu via cutting)
+
+    AVRO-1052. Java: Add AvroMultipleOutputFormat, to permit splitting
+    mapreduce output to multiple locations.  (Ashish Nagavaram via cutting)
+
   IMPROVEMENTS
+
+    AVRO-1060. Java: Upgrade Netty to version 3.4.0.  (Karthik K via cutting)
+
+    AVRO-1068. Avro Java does not build on recent Eclipse versions
+    with m2eclipse (thiru)
+
+    AVRO-551. C: Now compiles on Win32, using Visual Studio C++ 2008.
+    (Vivek Nadkarni via dcreager)
+
+    AVRO-1075. Add some Eclipse stuff to .gitignore.  (Karthik K via cutting)
+
+    AVRO-1085. Fingerprinting for C#. (Eric Hauser via thiru)
+
+    AVRO-1079. C++ Generator, improve include guard generation. (thiru)
+
+    AVRO-1062. Java: Remove use of java.rmi.server.UID so things work
+    on Android.  (Kevin Zhao via cutting)
+
+    AVRO-1090. Java: Permit appending to files besides java.io.File,
+    e.g., files in HDFS. (cutting)
+
+    AVRO-1074. Java: Optimize Utf8#length() and #toString() to not
+    allocate a String when the length is zero.  (cutting)
+
+    AVRO-1050. PHP: Optimize memory use by string append. (A B via cutting)
+
+    AVRO-1095. C++ compiler warns about control reaching end of
+    doAdavance (in JsonIO.cc) which returns something other than
+    void. (thiru)
+
+    AVRO-1026. Add namespace support to C++. (Keh-Li Sheng via thiru)
+
+    AVRO-1097. Fix BinaryDecoder so that EOFException is thrown
+    instead of a generic IOException when reading ints and longs past
+    the end of file.  (thiru & cutting)
+
+    AVRO-1098: CSharp: Fix compilation to work under older versions of Mono.
+    (cutting)
 
   BUG FIXES
 
+    AVRO-1045. Java: Fix a bug in GenericData#deepCopy() of ByteBuffer values.
+    (cutting)
+
+    AVRO-1055. Race condition in Java fingerprinting code (thiru)
+
+    AVRO-954. Typo in JsonCodec.cc (Nebojsa Sabovic via thiru)
+
+    AVRO-1045. C: Use less stack space in avro_file_writer_create (dcreager)
+
+    AVRO-1070. AvroSequenceFileOutputFormat is in wrong package. (thiru)
+
+    AVRO-1080. JsonIO.cc should allow \u escape sequence in
+    string. (Keh-Li Sheng via thiru)
+
+    AVRO-1066. ArrayIndexOutOfBoundsException in ParsingEncoder when
+    trying to use a json encoder to serialize a deep object
+    graph. (thiru)
+
+    AVRO-1065. NodeRecord::isValid() treats records with no fields as
+    invalid. (thiru)
+
+    AVRO-1081. Java: Fix to be able to write ByteBuffers that have no
+    backing array.  Also fix reflection to correctly read ByteBuffer
+    fields.  (cutting)
+
+    AVRO-1046. Java: Fix ReflectDatumReader to be able to read generic
+    or specific arrays. (cutting)
+
+    AVRO-1056. Java: Fix reflect to correctly handle unions containing
+    maps.  (Kevin Zhao via cutting)
+
+    AVRO-1076. Java: Fix Protocol#equals() to consider
+    properties. (Karthik K via cutting)
+
+    AVRO-1094. Java: Fix specific compiler to better support
+    non-default templates.  (Ed Kohlwey via cutting)
+
+    AVRO-1082. C: Avoid leaking open FILE objects.
+    (Pugachev Maxim via dcreager)
+
+    AVRO-1096. C: Don't set default CMAKE_OSX_ARCHITECTURES. (dcreager)
+
+    AVRO-1084. C: Fix reference counting in file_reader and file_writer.
+    (Pugachev Maxim via dcreager)
+
+    AVRO-1083. C: Fix multiple memory leaks.  (Pugachev Maxim via dcreager)
+
+    AVRO-1086. C: Fix possible crash bug in default codec initialization.
+    (Pugachev Maxim via dcreager)
+
+    AVRO-1096. C: Describe CMAKE_OSX_ARCHITECTURES in installation
+    instructions.  (dcreager)
+
+    AVRO-1088. C: Performance tests for arrays and schema resolution.
+    (Vivek Nadkarni via dcreager)
+
+    AVRO-1092. C: Error management code can be defined in a thread-safe
+    manner.  (Pugachev Maxim and Vivek Nadkarni via dcreager)
+
+    AVRO-1091. C: Helper scripts for calling CMake.
+    (Vivek Nadkarni via dcreager)
+
+    AVRO-1087. C: avro_file_writer_open() and appending Avro values
+    works correctly.  (Pugachev Maxim via dcreager)
+
+    AVRO-1102. C: Remove memory leak in avro_string().  (Maxim Pugachev via
+    dcreager)
+
+    AVRO-1099. Java: Fix JsonDecoder to permit floats and doubles to
+    be read from JSON values without decimal points, and for ints and
+    longs to be read from JSON values with decimal points. (cutting)
+
 Avro 1.6.3 (5 March 2012)
+
+    AVRO-1077. Missing 'inline' for union set function. (thiru)
+
+    AVRO-1078. ostreamOutputStream declaration missing in C++ API (thiru)
+
+    AVRO-1051. Java: Fix specific RPC so that method is found when
+    parameters are a union of a primitive and null.
+    (Hamed Asghari via cutting)
+
+    AVRO-1049. Java: Fix GenericData.Record#equals() to correctly
+    compare schemas and fix Schema#equals() to consider order. (cutting)
 
   IMPROVEMENTS
 
@@ -703,7 +836,7 @@ Avro 1.5.0 (10 March 2011)
     AVRO-741. C: Minor API change to handling of bytes data.
     (Douglas Creager via brucem)
 
-    AVRO-246. Java: Add required Schema parameter to GenericData.Fixed
+    AVRO-656. Java: Add required Schema parameter to GenericData.Fixed
     and GenericData.EnumSymbol constructors.  Also fix union dispatch
     to conform to specification, using full schema name for records,
     enums and fixed.

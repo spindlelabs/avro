@@ -21,21 +21,18 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilterOutputStream;
 import java.io.Flushable;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
-import java.rmi.server.UID;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.avro.AvroRuntimeException;
 import org.apache.avro.Schema;
@@ -149,14 +146,19 @@ public class DataFileWriter<D> implements Closeable, Flushable {
 
   /** Open a writer appending to an existing file. */
   public DataFileWriter<D> appendTo(File file) throws IOException {
+    return appendTo(new SeekableFileInput(file),
+                    new FileOutputStream(file, true));
+  }
+
+  /** Open a writer appending to an existing file.
+   * @param in reading the existing file.
+   * @param out positioned at the end of the existing file.
+   */
+  public DataFileWriter<D> appendTo(SeekableInput in, OutputStream out)
+    throws IOException {
     assertNotOpen();
-    if (!file.exists())
-      throw new FileNotFoundException("Not found: "+file);
-    RandomAccessFile raf = new RandomAccessFile(file, "r");
-    FileDescriptor fd = raf.getFD();
     DataFileReader<D> reader =
-      new DataFileReader<D>(new SeekableFileInput(fd),
-                            new GenericDatumReader<D>());
+      new DataFileReader<D>(in, new GenericDatumReader<D>());
     this.schema = reader.getSchema();
     this.sync = reader.getHeader().sync;
     this.meta.putAll(reader.getHeader().meta);
@@ -167,9 +169,9 @@ public class DataFileWriter<D> implements Closeable, Flushable {
     } else {
       this.codec = CodecFactory.nullCodec().createInstance();
     }
-    raf.close();
+    reader.close();
 
-    init(new FileOutputStream(file, true));
+    init(out);
 
     return this;
   }
@@ -192,7 +194,7 @@ public class DataFileWriter<D> implements Closeable, Flushable {
     try {
       MessageDigest digester = MessageDigest.getInstance("MD5");
       long time = System.currentTimeMillis();
-      digester.update((new UID()+"@"+time).getBytes());
+      digester.update((UUID.randomUUID()+"@"+time).getBytes());
       return digester.digest();
     } catch (NoSuchAlgorithmException e) {
       throw new RuntimeException(e);
@@ -279,8 +281,7 @@ public class DataFileWriter<D> implements Closeable, Flushable {
    * Appending non-conforming data may result in an unreadable file. */
   public void appendEncoded(ByteBuffer datum) throws IOException {
     assertOpen();
-    int start = datum.position();
-    bufOut.writeFixed(datum.array(), start, datum.limit()-start);
+    bufOut.writeFixed(datum);
     blockCount++;
     writeIfBlockFull();
   }

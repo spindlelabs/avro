@@ -103,7 +103,7 @@ public class GenericData {
       if (o == this) return true;                 // identical object
       if (!(o instanceof Record)) return false;   // not a record
       Record that = (Record)o;
-      if (!schema.getFullName().equals(that.schema.getFullName()))
+      if (!this.schema.equals(that.schema))
         return false;                             // not the same schema
       return GenericData.get().compare(this, that, schema, true) == 0;
     }
@@ -784,11 +784,12 @@ public class GenericData {
         return new Boolean((Boolean)value);
       case BYTES:
         ByteBuffer byteBufferValue = (ByteBuffer) value;
-        byte[] bytesCopy = new byte[byteBufferValue.capacity()];
-        byteBufferValue.rewind();
-        byteBufferValue.get(bytesCopy);
-        byteBufferValue.rewind();
-        return ByteBuffer.wrap(bytesCopy);
+        int start = byteBufferValue.position();
+        int length = byteBufferValue.limit() - start;
+        byte[] bytesCopy = new byte[length];
+        byteBufferValue.get(bytesCopy, 0, length);
+        byteBufferValue.position(start);
+        return ByteBuffer.wrap(bytesCopy, 0, length);
       case DOUBLE:
         return new Double((Double)value);
       case ENUM:

@@ -19,6 +19,7 @@ package org.apache.avro.generic;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collection;
@@ -137,6 +138,30 @@ public class TestGenericData {
     schema.setFields(fields);
     
     return schema;
+  }
+
+  @Test public void testEquals2() {
+   Schema schema1 = Schema.createRecord("r", null, "x", false);
+   List<Field> fields1 = new ArrayList<Field>();
+   fields1.add(new Field("a", Schema.create(Schema.Type.STRING), null, null,
+                         Field.Order.IGNORE));
+   schema1.setFields(fields1);
+
+   // only differs in field order
+   Schema schema2 = Schema.createRecord("r", null, "x", false);
+   List<Field> fields2 = new ArrayList<Field>();
+   fields2.add(new Field("a", Schema.create(Schema.Type.STRING), null, null,
+                         Field.Order.ASCENDING));
+   schema2.setFields(fields2);
+
+   GenericRecord record1 = new GenericData.Record(schema1);
+   record1.put("a", "1");
+
+   GenericRecord record2 = new GenericData.Record(schema2);
+   record2.put("a", "2");
+
+   assertFalse(record2.equals(record1));
+   assertFalse(record1.equals(record2));
   }
 
   @Test
@@ -332,5 +357,26 @@ public class TestGenericData {
     } catch (IOException e) {
       fail("IOException while writing records to output stream.");
     }
+  }
+  
+  @Test
+  public void testByteBufferDeepCopy() {
+    // Test that a deep copy of a byte buffer respects the byte buffer
+    // limits and capacity.
+    byte[] buffer_value = {0, 1, 2, 3, 0, 0, 0};
+    ByteBuffer buffer = ByteBuffer.wrap(buffer_value, 1, 4);
+    Schema schema = Schema.createRecord("my_record", "doc", "mytest", false);
+    Field byte_field =
+      new Field("bytes", Schema.create(Type.BYTES), null, null);
+    schema.setFields(Arrays.asList(byte_field));
+    
+    GenericRecord record = new GenericData.Record(schema);
+    record.put(byte_field.name(), buffer);
+    
+    GenericRecord copy =
+      (GenericRecord) GenericData.get().deepCopy(schema, record);
+    ByteBuffer buffer_copy = (ByteBuffer) copy.get(byte_field.name());
+
+    assertEquals(buffer, buffer_copy);
   }
 }

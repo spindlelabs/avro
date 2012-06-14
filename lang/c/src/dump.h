@@ -17,10 +17,16 @@
 
 #ifndef DUMP_H
 #define DUMP_H
+#ifdef __cplusplus
+extern "C" {
+#define CLOSE_EXTERN }
+#else
+#define CLOSE_EXTERN
+#endif
 
 #include <stdio.h>
-#include <sys/types.h>
 
-void dump(FILE * out, const caddr_t addr, const long len);
+void dump(FILE * out, const char *addr, const long len);
 
+CLOSE_EXTERN
 #endif

@@ -28,9 +28,15 @@ endmacro(add_avro_executable)
 
 macro(add_avro_test name)
     add_avro_executable(${name} ${ARGN})
+    if (WIN32)
+        set(exec_name ${CMAKE_CURRENT_BINARY_DIR}/Debug/${name}.exe)
+    else (WIN32)
+        set(exec_name ${CMAKE_CURRENT_BINARY_DIR}/${name})
+    endif (WIN32)
+
     add_test(${name}
         ${CMAKE_COMMAND} -E chdir ${AvroC_SOURCE_DIR}/tests
-        ${CMAKE_CURRENT_BINARY_DIR}/${name}
+        ${exec_name}
     )
 endmacro(add_avro_test)
 
@@ -45,6 +51,8 @@ add_avro_test(test_avro_values)
 add_avro_test(test_avro_968)
 add_avro_test(test_avro_984)
 add_avro_test(test_avro_1034)
+add_avro_test(test_avro_1084)
+add_avro_test(test_avro_1087)
 add_avro_test(test_avro_data)
 add_avro_test(test_refcount)
 add_avro_test(test_cpp test_cpp.cpp)

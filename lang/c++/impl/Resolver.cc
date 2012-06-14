@@ -32,7 +32,7 @@ class ResolverFactory;
 typedef boost::shared_ptr<Resolver> ResolverPtr;
 typedef boost::ptr_vector<Resolver> ResolverPtrVector;
 
-//#define DEBUG_VERBOSE
+// #define DEBUG_VERBOSE
 
 #ifdef DEBUG_VERBOSE
 #define DEBUG_OUT(str) std::cout << str << '\n'

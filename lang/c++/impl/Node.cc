@@ -80,17 +80,4 @@ bool Name::operator == (const Name& n) const
     return ns_ == n.ns_ && simpleName_ == n.simpleName_;
 }
 
-void 
-Node::checkNamespace(const std::string &ns) const
-{
-    string::const_iterator it = ns.begin();
-    if (it != ns.end() && (isalpha(*it) || *it == '_')) {
-        while ((++it != ns.end()) && (isalnum(*it) || *it == '_' || *it == '.'));
-        if (it == ns.end()) {
-            return;
-        }
-    }
-    throw Exception("Names must match [A-Za-z_][A-Za-z0-9_]*");
-}
-
 } // namespace avro

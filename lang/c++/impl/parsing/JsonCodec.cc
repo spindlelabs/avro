@@ -60,16 +60,11 @@ class JsonGrammarGenerator : public ValidatingGrammarGenerator {
 
 static std::string nameOf(const NodePtr& n)
 {
-    std::ostringstream oss;
     if (n->hasName()) {
-        if (n->hasNamespace() && !n->getNamespace().empty()) {
-            oss << n->getNamespace();
-            oss << ".";
-        }
-        oss << n->name();
-    } else {
-        oss << n->type();
+        return n->name();
     }
+    std::ostringstream oss;
+    oss << n->type();
     return oss.str();
 }
 

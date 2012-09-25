@@ -778,7 +778,7 @@
 		93C72C541505770D00FC0846 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = armv7;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				DSTROOT = /tmp/avro.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -789,7 +789,7 @@
 				INSTALL_PATH = /usr/local/lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LINK_WITH_STANDARD_LIBRARIES = NO;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRIVATE_HEADERS_FOLDER_PATH = include/avro;
 				PRODUCT_NAME = avro;
@@ -802,7 +802,7 @@
 		93C72C551505770D00FC0846 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = armv7;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				DSTROOT = /tmp/avro.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -813,7 +813,7 @@
 				INSTALL_PATH = /usr/local/lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LINK_WITH_STANDARD_LIBRARIES = NO;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRIVATE_HEADERS_FOLDER_PATH = include/avro;
 				PRODUCT_NAME = avro;
@@ -856,6 +856,7 @@
 				93C72BD21505757A00FC0846 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		93C72C531505770D00FC0846 /* Build configuration list for PBXNativeTarget "avro device" */ = {
 			isa = XCConfigurationList;
@@ -864,6 +865,7 @@
 				93C72C551505770D00FC0846 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		93C72C58150578F800FC0846 /* Build configuration list for PBXAggregateTarget "Merge" */ = {
 			isa = XCConfigurationList;
@@ -872,6 +874,7 @@
 				93C72C5A150578F800FC0846 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

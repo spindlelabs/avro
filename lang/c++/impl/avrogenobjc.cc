@@ -550,8 +550,22 @@ void CodeGen::generateRecordImplementation(const NodePtr& n)
                 << "        }\n"
                 << "        _" << nameAt << " = " << objcArrayName << ";\n";
         } else if (nn->type() == avro::AVRO_MAP) {
-            os_ << "#warning incomplete implementation\n"
-                << "        _" << nameAt << " = [[NSMutableDictionary alloc] init];\n";
+            
+            
+            const NodePtr& element = nn->leafAt(1);
+            string obcjType = objcTypeOf(element) + "Object";
+            string cppType = cppTypeOf(element);
+            string cppMapName = "cpp" + nameAt + "Map";
+            string objcMapName = "objc" + nameAt + "Map";
+            os_ << "        std::map<std::string, " << cppType << " > " << cppMapName << " = cppStruct." << nameAt << ";\n"
+                << "        NSMutableDictionary *" << objcMapName << " = " << generateObjcInitializer(nn, cppMapName) << ";\n"
+                << "        for (std::map<std::string, " << cppType << " >::const_iterator it = " << cppMapName << ".begin(); it != " << cppMapName << ".end(); ++it) {\n"
+                << "        NSString *mapKey = ((__bridge_transfer NSString *)CFStringCreateWithBytes(kCFAllocatorDefault, (const UInt8 *)(((*it).first).data()), ((*it).first).size(), kCFStringEncodingUTF8, false));\n"
+                << "            [" << objcMapName << " setObject:" << generateObjcInitializer(element, "(*it).second") << " forKey:mapKey" << "];\n"
+                << "        }\n"
+                << "        _" << nameAt << " = " << objcMapName << ";\n";
+
+            
         } else if (nn->type() == avro::AVRO_RECORD) {
             os_ << "        _" << nameAt << " = " << generateObjcInitializer(nn, "cppStruct." + nameAt) << ";\n";
         } else if (nn->type() == avro::AVRO_SYMBOLIC) {

@@ -198,6 +198,7 @@ class ValidatingDecoder : public Decoder {
     size_t mapStart();
     size_t mapNext();
     size_t skipMap();
+    size_t doSkip();
     size_t decodeUnionIndex();
 
 public:
@@ -399,6 +400,12 @@ size_t ValidatingDecoder<P>::decodeUnionIndex()
     size_t result = base->decodeUnionIndex();
     parser.selectBranch(result);
     return result;
+}
+    
+template <typename P>
+size_t ValidatingDecoder<P>::doSkip()
+{
+    return 0;
 }
 
 template <typename P>

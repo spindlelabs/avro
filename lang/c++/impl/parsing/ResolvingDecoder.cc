@@ -95,11 +95,20 @@ Symbol ResolvingGrammarGenerator::generate(
 
     const NodePtr& rr = reader.root();
     const NodePtr& rw = writer.root();
+    // NOTE:
+    // Oddly, this was left unreversed. Tests included in lang/c++/tests do
+    // not detect this incorrect state because they do not read to the end of a
+    // record with an added field
     Production backup = ValidatingGrammarGenerator::doGenerate(rw, m2);
     fixup(backup, m2);
 
     map<NodePair, shared_ptr<Production> > m;
-    Production main = doGenerate(rr, rw, m, m2);
+    // NOTE:
+    // This order is inverted from the intended usage of the API. Believe that this
+    // was done to "fix" the inversion of parameters further up the call chain in the
+    // constructor for ResolvingDecoder
+    //Production main = doGenerate(rr, rw, m, m2);
+    Production main = doGenerate(rw, rr, m, m2);
     fixup(main, m);
     return Symbol::rootSymbol(main, backup);
 }
@@ -437,13 +446,19 @@ class ResolvingDecoderImpl : public ResolvingDecoder
     size_t mapNext();
     size_t skipMap();
     size_t decodeUnionIndex();
+    size_t doSkip();
     const vector<size_t>& fieldOrder();
 public:
     ResolvingDecoderImpl(const ValidSchema& writer, const ValidSchema& reader,
         const DecoderPtr& base) :
         base_(base),
         handler_(*base_),
-        parser_(ResolvingGrammarGenerator().generate(reader, writer),
+    // NOTE:
+    // This original call has an inverted argument order. The argument names (and convention
+    // from the avro source base) indicate that all methods should be writer, reader
+    // but this was not.
+    //parser_(ResolvingGrammarGenerator().generate(reader, writer),
+    parser_(ResolvingGrammarGenerator().generate(writer, reader),
             &(*base_), handler_)
     {
     }
@@ -646,6 +661,16 @@ size_t ResolvingDecoderImpl<P>::decodeUnionIndex()
     return parser_.unionAdjust();
 }
 
+template <typename P>
+size_t ResolvingDecoderImpl<P>::doSkip()
+{
+    if (parser_.top() == Symbol::sSkipStart) {
+        parser_.pop();
+        parser_.skip(*base_);
+    }
+    return 0;
+}
+    
 template <typename P>
 const vector<size_t>& ResolvingDecoderImpl<P>::fieldOrder()
 {

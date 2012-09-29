@@ -303,6 +303,7 @@ void encode(Encoder& e, const T& t) {
 template <typename T>
 void decode(Decoder& d, T& t) {
     codec_traits<T>::decode(d, t);
+    d.doSkip();
 }
 
 }   // namespace avro

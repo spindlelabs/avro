@@ -633,7 +633,9 @@ string CodeGen::generateObjcInitializer(const NodePtr& node, const string& cppVa
 
 std::string CodeGen::generateObjcPrimitiveInitializer(const NodePtr& node, const string& cppValue)
 {
-    if (node->type() == avro::AVRO_ENUM) {
+    if (node->type() == avro::AVRO_SYMBOLIC) {
+        return generateObjcPrimitiveInitializer(resolveSymbol(node), cppValue);
+    } else if (node->type() == avro::AVRO_ENUM) {
         return "[NSNumber numberWithInt:(" + decorate(node->name()) + "Enum) " + cppValue + "]";
     }
     return generateObjcInitializer(node, cppValue);

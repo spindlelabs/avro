@@ -75,6 +75,7 @@ class CodeGen {
     std::string unionName();
     std::string objcUnionName();
     std::string generateObjcInitializer(const NodePtr& node, const string& cppValue);
+    std::string generateObjcPrimitiveInitializer(const NodePtr& node, const string& cppValue);
     std::string generateUnionType(const NodePtr& n);
     std::string generateType(const NodePtr& n);
     std::string generateDeclaration(const NodePtr& n);
@@ -546,7 +547,7 @@ void CodeGen::generateRecordImplementation(const NodePtr& n)
             os_ << "        std::vector< " << cppType << " > " << cppArrayName << " = cppStruct." << nameAt << ";\n" 
                 << "        NSMutableArray *" << objcArrayName << " = " << generateObjcInitializer(nn, cppArrayName) << ";\n"
                 << "        for (std::vector<" << cppType << " >::const_iterator it = " << cppArrayName << ".begin(); it != " << cppArrayName << ".end(); ++it) {\n"
-                << "            [" << objcArrayName << " addObject:" << generateObjcInitializer(element, "*it") << "];\n"
+                << "            [" << objcArrayName << " addObject:" << generateObjcPrimitiveInitializer(element, "*it") << "];\n"
                 << "        }\n"
                 << "        _" << nameAt << " = " << objcArrayName << ";\n";
         } else if (nn->type() == avro::AVRO_MAP) {
@@ -561,7 +562,7 @@ void CodeGen::generateRecordImplementation(const NodePtr& n)
                 << "        NSMutableDictionary *" << objcMapName << " = " << generateObjcInitializer(nn, cppMapName) << ";\n"
                 << "        for (std::map<std::string, " << cppType << " >::const_iterator it = " << cppMapName << ".begin(); it != " << cppMapName << ".end(); ++it) {\n"
                 << "        NSString *mapKey = ((__bridge_transfer NSString *)CFStringCreateWithBytes(kCFAllocatorDefault, (const UInt8 *)(((*it).first).data()), ((*it).first).size(), kCFStringEncodingUTF8, false));\n"
-                << "            [" << objcMapName << " setObject:" << generateObjcInitializer(element, "(*it).second") << " forKey:mapKey" << "];\n"
+                << "            [" << objcMapName << " setObject:" << generateObjcPrimitiveInitializer(element, "(*it).second") << " forKey:mapKey" << "];\n"
                 << "        }\n"
                 << "        _" << nameAt << " = " << objcMapName << ";\n";
 
@@ -624,10 +625,18 @@ string CodeGen::generateObjcInitializer(const NodePtr& node, const string& cppVa
         const string &name = objcTypeOf(node);
         return "[[" + name + "Object alloc] initWithStruct:" + cppValue + "]";
     } else if (node->type() == avro::AVRO_ENUM) {
-        return "(" + decorate(node->name()) + "Enum) " + cppValue + ";";
+        return "(" + decorate(node->name()) + "Enum) " + cppValue;
     }
     // don't deal with enum?
     return "";
+}
+
+std::string CodeGen::generateObjcPrimitiveInitializer(const NodePtr& node, const string& cppValue)
+{
+    if (node->type() == avro::AVRO_ENUM) {
+        return "[NSNumber numberWithInt:(" + decorate(node->name()) + "Enum) " + cppValue + "]";
+    }
+    return generateObjcInitializer(node, cppValue);
 }
 
 void CodeGen::generateUnionImplementation(const NodePtr& n)
@@ -709,12 +718,20 @@ void CodeGen::generateUnionImplementation(const NodePtr& n)
             os_ << "                 std::vector<" << cppType << "> cppArray = cppStruct.get_array();\n" 
                 << "                 NSMutableArray *array = " << generateObjcInitializer(nn, "cppArray") << ";\n"
                 << "                 for (std::vector<" << cppType << ">::const_iterator it = cppArray.begin(); it != cppArray.end(); ++it) {\n"
-                << "                     [array addObject:" << generateObjcInitializer(element, "*it") << "];\n"
+                << "                     [array addObject:" << generateObjcPrimitiveInitializer(element, "*it") << "];\n"
                 << "                 }\n"
                 << "                 _value = array;\n";
         } else if (nn->type() == avro::AVRO_MAP) {
-            os_ << "#warning incomplete implementation\n"
-                << "                 _value = [[NSMutableDictionary alloc] init];\n";
+            const NodePtr& element = nn->leafAt(1);
+            string obcjType = objcTypeOf(element) + "Object";
+            string cppType = cppTypeOf(element);
+            os_ << "        std::map<std::string, " << cppType << " > cppMap = cppStruct.get_map();\n"
+                << "        NSMutableDictionary *map = " << generateObjcInitializer(nn, "cppMap") << ";\n"
+                << "        for (std::map<std::string, " << cppType << " >::const_iterator it = cppMap.begin(); it != cppMap.end(); ++it) {\n"
+                << "        NSString *mapKey = ((__bridge_transfer NSString *)CFStringCreateWithBytes(kCFAllocatorDefault, (const UInt8 *)(((*it).first).data()), ((*it).first).size(), kCFStringEncodingUTF8, false));\n"
+                << "            [map setObject:" << generateObjcPrimitiveInitializer(element, "(*it).second") << " forKey:mapKey" << "];\n"
+                << "        }\n"
+                << "        _value = map;\n";
         } else if (nn->type() == avro::AVRO_RECORD) {
             os_ << "                 _value = " << generateObjcInitializer(nn, "cppStruct.get_" + decorate(nn->name()) + "()") << ";\n";
         } else if (nn->type() == avro::AVRO_SYMBOLIC) {

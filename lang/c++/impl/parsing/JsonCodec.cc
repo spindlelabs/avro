@@ -224,6 +224,7 @@ class JsonDecoder : public Decoder {
     size_t doSkip();
 
     void expect(JsonParser::Token tk);
+    JsonParser::Token expectDecimal();
     void skipComposite();
 public:
 
@@ -245,6 +246,21 @@ void JsonDecoder<P>::expect(JsonParser::Token tk)
     expectToken(in_, tk);
 }
 
+template <typename P>
+JsonParser::Token JsonDecoder<P>::expectDecimal()
+{
+    JsonParser::Token tk = in_.advance();
+    if (tk != JsonParser::tkDouble && tk != JsonParser::tkLong) {
+        ostringstream oss;
+        oss << "Incorrect token in the stream. Expected: "
+        << JsonParser::toString(tk) << ", found "
+        << JsonParser::toString(in_.cur());
+        throw Exception(oss.str());
+    }
+    return tk;
+}
+
+    
 template <typename P>
 void JsonDecoder<P>::decodeNull()
 {
@@ -287,8 +303,8 @@ template <typename P>
 float JsonDecoder<P>::decodeFloat()
 {
     parser_.advance(Symbol::sFloat);
-    expect(JsonParser::tkDouble);
-    double result = in_.doubleValue();
+    JsonParser::Token token = expectDecimal();
+    double result = token == JsonParser::tkDouble ? in_.doubleValue() : (double)in_.longValue();
     return static_cast<float>(result);
 }
 
@@ -296,8 +312,8 @@ template <typename P>
 double JsonDecoder<P>::decodeDouble()
 {
     parser_.advance(Symbol::sDouble);
-    expect(JsonParser::tkDouble);
-    double result = in_.doubleValue();
+    JsonParser::Token token = expectDecimal();
+    double result = token == JsonParser::tkDouble ? in_.doubleValue() : (double)in_.longValue();
     return result;
 }
 

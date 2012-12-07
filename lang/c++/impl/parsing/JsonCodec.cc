@@ -221,6 +221,7 @@ class JsonDecoder : public Decoder {
     size_t mapNext();
     size_t skipMap();
     size_t decodeUnionIndex();
+    size_t doSkip();
 
     void expect(JsonParser::Token tk);
     void skipComposite();
@@ -472,6 +473,12 @@ size_t JsonDecoder<P>::decodeUnionIndex()
     }
     parser_.selectBranch(result);
     return result;
+}
+
+template <typename P>
+size_t JsonDecoder<P>::doSkip()
+{
+    return 0;
 }
 
 

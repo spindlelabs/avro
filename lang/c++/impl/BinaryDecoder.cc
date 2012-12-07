@@ -55,6 +55,7 @@ class BinaryDecoder : public Decoder {
     size_t mapNext();
     size_t skipMap();
     size_t decodeUnionIndex();
+    size_t doSkip();
 
     int64_t doDecodeLong();
     size_t doDecodeItemCount();
@@ -216,6 +217,12 @@ size_t BinaryDecoder::decodeUnionIndex()
     return static_cast<size_t>(doDecodeLong());
 }
 
+
+size_t BinaryDecoder::doSkip()
+{
+    return 0;
+}
+    
 int64_t BinaryDecoder::doDecodeLong() {
     uint64_t encoded = 0;
     int shift = 0;

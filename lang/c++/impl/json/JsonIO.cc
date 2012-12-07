@@ -235,6 +235,43 @@ JsonParser::Token JsonParser::tryNumber(char ch)
     }
 }
 
+/* Macros lifted from SBJSON http://stig.github.com/json-framework/ */
+
+#define StringIsIllegalSurrogateHighCharacter(character) (((character) >= 0xD800UL) && ((character) <= 0xDFFFUL))
+#define StringIsSurrogateLowCharacter(character) ((character >= 0xDC00UL) && (character <= 0xDFFFUL))
+#define StringIsSurrogateHighCharacter(character) ((character >= 0xD800UL) && (character <= 0xDBFFUL))
+
+bool JsonParser::decodeHexQuad(unichar &quad)
+{
+    unichar tmp = 0;
+    char c, hex[4];
+    
+    in_.readBytes(reinterpret_cast<uint8_t*>(hex), 4);
+    for (int i = 0; i < 4; i++) {
+        c = hex[i];
+        tmp *= 16;
+        switch (c) {
+            case '0' ... '9':
+                tmp += c - '0';
+                break;
+                
+            case 'a' ... 'f':
+                tmp += 10 + c - 'a';
+                break;
+                
+            case 'A' ... 'F':
+                tmp += 10 + c - 'A';
+                break;
+                
+            default:
+                return false;
+        }
+    }
+    quad = tmp;
+    return true;
+}
+    
+
 JsonParser::Token JsonParser::tryString()
 {
     sv.clear();
@@ -268,23 +305,49 @@ JsonParser::Token JsonParser::tryString()
             case 'u':
             case 'U':
                 {
-                    unsigned int n = 0;
-                    char e[4];
-                    in_.readBytes(reinterpret_cast<uint8_t*>(e), 4);
-                    for (int i = 0; i < 4; i++) {
-                        n *= 16;
-                        char c = e[i];
-                        if (isdigit(c)) {
-                            n += c - '0';
-                        } else if (c >= 'a' && c <= 'f') {
-                            n += c - 'a' + 10;
-                        } else if (c >= 'A' && c <= 'F') {
-                            n += c - 'A' + 10;
+                    unichar high = 0;
+                    if (decodeHexQuad(high)) {
+                        if (StringIsSurrogateHighCharacter(high)) {
+                            unichar low;
+                            
+                            // If there was a high surrogate, there MUST be a low hex quad
+                            ch = in_.read();
+                            low = in_.read();
+                            if (ch != '\\' || low != 'u' || !decodeHexQuad(low)) {
+                                // not quite the right throw here
+                                throw unexpected(low);
+                            }
+                            if (!StringIsSurrogateLowCharacter(low)) {
+                                throw unexpected(low);
+                            }
+
+                            // decode into a decimal
+                            uint32_t supp = 0x10000 + ((high - 0xD800) << 10) + (low - 0xDC00);
+                            // push UTF-8 converted
+                            sv.push_back(0xF0 | ((supp >> 18) & 0x07));
+                            sv.push_back(0x80 | ((supp >> 12) & 0x3F));
+                            sv.push_back(0x80 | ((supp >> 6) & 0x3F));
+                            sv.push_back(0x80 | (supp & 0x3F));
+                            
+                        } else if (StringIsIllegalSurrogateHighCharacter(high)) {
+                            throw unexpected(high);
                         } else {
-                            throw unexpected(c);
+                            // deal with normal multibyte
+                            if (high <= 0x7F) {
+                                sv.push_back(high);
+                            } else if (high <= 0x7FF) {
+                                sv.push_back(0xC0 | ((high >> 6) & 0x1F));
+                                sv.push_back(0x80 | (high & 0x3f));
+                            } else if (high <= 0xFFFF) {
+                                sv.push_back(0xE0 | ((high >> 12) & 0x0F));
+                                sv.push_back(0x80 | ((high >> 6) & 0x3F));
+                                sv.push_back(0x80 | (high & 0x3F));
+                            }
                         }
+                    } else {
+                        // invalid character in hex quad
+                        throw unexpected(high);
                     }
-                    sv.push_back(n);
                 }
                 break;
             default:

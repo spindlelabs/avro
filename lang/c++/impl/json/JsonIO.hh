@@ -34,6 +34,7 @@ inline char toHex(unsigned int n) {
     return (n < 10) ? (n + '0') : (n + 'a' - 10);
 }
 
+typedef uint16_t unichar;
 
 class AVRO_DECL JsonParser : boost::noncopyable {
 public:
@@ -74,6 +75,7 @@ private:
     Token doAdvance();
     Token tryLiteral(const char exp[], size_t n, Token tk);
     Token tryNumber(char ch);
+    bool decodeHexQuad(unichar &quad);
     Token tryString();
     Exception unexpected(unsigned char ch);
     char next();
